@@ -1,0 +1,38 @@
+aid: integration-app
+name: Integration.app
+description: >-
+  Integration.app is a platform for building and managing embedded integrations
+  with a unified API and marketplace.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Embedded iPaaS
+  - Integration Marketplace
+  - Unified API
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/integration-app/refs/heads/main/apis.yml
+created: '2026-03-27'
+modified: '2026-03-27'
+specificationVersion: '0.19'
+apis:
+  - aid: integration-app:apis
+    name: Integration.app API
+    description: >-
+      Integration.app provides a unified API and marketplace for building
+      embedded integrations, with pre-built connectors and customizable
+      workflows.
+    humanURL: https://integration.app
+    tags:
+      - Embedded iPaaS
+      - Integration Marketplace
+    properties:
+      - type: Documentation
+        url: https://integration.app/docs
+common:
+  - type: Website
+    url: https://integration.app
+  - type: Documentation
+    url: https://integration.app/docs
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
