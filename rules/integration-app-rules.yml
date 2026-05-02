@@ -1,0 +1,79 @@
+aid: integration-app:rules
+name: Integration.app / Membrane Usage Rules
+description: >-
+  Operational rules and guardrails for adopting Integration.app (now branded
+  Membrane) as the agentic integration infrastructure for embedded and
+  AI-driven product workflows. These rules cover connector selection,
+  authentication, MCP server scope, data handling, observability, and
+  self-hosting decisions.
+modified: '2026-04-28'
+rules:
+  - id: brand-awareness
+    category: Vendor
+    statement: >-
+      Track that Integration.app now operates as Membrane (getmembrane.com)
+      and update internal references, vendor records, and DNS allowlists to
+      the new domain over time.
+  - id: managed-oauth
+    category: Authentication
+    statement: >-
+      Use Membrane's managed OAuth and AuthKit for third-party connections
+      rather than rolling per-connector OAuth flows in your own product.
+  - id: per-tenant-credentials
+    category: Authentication
+    statement: >-
+      Scope every external connection to a single tenant or workspace; never
+      share end-user OAuth tokens across tenants in a multi-tenant product.
+  - id: connector-selection
+    category: Integrations
+    statement: >-
+      Prefer Membrane's pre-built connector for a target application over
+      writing a custom connector; only build custom flows when an action or
+      object is missing from the catalog.
+  - id: mcp-server-scope
+    category: MCP
+    statement: >-
+      Treat each Membrane MCP server as a privileged tool surface; pin the
+      server to the smallest allowlist of tools and resources required for
+      the agent's job.
+  - id: agent-action-confirmation
+    category: AI Agents
+    statement: >-
+      Require human confirmation for destructive or high-cost agent actions
+      executed via Membrane (e.g., money movement, customer messaging,
+      bulk deletes), regardless of how trusted the model is.
+  - id: webhook-signing
+    category: Security
+    statement: >-
+      Verify Membrane webhook signatures on inbound events before acting on
+      them and reject any event whose signature, timestamp, or replay
+      window is invalid.
+  - id: data-residency
+    category: Compliance
+    statement: >-
+      Confirm data residency and processing region with Membrane before
+      routing regulated data (PII, PHI, financial) and align with the
+      platform's SOC 2 Type II and GDPR posture.
+  - id: observability
+    category: Operations
+    statement: >-
+      Stream Membrane run logs, error events, and rate-limit signals into
+      your central observability stack so that integration incidents are
+      visible alongside core product telemetry.
+  - id: self-hosting-decision
+    category: Deployment
+    statement: >-
+      Use Membrane's self-hosted deployment only when residency, network
+      isolation, or compliance demands it; otherwise rely on the managed
+      offering to reduce operational load.
+  - id: rate-limit-respect
+    category: Reliability
+    statement: >-
+      Respect both Membrane platform limits and the rate limits of each
+      downstream connector; queue or backoff at the agent layer rather than
+      depending solely on platform retries.
+  - id: lifecycle-and-deprecation
+    category: Lifecycle
+    statement: >-
+      Track connector and SDK changelog updates and plan migrations away
+      from deprecated connectors before they reach end of life.
