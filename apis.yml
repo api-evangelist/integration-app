@@ -55,13 +55,13 @@ apis:
         url: https://getmembrane.com/pricing
       - type: Blog
         url: https://getmembrane.com/articles
-      - type: Changelog
+      - type: ChangeLog
         url: https://changelog.getmembrane.com
       - type: SignUp
         url: https://console.getmembrane.com
       - type: Login
         url: https://console.getmembrane.com
-      - type: Status
+      - type: StatusPage
         url: https://status.getmembrane.com
       - type: TrustCenter
         url: https://trust.getmembrane.com
@@ -80,13 +80,13 @@ common:
     url: https://getmembrane.com/pricing
   - type: Blog
     url: https://getmembrane.com/articles
-  - type: Changelog
+  - type: ChangeLog
     url: https://changelog.getmembrane.com
   - type: SignUp
     url: https://console.getmembrane.com
   - type: Login
     url: https://console.getmembrane.com
-  - type: Status
+  - type: StatusPage
     url: https://status.getmembrane.com
   - type: TrustCenter
     url: https://trust.getmembrane.com
