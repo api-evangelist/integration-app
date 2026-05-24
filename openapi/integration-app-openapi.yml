@@ -1,0 +1,944 @@
+openapi: 3.1.0
+info:
+  title: Membrane (formerly Integration.app) Platform API
+  description: |
+    The Membrane platform (rebranded from Integration.app) provides a unified
+    API for building embedded and agentic integrations across 100,000+ apps.
+    The REST API surfaces resources for connections, connectors, integrations,
+    flows, actions, data collections, customers, packages, app event
+    subscriptions, MCP-style agent sessions, and observability logs. Most
+    selectable resources accept either an id or a key as `{selector}`.
+  version: "1.0"
+  contact:
+    name: Membrane Documentation
+    url: https://docs.getmembrane.com
+servers:
+  - url: https://api.getmembrane.com
+    description: Production API
+security:
+  - bearerAuth: []
+tags:
+  - name: Connections
+  - name: Connectors
+  - name: Customers
+  - name: Integrations
+  - name: Actions
+  - name: Flows
+  - name: Flow Runs
+  - name: Data Collections
+  - name: Data Sources
+  - name: Field Mappings
+  - name: App Event Subscriptions
+  - name: External Event Subscriptions
+  - name: Logs
+  - name: Search
+  - name: Sessions
+  - name: Public
+paths:
+  /connections:
+    get:
+      tags: [Connections]
+      summary: List connections
+      operationId: listConnections
+      responses:
+        '200':
+          description: List of connections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionList'
+    post:
+      tags: [Connections]
+      summary: Create a connection
+      operationId: createConnection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connection'
+      responses:
+        '201':
+          description: Connection created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+  /connections/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Connections]
+      summary: Get connection
+      operationId: getConnection
+      responses:
+        '200':
+          description: Connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+    put:
+      tags: [Connections]
+      summary: Replace connection
+      operationId: replaceConnection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connection'
+      responses:
+        '200':
+          description: Updated connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+    patch:
+      tags: [Connections]
+      summary: Update connection
+      operationId: updateConnection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connection'
+      responses:
+        '200':
+          description: Updated connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+  /connections/{id}/archive:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [Connections]
+      summary: Archive connection
+      operationId: archiveConnection
+      responses:
+        '200':
+          description: Archived
+  /connections/{id}/restore:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [Connections]
+      summary: Restore connection
+      operationId: restoreConnection
+      responses:
+        '200':
+          description: Restored
+  /connections/{id}/refresh-credentials:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [Connections]
+      summary: Refresh credentials
+      operationId: refreshConnectionCredentials
+      responses:
+        '200':
+          description: Credentials refreshed
+  /connections/{id}/test:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [Connections]
+      summary: Test connection
+      operationId: testConnection
+      responses:
+        '200':
+          description: Test result
+  /connections/{id}/logs:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Connections, Logs]
+      summary: Get connection logs
+      operationId: getConnectionLogs
+      responses:
+        '200':
+          description: Logs
+  /connectors:
+    get:
+      tags: [Connectors]
+      summary: List connectors
+      operationId: listConnectors
+      responses:
+        '200':
+          description: Connector list
+    post:
+      tags: [Connectors]
+      summary: Create connector
+      operationId: createConnector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connector'
+      responses:
+        '201':
+          description: Connector created
+  /connectors/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Connectors]
+      summary: Get connector
+      operationId: getConnector
+      responses:
+        '200':
+          description: Connector
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connector'
+    put:
+      tags: [Connectors]
+      summary: Replace connector
+      operationId: replaceConnector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connector'
+      responses:
+        '200':
+          description: Updated
+    patch:
+      tags: [Connectors]
+      summary: Update connector
+      operationId: updateConnector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connector'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      tags: [Connectors]
+      summary: Delete connector
+      operationId: deleteConnector
+      responses:
+        '204':
+          description: Deleted
+  /connectors/{id}/publish:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [Connectors]
+      summary: Publish connector
+      operationId: publishConnector
+      responses:
+        '200':
+          description: Published
+  /customers:
+    get:
+      tags: [Customers]
+      summary: List customers
+      operationId: listCustomers
+      responses:
+        '200':
+          description: Customer list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerList'
+    post:
+      tags: [Customers]
+      summary: Create customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /customers/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Customers]
+      summary: Get customer
+      operationId: getCustomer
+      responses:
+        '200':
+          description: Customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+    put:
+      tags: [Customers]
+      summary: Replace customer
+      operationId: replaceCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Updated
+    patch:
+      tags: [Customers]
+      summary: Update customer
+      operationId: updateCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      tags: [Customers]
+      summary: Delete customer
+      operationId: deleteCustomer
+      responses:
+        '204':
+          description: Deleted
+  /integrations:
+    get:
+      tags: [Integrations]
+      summary: List integrations
+      operationId: listIntegrations
+      responses:
+        '200':
+          description: Integration list
+    post:
+      tags: [Integrations]
+      summary: Create integration
+      operationId: createIntegration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration'
+      responses:
+        '201':
+          description: Integration created
+  /integrations/{selector}:
+    parameters:
+      - $ref: '#/components/parameters/Selector'
+    get:
+      tags: [Integrations]
+      summary: Get integration
+      operationId: getIntegration
+      responses:
+        '200':
+          description: Integration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+  /actions:
+    get:
+      tags: [Actions]
+      summary: List actions
+      operationId: listActions
+      responses:
+        '200':
+          description: Action list
+    post:
+      tags: [Actions]
+      summary: Create action
+      operationId: createAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Action'
+      responses:
+        '201':
+          description: Action created
+  /actions/{selector}:
+    parameters:
+      - $ref: '#/components/parameters/Selector'
+    get:
+      tags: [Actions]
+      summary: Get action
+      operationId: getAction
+      responses:
+        '200':
+          description: Action
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Action'
+    put:
+      tags: [Actions]
+      summary: Replace action
+      operationId: replaceAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Action'
+      responses:
+        '200':
+          description: Updated
+    patch:
+      tags: [Actions]
+      summary: Update action
+      operationId: updateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Action'
+      responses:
+        '200':
+          description: Updated
+  /flows:
+    get:
+      tags: [Flows]
+      summary: List flows
+      operationId: listFlows
+      responses:
+        '200':
+          description: Flow list
+    post:
+      tags: [Flows]
+      summary: Create flow
+      operationId: createFlow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flow'
+      responses:
+        '201':
+          description: Flow created
+  /flows/{selector}:
+    parameters:
+      - $ref: '#/components/parameters/Selector'
+    get:
+      tags: [Flows]
+      summary: Get flow
+      operationId: getFlow
+      responses:
+        '200':
+          description: Flow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flow'
+  /flows/{selector}/run:
+    parameters:
+      - $ref: '#/components/parameters/Selector'
+    post:
+      tags: [Flow Runs]
+      summary: Run a flow
+      operationId: runFlow
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Input parameters for the flow.
+      responses:
+        '202':
+          description: Flow run accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowRun'
+  /flow-runs:
+    get:
+      tags: [Flow Runs]
+      summary: List flow runs
+      operationId: listFlowRuns
+      responses:
+        '200':
+          description: Flow run list
+  /flow-runs/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Flow Runs]
+      summary: Get flow run
+      operationId: getFlowRun
+      responses:
+        '200':
+          description: Flow run details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowRun'
+  /flow-runs/{id}/output:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Flow Runs]
+      summary: Get flow run output
+      operationId: getFlowRunOutput
+      responses:
+        '200':
+          description: Output payload
+  /flow-runs/{id}/stop:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [Flow Runs]
+      summary: Stop flow run
+      operationId: stopFlowRun
+      responses:
+        '200':
+          description: Stopped
+  /data-collections/{connectionId}/{collectionName}/records:
+    parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: collectionName
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [Data Collections]
+      summary: List records in a data collection
+      operationId: listDataCollectionRecords
+      responses:
+        '200':
+          description: Records
+    post:
+      tags: [Data Collections]
+      summary: Create a record in a data collection
+      operationId: createDataCollectionRecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Record created
+  /data-collections/{connectionId}/{collectionName}/records/{id}:
+    parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: collectionName
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Data Collections]
+      summary: Get a record
+      operationId: getDataCollectionRecord
+      responses:
+        '200':
+          description: Record
+    put:
+      tags: [Data Collections]
+      summary: Update a record
+      operationId: updateDataCollectionRecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Updated
+    delete:
+      tags: [Data Collections]
+      summary: Delete a record
+      operationId: deleteDataCollectionRecord
+      responses:
+        '204':
+          description: Deleted
+  /field-mappings:
+    get:
+      tags: [Field Mappings]
+      summary: List field mappings
+      operationId: listFieldMappings
+      responses:
+        '200':
+          description: Mappings list
+    post:
+      tags: [Field Mappings]
+      summary: Create field mapping
+      operationId: createFieldMapping
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FieldMapping'
+      responses:
+        '201':
+          description: Created
+  /field-mappings/{selector}:
+    parameters:
+      - $ref: '#/components/parameters/Selector'
+    get:
+      tags: [Field Mappings]
+      summary: Get field mapping
+      operationId: getFieldMapping
+      responses:
+        '200':
+          description: Mapping
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMapping'
+  /app-event-subscriptions:
+    get:
+      tags: [App Event Subscriptions]
+      summary: List app event subscriptions
+      operationId: listAppEventSubscriptions
+      responses:
+        '200':
+          description: List
+  /app-event-subscriptions/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [App Event Subscriptions]
+      summary: Get subscription
+      operationId: getAppEventSubscription
+      responses:
+        '200':
+          description: Subscription
+  /external-event-subscriptions/{id}/subscribe:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [External Event Subscriptions]
+      summary: Subscribe
+      operationId: subscribeExternalEvent
+      responses:
+        '200':
+          description: Subscribed
+  /external-event-subscriptions/{id}/unsubscribe:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [External Event Subscriptions]
+      summary: Unsubscribe
+      operationId: unsubscribeExternalEvent
+      responses:
+        '200':
+          description: Unsubscribed
+  /external-api-logs:
+    get:
+      tags: [Logs]
+      summary: List external API logs
+      operationId: listExternalApiLogs
+      responses:
+        '200':
+          description: Logs
+  /external-api-logs/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Logs]
+      summary: Get external API log
+      operationId: getExternalApiLog
+      responses:
+        '200':
+          description: Log entry
+  /sessions:
+    get:
+      tags: [Sessions]
+      summary: List agent sessions
+      operationId: listSessions
+      responses:
+        '200':
+          description: Session list
+    post:
+      tags: [Sessions]
+      summary: Create agent session
+      operationId: createSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Session created
+  /sessions/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Sessions]
+      summary: Get session
+      operationId: getSession
+      responses:
+        '200':
+          description: Session
+  /sessions/{id}/message:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [Sessions]
+      summary: Send message to session
+      operationId: sendSessionMessage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Message accepted
+  /sessions/{id}/stop:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    post:
+      tags: [Sessions]
+      summary: Stop session
+      operationId: stopSession
+      responses:
+        '200':
+          description: Stopped
+  /search/keyword:
+    post:
+      tags: [Search]
+      summary: Keyword search
+      operationId: keywordSearch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+      responses:
+        '200':
+          description: Search results
+  /search/semantic:
+    post:
+      tags: [Search]
+      summary: Semantic search
+      operationId: semanticSearch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+      responses:
+        '200':
+          description: Search results
+  /public/apps:
+    get:
+      tags: [Public]
+      summary: List public apps
+      operationId: listPublicApps
+      security: []
+      responses:
+        '200':
+          description: List of public apps
+  /public/connectors:
+    get:
+      tags: [Public]
+      summary: List public connectors
+      operationId: listPublicConnectors
+      security: []
+      responses:
+        '200':
+          description: List of public connectors
+  /public/packages:
+    get:
+      tags: [Public]
+      summary: List public packages
+      operationId: listPublicPackages
+      security: []
+      responses:
+        '200':
+          description: List of public packages
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Bearer token in the Authorization header. Test tokens are available
+        from workspace settings; admin-level tokens are required for
+        administrative operations.
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
+  schemas:
+    Connection:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        integrationId:
+          type: string
+        customerId:
+          type: string
+        state:
+          type: string
+        credentials:
+          type: object
+    ConnectionList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+        cursor:
+          type: string
+    Connector:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+        externalId:
+          type: string
+        name:
+          type: string
+    CustomerList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        cursor:
+          type: string
+    Integration:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+        connectorId:
+          type: string
+    Action:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+        integrationId:
+          type: string
+        inputSchema:
+          type: object
+        outputSchema:
+          type: object
+    Flow:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+        nodes:
+          type: array
+          items:
+            type: object
+    FlowRun:
+      type: object
+      properties:
+        id:
+          type: string
+        flowId:
+          type: string
+        state:
+          type: string
+          enum: [running, succeeded, failed, stopped]
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
+    FieldMapping:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+        integrationId:
+          type: string
+        fields:
+          type: array
+          items:
+            type: object
