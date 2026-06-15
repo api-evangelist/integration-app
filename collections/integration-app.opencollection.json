@@ -1,0 +1,1237 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Membrane (formerly Integration.app) Platform API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/connections"
+          },
+          "docs": "List connections"
+        },
+        {
+          "info": {
+            "name": "Create a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/connections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a connection"
+        },
+        {
+          "info": {
+            "name": "Get connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get connection"
+        },
+        {
+          "info": {
+            "name": "Replace connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getmembrane.com/connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace connection"
+        },
+        {
+          "info": {
+            "name": "Update connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.getmembrane.com/connections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update connection"
+        },
+        {
+          "info": {
+            "name": "Archive connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/connections/:id/archive",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Archive connection"
+        },
+        {
+          "info": {
+            "name": "Restore connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/connections/:id/restore",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Restore connection"
+        },
+        {
+          "info": {
+            "name": "Refresh credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/connections/:id/refresh-credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Refresh credentials"
+        },
+        {
+          "info": {
+            "name": "Test connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/connections/:id/test",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Test connection"
+        },
+        {
+          "info": {
+            "name": "Get connection logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/connections/:id/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get connection logs"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Connectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/connectors"
+          },
+          "docs": "List connectors"
+        },
+        {
+          "info": {
+            "name": "Create connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/connectors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create connector"
+        },
+        {
+          "info": {
+            "name": "Get connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/connectors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get connector"
+        },
+        {
+          "info": {
+            "name": "Replace connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getmembrane.com/connectors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace connector"
+        },
+        {
+          "info": {
+            "name": "Update connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.getmembrane.com/connectors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update connector"
+        },
+        {
+          "info": {
+            "name": "Delete connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getmembrane.com/connectors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete connector"
+        },
+        {
+          "info": {
+            "name": "Publish connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/connectors/:id/publish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Publish connector"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/customers"
+          },
+          "docs": "List customers"
+        },
+        {
+          "info": {
+            "name": "Create customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/customers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create customer"
+        },
+        {
+          "info": {
+            "name": "Get customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/customers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get customer"
+        },
+        {
+          "info": {
+            "name": "Replace customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getmembrane.com/customers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace customer"
+        },
+        {
+          "info": {
+            "name": "Update customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.getmembrane.com/customers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update customer"
+        },
+        {
+          "info": {
+            "name": "Delete customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getmembrane.com/customers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete customer"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/integrations"
+          },
+          "docs": "List integrations"
+        },
+        {
+          "info": {
+            "name": "Create integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/integrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create integration"
+        },
+        {
+          "info": {
+            "name": "Get integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/integrations/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ]
+          },
+          "docs": "Get integration"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Actions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/actions"
+          },
+          "docs": "List actions"
+        },
+        {
+          "info": {
+            "name": "Create action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/actions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create action"
+        },
+        {
+          "info": {
+            "name": "Get action",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/actions/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ]
+          },
+          "docs": "Get action"
+        },
+        {
+          "info": {
+            "name": "Replace action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getmembrane.com/actions/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace action"
+        },
+        {
+          "info": {
+            "name": "Update action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.getmembrane.com/actions/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update action"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Flows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List flows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/flows"
+          },
+          "docs": "List flows"
+        },
+        {
+          "info": {
+            "name": "Create flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/flows",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create flow"
+        },
+        {
+          "info": {
+            "name": "Get flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/flows/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ]
+          },
+          "docs": "Get flow"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Flow Runs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run a flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/flows/:selector/run",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Run a flow"
+        },
+        {
+          "info": {
+            "name": "List flow runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/flow-runs"
+          },
+          "docs": "List flow runs"
+        },
+        {
+          "info": {
+            "name": "Get flow run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/flow-runs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get flow run"
+        },
+        {
+          "info": {
+            "name": "Get flow run output",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/flow-runs/:id/output",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get flow run output"
+        },
+        {
+          "info": {
+            "name": "Stop flow run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/flow-runs/:id/stop",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stop flow run"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Data Collections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List records in a data collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/data-collections/:connectionId/:collectionName/records",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "collectionName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List records in a data collection"
+        },
+        {
+          "info": {
+            "name": "Create a record in a data collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/data-collections/:connectionId/:collectionName/records",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "collectionName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a record in a data collection"
+        },
+        {
+          "info": {
+            "name": "Get a record",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/data-collections/:connectionId/:collectionName/records/:id",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "collectionName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a record"
+        },
+        {
+          "info": {
+            "name": "Update a record",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getmembrane.com/data-collections/:connectionId/:collectionName/records/:id",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "collectionName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a record"
+        },
+        {
+          "info": {
+            "name": "Delete a record",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.getmembrane.com/data-collections/:connectionId/:collectionName/records/:id",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "collectionName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a record"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Field Mappings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List field mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/field-mappings"
+          },
+          "docs": "List field mappings"
+        },
+        {
+          "info": {
+            "name": "Create field mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/field-mappings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create field mapping"
+        },
+        {
+          "info": {
+            "name": "Get field mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/field-mappings/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ]
+          },
+          "docs": "Get field mapping"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "App Event Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List app event subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/app-event-subscriptions"
+          },
+          "docs": "List app event subscriptions"
+        },
+        {
+          "info": {
+            "name": "Get subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/app-event-subscriptions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get subscription"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "External Event Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Subscribe",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/external-event-subscriptions/:id/subscribe",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Subscribe"
+        },
+        {
+          "info": {
+            "name": "Unsubscribe",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/external-event-subscriptions/:id/unsubscribe",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unsubscribe"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List external API logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/external-api-logs"
+          },
+          "docs": "List external API logs"
+        },
+        {
+          "info": {
+            "name": "Get external API log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/external-api-logs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get external API log"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List agent sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/sessions"
+          },
+          "docs": "List agent sessions"
+        },
+        {
+          "info": {
+            "name": "Create agent session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/sessions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create agent session"
+        },
+        {
+          "info": {
+            "name": "Get session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/sessions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get session"
+        },
+        {
+          "info": {
+            "name": "Send message to session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/sessions/:id/message",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send message to session"
+        },
+        {
+          "info": {
+            "name": "Stop session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/sessions/:id/stop",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stop session"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Keyword search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/search/keyword",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Keyword search"
+        },
+        {
+          "info": {
+            "name": "Semantic search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/search/semantic",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Semantic search"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Public",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List public apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/public/apps"
+          },
+          "docs": "List public apps"
+        },
+        {
+          "info": {
+            "name": "List public connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/public/connectors"
+          },
+          "docs": "List public connectors"
+        },
+        {
+          "info": {
+            "name": "List public packages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/public/packages"
+          },
+          "docs": "List public packages"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
