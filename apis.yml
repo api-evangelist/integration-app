@@ -57,7 +57,7 @@ apis:
         url: https://getmembrane.com/articles
       - type: ChangeLog
         url: https://changelog.getmembrane.com
-      - type: SignUp
+      - type: Signup
         url: https://console.getmembrane.com
       - type: Login
         url: https://console.getmembrane.com
@@ -82,7 +82,7 @@ common:
     url: https://getmembrane.com/articles
   - type: ChangeLog
     url: https://changelog.getmembrane.com
-  - type: SignUp
+  - type: Signup
     url: https://console.getmembrane.com
   - type: Login
     url: https://console.getmembrane.com
