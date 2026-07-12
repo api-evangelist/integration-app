@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/integration-app-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: |-
+    Bearer token in the Authorization header. Test tokens are available
+    from workspace settings; admin-level tokens are required for
+    administrative operations.
+  sources:
+  - openapi/integration-app-openapi.yml

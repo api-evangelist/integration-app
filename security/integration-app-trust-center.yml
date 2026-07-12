@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://trust.getmembrane.com/
+url: https://trust.getmembrane.com/
+certifications:
+- SOC 2
+- GDPR
+evidence:
+- source: https://trust.getmembrane.com/
+  keywords:
+  - soc 2
+  - soc2
+  - trust center
+  - gdpr

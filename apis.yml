@@ -70,6 +70,12 @@ apis:
       - type: Rules
         url: rules/integration-app-rules.yml
 common:
+  - type: TrustCenter
+    url: security/integration-app-trust-center.yml
+  - type: DomainSecurity
+    url: security/integration-app-domain-security.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
   - type: Portal
     url: https://getmembrane.com
   - type: Documentation
