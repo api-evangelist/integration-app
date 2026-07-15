@@ -70,6 +70,8 @@ apis:
       - type: Rules
         url: rules/integration-app-rules.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/integration-app-agentic-access.yml
   - type: TrustCenter
     url: security/integration-app-trust-center.yml
   - type: DomainSecurity
