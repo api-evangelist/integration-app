@@ -1,0 +1,101 @@
+openapi: 3.1.0
+info:
+  title: Membrane (formerly Integration.app) Platform Actions Flows API
+  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
+
+    API for building embedded and agentic integrations across 100,000+ apps.
+
+    The REST API surfaces resources for connections, connectors, integrations,
+
+    flows, actions, data collections, customers, packages, app event
+
+    subscriptions, MCP-style agent sessions, and observability logs. Most
+
+    selectable resources accept either an id or a key as `{selector}`.
+
+    '
+  version: '1.0'
+  contact:
+    name: Membrane Documentation
+    url: https://docs.getmembrane.com
+servers:
+- url: https://api.getmembrane.com
+  description: Production API
+security:
+- bearerAuth: []
+tags:
+- name: Flows
+paths:
+  /flows:
+    get:
+      tags:
+      - Flows
+      summary: List flows
+      operationId: listFlows
+      responses:
+        '200':
+          description: Flow list
+    post:
+      tags:
+      - Flows
+      summary: Create flow
+      operationId: createFlow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flow'
+      responses:
+        '201':
+          description: Flow created
+  /flows/{selector}:
+    parameters:
+    - $ref: '#/components/parameters/Selector'
+    get:
+      tags:
+      - Flows
+      summary: Get flow
+      operationId: getFlow
+      responses:
+        '200':
+          description: Flow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flow'
+components:
+  schemas:
+    Flow:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+        nodes:
+          type: array
+          items:
+            type: object
+  parameters:
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Bearer token in the Authorization header. Test tokens are available
+
+        from workspace settings; admin-level tokens are required for
+
+        administrative operations.
+
+        '

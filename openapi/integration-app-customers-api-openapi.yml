@@ -1,0 +1,149 @@
+openapi: 3.1.0
+info:
+  title: Membrane (formerly Integration.app) Platform Actions Customers API
+  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
+
+    API for building embedded and agentic integrations across 100,000+ apps.
+
+    The REST API surfaces resources for connections, connectors, integrations,
+
+    flows, actions, data collections, customers, packages, app event
+
+    subscriptions, MCP-style agent sessions, and observability logs. Most
+
+    selectable resources accept either an id or a key as `{selector}`.
+
+    '
+  version: '1.0'
+  contact:
+    name: Membrane Documentation
+    url: https://docs.getmembrane.com
+servers:
+- url: https://api.getmembrane.com
+  description: Production API
+security:
+- bearerAuth: []
+tags:
+- name: Customers
+paths:
+  /customers:
+    get:
+      tags:
+      - Customers
+      summary: List customers
+      operationId: listCustomers
+      responses:
+        '200':
+          description: Customer list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerList'
+    post:
+      tags:
+      - Customers
+      summary: Create customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /customers/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Customers
+      summary: Get customer
+      operationId: getCustomer
+      responses:
+        '200':
+          description: Customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+    put:
+      tags:
+      - Customers
+      summary: Replace customer
+      operationId: replaceCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Updated
+    patch:
+      tags:
+      - Customers
+      summary: Update customer
+      operationId: updateCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      tags:
+      - Customers
+      summary: Delete customer
+      operationId: deleteCustomer
+      responses:
+        '204':
+          description: Deleted
+components:
+  schemas:
+    CustomerList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        cursor:
+          type: string
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+        externalId:
+          type: string
+        name:
+          type: string
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Bearer token in the Authorization header. Test tokens are available
+
+        from workspace settings; admin-level tokens are required for
+
+        administrative operations.
+
+        '

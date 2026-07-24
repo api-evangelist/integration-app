@@ -1,0 +1,144 @@
+openapi: 3.1.0
+info:
+  title: Membrane (formerly Integration.app) Platform Actions Flow Runs API
+  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
+
+    API for building embedded and agentic integrations across 100,000+ apps.
+
+    The REST API surfaces resources for connections, connectors, integrations,
+
+    flows, actions, data collections, customers, packages, app event
+
+    subscriptions, MCP-style agent sessions, and observability logs. Most
+
+    selectable resources accept either an id or a key as `{selector}`.
+
+    '
+  version: '1.0'
+  contact:
+    name: Membrane Documentation
+    url: https://docs.getmembrane.com
+servers:
+- url: https://api.getmembrane.com
+  description: Production API
+security:
+- bearerAuth: []
+tags:
+- name: Flow Runs
+paths:
+  /flows/{selector}/run:
+    parameters:
+    - $ref: '#/components/parameters/Selector'
+    post:
+      tags:
+      - Flow Runs
+      summary: Run a flow
+      operationId: runFlow
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Input parameters for the flow.
+      responses:
+        '202':
+          description: Flow run accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowRun'
+  /flow-runs:
+    get:
+      tags:
+      - Flow Runs
+      summary: List flow runs
+      operationId: listFlowRuns
+      responses:
+        '200':
+          description: Flow run list
+  /flow-runs/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Flow Runs
+      summary: Get flow run
+      operationId: getFlowRun
+      responses:
+        '200':
+          description: Flow run details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowRun'
+  /flow-runs/{id}/output:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Flow Runs
+      summary: Get flow run output
+      operationId: getFlowRunOutput
+      responses:
+        '200':
+          description: Output payload
+  /flow-runs/{id}/stop:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    post:
+      tags:
+      - Flow Runs
+      summary: Stop flow run
+      operationId: stopFlowRun
+      responses:
+        '200':
+          description: Stopped
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
+  schemas:
+    FlowRun:
+      type: object
+      properties:
+        id:
+          type: string
+        flowId:
+          type: string
+        state:
+          type: string
+          enum:
+          - running
+          - succeeded
+          - failed
+          - stopped
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Bearer token in the Authorization header. Test tokens are available
+
+        from workspace settings; admin-level tokens are required for
+
+        administrative operations.
+
+        '

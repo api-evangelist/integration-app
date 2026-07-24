@@ -1,0 +1,210 @@
+openapi: 3.1.0
+info:
+  title: Membrane (formerly Integration.app) Platform Actions Connections API
+  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
+
+    API for building embedded and agentic integrations across 100,000+ apps.
+
+    The REST API surfaces resources for connections, connectors, integrations,
+
+    flows, actions, data collections, customers, packages, app event
+
+    subscriptions, MCP-style agent sessions, and observability logs. Most
+
+    selectable resources accept either an id or a key as `{selector}`.
+
+    '
+  version: '1.0'
+  contact:
+    name: Membrane Documentation
+    url: https://docs.getmembrane.com
+servers:
+- url: https://api.getmembrane.com
+  description: Production API
+security:
+- bearerAuth: []
+tags:
+- name: Connections
+paths:
+  /connections:
+    get:
+      tags:
+      - Connections
+      summary: List connections
+      operationId: listConnections
+      responses:
+        '200':
+          description: List of connections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionList'
+    post:
+      tags:
+      - Connections
+      summary: Create a connection
+      operationId: createConnection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connection'
+      responses:
+        '201':
+          description: Connection created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+  /connections/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Connections
+      summary: Get connection
+      operationId: getConnection
+      responses:
+        '200':
+          description: Connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+    put:
+      tags:
+      - Connections
+      summary: Replace connection
+      operationId: replaceConnection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connection'
+      responses:
+        '200':
+          description: Updated connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+    patch:
+      tags:
+      - Connections
+      summary: Update connection
+      operationId: updateConnection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connection'
+      responses:
+        '200':
+          description: Updated connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+  /connections/{id}/archive:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    post:
+      tags:
+      - Connections
+      summary: Archive connection
+      operationId: archiveConnection
+      responses:
+        '200':
+          description: Archived
+  /connections/{id}/restore:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    post:
+      tags:
+      - Connections
+      summary: Restore connection
+      operationId: restoreConnection
+      responses:
+        '200':
+          description: Restored
+  /connections/{id}/refresh-credentials:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    post:
+      tags:
+      - Connections
+      summary: Refresh credentials
+      operationId: refreshConnectionCredentials
+      responses:
+        '200':
+          description: Credentials refreshed
+  /connections/{id}/test:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    post:
+      tags:
+      - Connections
+      summary: Test connection
+      operationId: testConnection
+      responses:
+        '200':
+          description: Test result
+  /connections/{id}/logs:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Connections
+      summary: Get connection logs
+      operationId: getConnectionLogs
+      responses:
+        '200':
+          description: Logs
+components:
+  schemas:
+    ConnectionList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+        cursor:
+          type: string
+    Connection:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        integrationId:
+          type: string
+        customerId:
+          type: string
+        state:
+          type: string
+        credentials:
+          type: object
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Bearer token in the Authorization header. Test tokens are available
+
+        from workspace settings; admin-level tokens are required for
+
+        administrative operations.
+
+        '

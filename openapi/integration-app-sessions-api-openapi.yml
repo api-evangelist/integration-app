@@ -1,0 +1,113 @@
+openapi: 3.1.0
+info:
+  title: Membrane (formerly Integration.app) Platform Actions Sessions API
+  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
+
+    API for building embedded and agentic integrations across 100,000+ apps.
+
+    The REST API surfaces resources for connections, connectors, integrations,
+
+    flows, actions, data collections, customers, packages, app event
+
+    subscriptions, MCP-style agent sessions, and observability logs. Most
+
+    selectable resources accept either an id or a key as `{selector}`.
+
+    '
+  version: '1.0'
+  contact:
+    name: Membrane Documentation
+    url: https://docs.getmembrane.com
+servers:
+- url: https://api.getmembrane.com
+  description: Production API
+security:
+- bearerAuth: []
+tags:
+- name: Sessions
+paths:
+  /sessions:
+    get:
+      tags:
+      - Sessions
+      summary: List agent sessions
+      operationId: listSessions
+      responses:
+        '200':
+          description: Session list
+    post:
+      tags:
+      - Sessions
+      summary: Create agent session
+      operationId: createSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Session created
+  /sessions/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Sessions
+      summary: Get session
+      operationId: getSession
+      responses:
+        '200':
+          description: Session
+  /sessions/{id}/message:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    post:
+      tags:
+      - Sessions
+      summary: Send message to session
+      operationId: sendSessionMessage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Message accepted
+  /sessions/{id}/stop:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    post:
+      tags:
+      - Sessions
+      summary: Stop session
+      operationId: stopSession
+      responses:
+        '200':
+          description: Stopped
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Bearer token in the Authorization header. Test tokens are available
+
+        from workspace settings; admin-level tokens are required for
+
+        administrative operations.
+
+        '

@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: Membrane (formerly Integration.app) Platform Actions App Event Subscriptions API
+  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
+
+    API for building embedded and agentic integrations across 100,000+ apps.
+
+    The REST API surfaces resources for connections, connectors, integrations,
+
+    flows, actions, data collections, customers, packages, app event
+
+    subscriptions, MCP-style agent sessions, and observability logs. Most
+
+    selectable resources accept either an id or a key as `{selector}`.
+
+    '
+  version: '1.0'
+  contact:
+    name: Membrane Documentation
+    url: https://docs.getmembrane.com
+servers:
+- url: https://api.getmembrane.com
+  description: Production API
+security:
+- bearerAuth: []
+tags:
+- name: App Event Subscriptions
+paths:
+  /app-event-subscriptions:
+    get:
+      tags:
+      - App Event Subscriptions
+      summary: List app event subscriptions
+      operationId: listAppEventSubscriptions
+      responses:
+        '200':
+          description: List
+  /app-event-subscriptions/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - App Event Subscriptions
+      summary: Get subscription
+      operationId: getAppEventSubscription
+      responses:
+        '200':
+          description: Subscription
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Bearer token in the Authorization header. Test tokens are available
+
+        from workspace settings; admin-level tokens are required for
+
+        administrative operations.
+
+        '

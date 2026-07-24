@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: Membrane (formerly Integration.app) Platform Actions Integrations API
+  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
+
+    API for building embedded and agentic integrations across 100,000+ apps.
+
+    The REST API surfaces resources for connections, connectors, integrations,
+
+    flows, actions, data collections, customers, packages, app event
+
+    subscriptions, MCP-style agent sessions, and observability logs. Most
+
+    selectable resources accept either an id or a key as `{selector}`.
+
+    '
+  version: '1.0'
+  contact:
+    name: Membrane Documentation
+    url: https://docs.getmembrane.com
+servers:
+- url: https://api.getmembrane.com
+  description: Production API
+security:
+- bearerAuth: []
+tags:
+- name: Integrations
+paths:
+  /integrations:
+    get:
+      tags:
+      - Integrations
+      summary: List integrations
+      operationId: listIntegrations
+      responses:
+        '200':
+          description: Integration list
+    post:
+      tags:
+      - Integrations
+      summary: Create integration
+      operationId: createIntegration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration'
+      responses:
+        '201':
+          description: Integration created
+  /integrations/{selector}:
+    parameters:
+    - $ref: '#/components/parameters/Selector'
+    get:
+      tags:
+      - Integrations
+      summary: Get integration
+      operationId: getIntegration
+      responses:
+        '200':
+          description: Integration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+components:
+  parameters:
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
+  schemas:
+    Integration:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        name:
+          type: string
+        connectorId:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Bearer token in the Authorization header. Test tokens are available
+
+        from workspace settings; admin-level tokens are required for
+
+        administrative operations.
+
+        '

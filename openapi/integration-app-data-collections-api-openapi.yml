@@ -1,0 +1,125 @@
+openapi: 3.1.0
+info:
+  title: Membrane (formerly Integration.app) Platform Actions Data Collections API
+  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
+
+    API for building embedded and agentic integrations across 100,000+ apps.
+
+    The REST API surfaces resources for connections, connectors, integrations,
+
+    flows, actions, data collections, customers, packages, app event
+
+    subscriptions, MCP-style agent sessions, and observability logs. Most
+
+    selectable resources accept either an id or a key as `{selector}`.
+
+    '
+  version: '1.0'
+  contact:
+    name: Membrane Documentation
+    url: https://docs.getmembrane.com
+servers:
+- url: https://api.getmembrane.com
+  description: Production API
+security:
+- bearerAuth: []
+tags:
+- name: Data Collections
+paths:
+  /data-collections/{connectionId}/{collectionName}/records:
+    parameters:
+    - name: connectionId
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: collectionName
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Data Collections
+      summary: List records in a data collection
+      operationId: listDataCollectionRecords
+      responses:
+        '200':
+          description: Records
+    post:
+      tags:
+      - Data Collections
+      summary: Create a record in a data collection
+      operationId: createDataCollectionRecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Record created
+  /data-collections/{connectionId}/{collectionName}/records/{id}:
+    parameters:
+    - name: connectionId
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: collectionName
+      in: path
+      required: true
+      schema:
+        type: string
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Data Collections
+      summary: Get a record
+      operationId: getDataCollectionRecord
+      responses:
+        '200':
+          description: Record
+    put:
+      tags:
+      - Data Collections
+      summary: Update a record
+      operationId: updateDataCollectionRecord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Updated
+    delete:
+      tags:
+      - Data Collections
+      summary: Delete a record
+      operationId: deleteDataCollectionRecord
+      responses:
+        '204':
+          description: Deleted
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Bearer token in the Authorization header. Test tokens are available
+
+        from workspace settings; admin-level tokens are required for
+
+        administrative operations.
+
+        '
