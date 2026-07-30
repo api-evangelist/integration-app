@@ -10,9 +10,22 @@ description: >-
   embedded UI, with managed authentication, observability, self-hosting, and
   enterprise compliance (SOC 2 Type II, GDPR).
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/integration-app.png
 tags:
   - Agentic Integrations
   - AI Agents
@@ -29,46 +42,199 @@ modified: '2026-04-28'
 url: https://raw.githubusercontent.com/api-evangelist/integration-app/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: integration-app:platform
-    name: Membrane (formerly Integration.app) Platform
-    description: >-
-      The Membrane platform (formerly Integration.app) provides a unified
-      surface for building embedded and agentic integrations across 100,000+
-      apps with managed OAuth, observability, MCP server support, and
-      embedded UI. The platform is consumed via REST API, CLI, SDKs, and
-      Model Context Protocol servers.
-    humanURL: https://getmembrane.com
-    baseURL: https://api.getmembrane.com
-    tags:
-      - Agentic Integrations
-      - Embedded iPaaS
-      - MCP
-      - Unified API
-    properties:
-      - type: Portal
-        url: https://getmembrane.com
-      - type: Documentation
-        url: https://docs.getmembrane.com
-      - type: APIReference
-        url: https://docs.getmembrane.com/reference/overview/authentication
-      - type: Pricing
-        url: https://getmembrane.com/pricing
-      - type: Blog
-        url: https://getmembrane.com/articles
-      - type: ChangeLog
-        url: https://changelog.getmembrane.com
-      - type: Signup
-        url: https://console.getmembrane.com
-      - type: Login
-        url: https://console.getmembrane.com
-      - type: StatusPage
-        url: https://status.getmembrane.com
-      - type: TrustCenter
-        url: https://trust.getmembrane.com
-      - type: GitHubOrg
-        url: https://github.com/membranehq
-      - type: Rules
-        url: rules/integration-app-rules.yml
+- aid: integration-app:platform
+  name: Membrane (formerly Integration.app) Platform
+  description: >-
+    The Membrane platform (formerly Integration.app) provides a unified surface for building embedded
+    and agentic integrations across 100,000+ apps with managed OAuth, observability, MCP server support,
+    and embedded UI. The platform is consumed via REST API, CLI, SDKs, and Model Context Protocol servers.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Agentic Integrations
+  - Embedded iPaaS
+  - MCP
+  - Unified API
+  properties:
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Pricing
+    url: https://getmembrane.com/pricing
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-actions-api
+  name: Integration.app (Membrane) Actions API
+  description: The Actions API from Integration.app (Membrane) — 2 operation(s) for actions.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Actions
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-actions-api-openapi.yml
+- aid: integration-app:integration-app-app-event-subscriptions-api
+  name: Integration.app (Membrane) App Event Subscriptions API
+  description: >-
+    The App Event Subscriptions API from Integration.app (Membrane) — 2 operation(s) for app event subscriptions.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - App Event Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-app-event-subscriptions-api-openapi.yml
+- aid: integration-app:integration-app-connections-api
+  name: Integration.app (Membrane) Connections API
+  description: The Connections API from Integration.app (Membrane) — 7 operation(s) for connections.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Connections
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-connections-api-openapi.yml
+- aid: integration-app:integration-app-connectors-api
+  name: Integration.app (Membrane) Connectors API
+  description: The Connectors API from Integration.app (Membrane) — 3 operation(s) for connectors.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Connectors
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-connectors-api-openapi.yml
+- aid: integration-app:integration-app-customers-api
+  name: Integration.app (Membrane) Customers API
+  description: The Customers API from Integration.app (Membrane) — 2 operation(s) for customers.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-customers-api-openapi.yml
+- aid: integration-app:integration-app-data-collections-api
+  name: Integration.app (Membrane) Data Collections API
+  description: >-
+    The Data Collections API from Integration.app (Membrane) — 2 operation(s) for data collections.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Data Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-data-collections-api-openapi.yml
+- aid: integration-app:integration-app-external-event-subscriptions-api
+  name: Integration.app (Membrane) External Event Subscriptions API
+  description: >-
+    The External Event Subscriptions API from Integration.app (Membrane) — 2 operation(s) for external
+    event subscriptions.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - External Event Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-external-event-subscriptions-api-openapi.yml
+- aid: integration-app:integration-app-field-mappings-api
+  name: Integration.app (Membrane) Field Mappings API
+  description: >-
+    The Field Mappings API from Integration.app (Membrane) — 2 operation(s) for field mappings.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Field Mappings
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-field-mappings-api-openapi.yml
+- aid: integration-app:integration-app-flow-runs-api
+  name: Integration.app (Membrane) Flow Runs API
+  description: The Flow Runs API from Integration.app (Membrane) — 5 operation(s) for flow runs.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Flow Runs
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-flow-runs-api-openapi.yml
+- aid: integration-app:integration-app-flows-api
+  name: Integration.app (Membrane) Flows API
+  description: The Flows API from Integration.app (Membrane) — 2 operation(s) for flows.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Flows
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-flows-api-openapi.yml
+- aid: integration-app:integration-app-integrations-api
+  name: Integration.app (Membrane) Integrations API
+  description: The Integrations API from Integration.app (Membrane) — 2 operation(s) for integrations.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-integrations-api-openapi.yml
+- aid: integration-app:integration-app-logs-api
+  name: Integration.app (Membrane) Logs API
+  description: The Logs API from Integration.app (Membrane) — 3 operation(s) for logs.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-logs-api-openapi.yml
+- aid: integration-app:integration-app-public-api
+  name: Integration.app (Membrane) Public API
+  description: The Public API from Integration.app (Membrane) — 3 operation(s) for public.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Public
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-public-api-openapi.yml
+- aid: integration-app:integration-app-search-api
+  name: Integration.app (Membrane) Search API
+  description: The Search API from Integration.app (Membrane) — 2 operation(s) for search.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-search-api-openapi.yml
+- aid: integration-app:integration-app-sessions-api
+  name: Integration.app (Membrane) Sessions API
+  description: The Sessions API from Integration.app (Membrane) — 4 operation(s) for sessions.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-sessions-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/integration-app-agentic-access.yml
