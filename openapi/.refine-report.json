@@ -1,0 +1,42 @@
+{
+  "provider": "integration-app",
+  "sources": [
+    "integration-app-actions-api-openapi.yml",
+    "integration-app-app-event-subscriptions-api-openapi.yml",
+    "integration-app-connections-api-openapi.yml",
+    "integration-app-connectors-api-openapi.yml",
+    "integration-app-customers-api-openapi.yml",
+    "integration-app-data-collections-api-openapi.yml",
+    "integration-app-external-event-subscriptions-api-openapi.yml",
+    "integration-app-field-mappings-api-openapi.yml",
+    "integration-app-flow-runs-api-openapi.yml",
+    "integration-app-flows-api-openapi.yml",
+    "integration-app-integrations-api-openapi.yml",
+    "integration-app-logs-api-openapi.yml",
+    "integration-app-public-api-openapi.yml",
+    "integration-app-search-api-openapi.yml",
+    "integration-app-sessions-api-openapi.yml"
+  ],
+  "outputs": [
+    "integration-app-actions-api-openapi.yml",
+    "integration-app-app-event-subscriptions-api-openapi.yml",
+    "integration-app-connections-api-openapi.yml",
+    "integration-app-connectors-api-openapi.yml",
+    "integration-app-customers-api-openapi.yml",
+    "integration-app-data-collections-api-openapi.yml",
+    "integration-app-external-event-subscriptions-api-openapi.yml",
+    "integration-app-field-mappings-api-openapi.yml",
+    "integration-app-flow-runs-api-openapi.yml",
+    "integration-app-flows-api-openapi.yml",
+    "integration-app-integrations-api-openapi.yml",
+    "integration-app-logs-api-openapi.yml",
+    "integration-app-public-api-openapi.yml",
+    "integration-app-search-api-openapi.yml",
+    "integration-app-sessions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
