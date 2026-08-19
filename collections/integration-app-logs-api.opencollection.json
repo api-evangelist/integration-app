@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Membrane (formerly Integration.app) Platform Actions Logs API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get connection logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/connections/:id/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get connection logs"
+        },
+        {
+          "info": {
+            "name": "List external API logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/external-api-logs"
+          },
+          "docs": "List external API logs"
+        },
+        {
+          "info": {
+            "name": "Get external API log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/external-api-logs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get external API log"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

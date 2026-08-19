@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Membrane (formerly Integration.app) Platform Actions Sessions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List agent sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/sessions"
+          },
+          "docs": "List agent sessions"
+        },
+        {
+          "info": {
+            "name": "Create agent session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/sessions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create agent session"
+        },
+        {
+          "info": {
+            "name": "Get session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/sessions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get session"
+        },
+        {
+          "info": {
+            "name": "Send message to session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/sessions/:id/message",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send message to session"
+        },
+        {
+          "info": {
+            "name": "Stop session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/sessions/:id/stop",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stop session"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

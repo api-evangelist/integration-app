@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Membrane (formerly Integration.app) Platform Actions Public API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Public",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List public apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/public/apps"
+          },
+          "docs": "List public apps"
+        },
+        {
+          "info": {
+            "name": "List public connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/public/connectors"
+          },
+          "docs": "List public connectors"
+        },
+        {
+          "info": {
+            "name": "List public packages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/public/packages"
+          },
+          "docs": "List public packages"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

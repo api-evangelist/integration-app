@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Membrane (formerly Integration.app) Platform Actions Integrations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/integrations"
+          },
+          "docs": "List integrations"
+        },
+        {
+          "info": {
+            "name": "Create integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/integrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create integration"
+        },
+        {
+          "info": {
+            "name": "Get integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/integrations/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ]
+          },
+          "docs": "Get integration"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

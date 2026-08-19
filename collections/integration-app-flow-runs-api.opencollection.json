@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Membrane (formerly Integration.app) Platform Actions Flow Runs API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Flow Runs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run a flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/flows/:selector/run",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Run a flow"
+        },
+        {
+          "info": {
+            "name": "List flow runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/flow-runs"
+          },
+          "docs": "List flow runs"
+        },
+        {
+          "info": {
+            "name": "Get flow run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/flow-runs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get flow run"
+        },
+        {
+          "info": {
+            "name": "Get flow run output",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/flow-runs/:id/output",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get flow run output"
+        },
+        {
+          "info": {
+            "name": "Stop flow run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/flow-runs/:id/stop",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stop flow run"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

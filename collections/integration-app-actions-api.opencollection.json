@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Membrane (formerly Integration.app) Platform Actions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Actions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/actions"
+          },
+          "docs": "List actions"
+        },
+        {
+          "info": {
+            "name": "Create action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/actions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create action"
+        },
+        {
+          "info": {
+            "name": "Get action",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/actions/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ]
+          },
+          "docs": "Get action"
+        },
+        {
+          "info": {
+            "name": "Replace action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.getmembrane.com/actions/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace action"
+        },
+        {
+          "info": {
+            "name": "Update action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.getmembrane.com/actions/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update action"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

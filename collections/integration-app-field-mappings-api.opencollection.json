@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Membrane (formerly Integration.app) Platform Actions Field Mappings API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Field Mappings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List field mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/field-mappings"
+          },
+          "docs": "List field mappings"
+        },
+        {
+          "info": {
+            "name": "Create field mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.getmembrane.com/field-mappings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create field mapping"
+        },
+        {
+          "info": {
+            "name": "Get field mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.getmembrane.com/field-mappings/:selector",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "path",
+                "description": "Resource id or unique key."
+              }
+            ]
+          },
+          "docs": "Get field mapping"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
