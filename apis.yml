@@ -40,7 +40,7 @@ tags:
 created: '2026-03-27'
 modified: '2026-04-28'
 url: https://raw.githubusercontent.com/api-evangelist/integration-app/refs/heads/main/apis.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: integration-app:platform
   name: Membrane (formerly Integration.app) Platform
