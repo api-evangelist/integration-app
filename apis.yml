@@ -34,6 +34,16 @@ tags:
   - Embedded iPaaS
   - Integration Marketplace
   - MCP
+  - Self-Hosting
+  - Unified-API
+tags_raw:
+  - Agentic Integrations
+  - AI Agents
+  - Connectors
+  - Embedded Integrations
+  - Embedded iPaaS
+  - Integration Marketplace
+  - MCP
   - Model Context Protocol
   - Self-Hosting
   - Unified API
@@ -51,6 +61,11 @@ apis:
   humanURL: https://getmembrane.com
   baseURL: https://api.getmembrane.com
   tags:
+  - Agentic Integrations
+  - Embedded iPaaS
+  - MCP
+  - Unified-API
+  tags_raw:
   - Agentic Integrations
   - Embedded iPaaS
   - MCP
@@ -191,6 +206,8 @@ apis:
   humanURL: https://getmembrane.com
   baseURL: https://api.getmembrane.com
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
