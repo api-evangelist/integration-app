@@ -266,6 +266,8 @@ apis:
   - type: OpenAPI
     url: openapi/integration-app-sessions-api-openapi.yml
 common:
+  - type: Website
+    url: https://getmembrane.com/
   - type: AgenticAccess
     url: agentic-access/integration-app-agentic-access.yml
   - type: TrustCenter
