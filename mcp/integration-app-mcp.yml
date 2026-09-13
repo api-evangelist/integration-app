@@ -1,21 +1,80 @@
-generated: '2026-09-11'
+generated: '2026-09-13'
 method: probed
-source: https://api.getmembrane.com/mcp/integrate-anything
+source: >-
+  https://docs.getmembrane.com/docs/ways-to-use-membrane/mcp.md (endpoint published by the provider),
+  then probed live 2026-09-13
 status: gated
 server:
-  name: integration-app
+  name: membrane-integrate-anything
   transport: http
   url: https://api.getmembrane.com/mcp/integrate-anything
 deployment:
-  mode: remote
+  mode: both
   endpoint: https://api.getmembrane.com/mcp/integrate-anything
+  install: git clone https://github.com/membranehq/mcp-server.git && npm install && npm run build
+  package: https://github.com/membranehq/mcp-server
+  auth: oauth
   verified: probed
-  probe: gated
-  checked: '2026-09-11'
-  source: docs-check 2026-09-12 (endpoint found in the provider's own documentation, then probed)
-  probe_why: RFC 9728 challenge on the MCP path only
-tools_note: No tool list captured. This manifest records a PROBED, reachable endpoint only; anonymous
-  tools/list was auth-gated or the server requires an initialize handshake this reachability probe does
-  not perform. Run signals/audit_mcp_authorship.py --probe to enumerate tools and settle platform-vs-provider
-  authorship. Do NOT derive a tool list from the OpenAPI and store it here -- that is a candidate manifest,
-  and it belongs under an X-MCPServerCandidate pointer.
+  checked: '2026-09-13'
+  note: >-
+    mode is `both` because the provider ships two genuinely different things. The hosted endpoint at
+    api.getmembrane.com/mcp/integrate-anything is callable by an agent right now - it answers an
+    anonymous POST with a 401 and advertises its own OAuth metadata, which is a reachable agent
+    surface. Separately, github.com/membranehq/mcp-server is an open-source server a customer runs
+    themselves. It declares the npm name "integration-app-mcp-server" v1.3.0 in package.json but is
+    NOT published to npm (registry 404 on 2026-09-13), so there is no `npx -y` line to record; the
+    only published install path is a git clone or the repo's Dockerfile. Recording an npx command
+    here would be an invention.
+probes:
+- url: https://api.getmembrane.com/mcp/integrate-anything
+  method: POST
+  body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  accept: application/json, text/event-stream
+  http_status: 401
+  body_snippet: >-
+    {"message":"This request requires authentication, but access token was not provided",
+    "type":"bad_request","key":"not_authenticated"}
+  verdict: gated
+- url: https://api.getmembrane.com/mcp
+  method: POST
+  http_status: 404
+  verdict: not a server path; only the named /mcp/<skill> paths exist on the hosted service
+- url: https://api.getmembrane.com/.well-known/oauth-protected-resource/mcp/integrate-anything
+  method: GET
+  http_status: 200
+  verdict: RFC 9728 protected resource metadata served anonymously
+authorization:
+  model: oauth2
+  spec: RFC 9728 protected resource metadata + RFC 8414 authorization server metadata
+  resource: https://api.getmembrane.com/mcp/integrate-anything
+  authorization_servers:
+  - https://api.getmembrane.com
+  token_type: tenant
+  bearer_methods_supported:
+  - header
+  dynamic_client_registration: https://api.getmembrane.com/oauth/register
+  pkce: S256
+  alternatives_documented:
+  - Bearer token in the Authorization header
+  - token appended to the URL as a query parameter
+  documents:
+  - well-known/integration-app-oauth-protected-resource-mcp-integrate-anything.json
+  - well-known/integration-app-oauth-authorization-server.json
+tools_note: >-
+  Anonymous tools/list is auth-gated (401), so no live inputSchema set was captured. The tool NAMES
+  and their backing REST calls are nevertheless first-party and verifiable: the provider publishes
+  tools/integrate-anything.ts in github.com/membranehq/agent-skills, which defines the same
+  integrate-anything tool surface this endpoint is named for and shows the exact REST path each tool
+  calls. Those 11 tools are recorded in mcp/integration-app-tool-crosswalk.yml, bound to verified
+  operationIds in the published OpenAPI. They are NOT recorded here as a derived tool list.
+  Membrane's hosted server is additionally dynamic: in static mode it returns every action available
+  across a tenant's connected integrations, so the live tool set is tenant-specific and cannot be
+  enumerated anonymously even with credentials to a different workspace.
+modes:
+  static: returns all available tools (actions) for every connected integration - the default
+  dynamic: '?mode=dynamic returns a single `enable-tools` tool the agent calls to enable what it needs'
+  source: https://github.com/membranehq/mcp-server#readme
+transports:
+  streamable_http: /mcp
+  sse: /sse
+  sse_status: deprecated by the provider, per its own README, following the MCP spec deprecation

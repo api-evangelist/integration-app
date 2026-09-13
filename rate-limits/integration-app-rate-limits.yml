@@ -1,97 +1,127 @@
-specification: API Commons Rate Limits
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
-provider: Integration.app (Membrane)
-providerId: integration-app
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Agentic Integrations
-  - AI Agents
-  - Connectors
-  - Embedded Integrations
-  - Embedded iPaaS
-  - Integration Marketplace
-  - MCP
-  - Model Context Protocol
-  - Self-Hosting
-  - Unified API
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Integration.app (Membrane) API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+generated: '2026-09-13'
+method: searched
+source: https://docs.getmembrane.com/docs/managing-membrane/limits
+docs: https://docs.getmembrane.com/docs/managing-membrane/limits
+note: >-
+  Membrane publishes a Limits page, but what it publishes are RESOURCE limits - request size,
+  duration, concurrency, queue depth - not a requests-per-window quota. There is no published
+  "N requests per minute" figure for the REST API. All limits are stated to apply on a rolling
+  window basis rather than resetting at a fixed interval, and a self-hosted deployment can change
+  any of them through environment variables. The 2026-08-11 changelog entry records unspecified
+  "rate limit increases".
+window_model: rolling
+self_hostable: true
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Membrane (formerly Integration.app) Platform
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Membrane (formerly Integration.app) Platform
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Membrane (formerly Integration.app) Platform
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Membrane (formerly Integration.app) Platform
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Membrane (formerly Integration.app) Platform
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- scope: per-request
+  surface: REST API
+  name: Maximum request size
+  limit: 10
+  unit: MB
+  remediation: 'Use the Files surface for larger payloads: /docs/how-membrane-works/binary-data-and-files'
+- scope: per-request
+  surface: REST API
+  name: Maximum response size
+  limit: 30
+  unit: MB
+- scope: per-request
+  surface: REST API
+  name: Maximum request duration
+  limit: 60
+  unit: seconds
+  remediation: Use Flows for longer-running work.
+- scope: per-flow-run
+  surface: Flow Runs
+  name: Maximum flow run duration
+  limit: 50
+  unit: minutes
+- scope: per-flow-run
+  surface: Flow Runs
+  name: Maximum memory size
+  limit: 2
+  unit: GB
+- scope: per-flow-run
+  surface: Flow Runs
+  name: Maximum flow node output
+  limit: 20
+  unit: MB
+- scope: per-connection
+  surface: Flow Runs
+  name: Maximum parallel flow runs per connection
+  limit: 1
+  unit: concurrent runs
+  note: >-
+    The single most consequential limit for an agent. Work against one connection is serialised by
+    default, so a burst queues rather than parallelising.
+- scope: per-connection
+  surface: Flow Runs
+  name: Maximum flow run queue size per connection
+  limit: 10000
+  unit: queued runs
+  exhaustion: New flow runs are rejected with a rate limit error.
+- scope: per-connection
+  surface: External Event Pulls
+  name: Maximum parallel incremental pulls per connection
+  limit: 1
+  unit: concurrent pulls
+- scope: per-connection
+  surface: External Event Pulls
+  name: Maximum parallel full-sync pulls per connection
+  limit: 1
+  unit: concurrent pulls
+- scope: per-workspace
+  surface: External Event Pulls
+  name: Maximum parallel pulls per workspace
+  limit: 10
+  unit: concurrent pulls
+- scope: per-connection
+  surface: External Event Pulls
+  name: Minimal interval for incremental pull
+  limit: 60
+  unit: seconds
+- scope: per-connection
+  surface: External Event Pulls
+  name: Minimal interval for full-sync pull
+  limit: 60
+  unit: minutes
+  note: >-
+    The 2026-08-11 changelog says the minimum full-sync interval was raised to 10 minutes, which
+    contradicts this page. Both are the provider's own statements; recorded as found.
+- scope: per-action
+  surface: Actions
+  name: Maximum memory when running custom code
+  limit: 512
+  unit: MB
+- scope: per-action
+  surface: Actions
+  name: Maximum duration in synchronous mode
+  limit: 50
+  unit: seconds
+- scope: per-action
+  surface: Actions
+  name: Maximum duration in asynchronous mode (flow)
+  limit: 50
+  unit: minutes
+limit_count: 16
+response_signaling:
+  headers_published: false
+  headers:
+  - name: X-RateLimit-*
+    present: false
+  - name: RateLimit-*
+    present: false
+  - name: Retry-After
+    present: false
+  exhaustion_status: 429
+  exhaustion_body:
+    type: bad_request
+    key: rate_limit_exceeded
+  external_app_exhaustion:
+    type: connection
+    key: rate_limit_exceeded
+    note: >-
+      A distinct error for when the EXTERNAL app rate-limits Membrane, which is the one an
+      integration will hit most often.
+  gap: >-
+    No runtime rate-limit signal is documented on any response. An agent learns it has exhausted a
+    limit only by being refused with a 429, and has no published header telling it how long to wait.
+  see: conventions/integration-app-conventions.yml

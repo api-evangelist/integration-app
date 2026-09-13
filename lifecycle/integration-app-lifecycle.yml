@@ -1,0 +1,83 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://docs.getmembrane.com/docs/ways-to-use-membrane/rest-api, https://changelog.getmembrane.com,
+  https://status.getmembrane.com, derived from openapi/integration-app-membrane-api-openapi.json
+versioning:
+  scheme: X.Y contract version, pinned per request
+  header: API-Version
+  example: 'API-Version: 2.1'
+  semantics: >-
+    "The major version changes when there are breaking changes, and the minor version changes with
+    any updates." Omitting the header uses the current version.
+  in_url: false
+  note: >-
+    Versioning is a request header, not a URL path segment - https://api.getmembrane.com has no /v1.
+    Contract versions 1.10, 1.11 and 1.12 are referenced in the changelog.
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/rest-api
+deprecation:
+  policy_published: true
+  policy_form: >-
+    Breaking changes are gated behind a major contract version bump and callers pin with the
+    API-Version header, which is a deprecation mechanism rather than a dated sunset policy. The
+    changelog announces breaking changes per release (e.g. the 2026-08-12 SDK note renaming the
+    external event subscription webhookUri field).
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No RFC 8594 Sunset or Deprecation response headers are documented, and no dated end-of-life
+    schedule is published. An agent cannot learn from a response that an operation is going away.
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/rest-api
+deprecated_in_spec:
+  count: 1
+  operations:
+  - operationId: runAction
+    path: POST /actions/{selector}/run
+    summary: Run an action
+    replacement: >-
+      POST /act (operationId `act`) is the current single entry point for running an action. Note
+      that the provider's own published agent tool definitions still call the deprecated path - see
+      mcp/integration-app-tool-crosswalk.yml.
+  deprecated_parameters:
+  - name: disconnected
+    on: GET /connections
+    note: 'Spec description reads "[DEPRECATED] Use `connected` instead."'
+  derived_from: openapi/integration-app-membrane-api-openapi.json
+status_page:
+  url: https://status.getmembrane.com
+  http_status: 200
+  verified: '2026-09-13'
+changelog:
+  url: https://changelog.getmembrane.com
+  http_status: 200
+  verified: '2026-09-13'
+  see: changelog/integration-app-changelog.yml
+sla:
+  published: false
+  note: >-
+    No public SLA or uptime commitment was found. The pricing page was removed (301 to the
+    homepage), and the enterprise page describes scale without naming a numeric availability target.
+  searched:
+  - https://getmembrane.com/enterprise
+  - https://trust.getmembrane.com/
+  - https://docs.getmembrane.com/docs/managing-membrane/limits
+element_lifecycle:
+  note: >-
+    Distinct from API lifecycle, and worth recording because it is the model an agent actually acts
+    on: every workspace element moves through create -> archive (DELETE) -> restore, stays queryable
+    while archived via includeArchived=true, and connectors additionally carry explicit versions
+    (GET /connectors/{key}/versions, publishConnectorVersion, deleteConnectorVersion). See the
+    reversibility block in conventions/integration-app-conventions.yml.
+rebrand:
+  from: Integration.app
+  to: Membrane
+  evidence: >-
+    npm scope moved from @integration-app to @membranehq, with the last @integration-app/sdk release
+    on 2025-07-22 and the first @membranehq/sdk release on 2025-07-23. The @integration-app/react npm
+    description now reads "Package has moved to @membranehq/react". The API host is
+    api.getmembrane.com; the docs auth page still links console.integration.app for test tokens,
+    which is the one place the old brand is still load-bearing.
+  note: >-
+    The legacy packages are not deleted, so code pinned to @integration-app/* keeps working against
+    the same platform but stops receiving updates.

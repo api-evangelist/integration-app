@@ -1,0 +1,56 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://docs.getmembrane.com/reference/overview/authentication,
+  https://docs.getmembrane.com/docs/how-membrane-works/authentication, derived from
+  openapi/integration-app-membrane-api-openapi.json
+model: in-workspace test flag
+separate_host: false
+separate_key_prefix: false
+note: >-
+  There is no sandbox host, no test-mode key prefix and no fixture set. Membrane's test surface is a
+  flag ON REAL OBJECTS inside a live workspace: connections and workspace elements carry an isTest
+  boolean, filterable with an isTest query parameter, so test and production objects sit side by
+  side in one workspace against the same api.getmembrane.com host. Nothing is simulated - a test
+  connection authenticates against the real external app.
+test_credentials:
+  test_token:
+    available: true
+    where: Console workspace settings, Testing page
+    url: https://console.integration.app/w/0/settings/testing
+    url_note: >-
+      The docs still link the PRE-REBRAND console host (console.integration.app) for the test token
+      even though the current console is console.getmembrane.com. Recorded verbatim from the
+      provider's reference page; a reader following it is relying on the old domain still resolving.
+    detail: >-
+      A ready-made bearer token for calling the API without signing a JWT yourself. Production
+      tokens are signed with the workspace key and secret.
+  admin_token:
+    available: true
+    detail: Some operations (editing users, for example) require an admin-level token.
+    docs: https://docs.getmembrane.com/docs/how-membrane-works/authentication#admin-token
+test_flags:
+- name: isTest
+  kind: boolean field + query parameter
+  applies_to: connections and workspace elements
+  source: openapi/integration-app-membrane-api-openapi.json
+validation_surfaces:
+- name: Test connection validity
+  kind: endpoint
+  docs: https://docs.getmembrane.com/api-reference/connections/test-connection-validity
+  detail: Checks that a connection's credentials still work.
+- name: connector `test` function
+  kind: connector function
+  docs: https://docs.getmembrane.com/reference/workspace-elements/connectors/connector-functions/test
+  detail: A connector author's own test hook, run against the external app.
+absent:
+  test_cards: false
+  magic_identifiers: false
+  time_simulation: false
+  fixtures: false
+  note: >-
+    Not applicable rather than missing - Membrane is not a payments or comms API. There is nothing
+    to simulate because every call is proxied to a third-party app the customer connected.
+dry_run:
+  supported: false
+  see: conventions/integration-app-conventions.yml

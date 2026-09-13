@@ -1,0 +1,147 @@
+generated: '2026-09-13'
+method: probed
+source: live GET of the named /.well-known/ paths on every host this record knows, 2026-09-13
+note: >-
+  Five hosts probed: the registrable domain and www, the API host from every OpenAPI servers[] block
+  and every apis[].baseURL, the docs host, and the console host. Two real documents were found, both
+  OAuth 2.0 metadata served by the API host, and they are what makes the hosted MCP server
+  discoverable without credentials. getmembrane.com and console.getmembrane.com answer HTTP 200 with
+  their single-page-app HTML shell for EVERY /.well-known/ path including paths that cannot exist;
+  those are recorded as misses with shell_200 noted, not as served documents. No security.txt is
+  published on any host, so no SecurityTxt pointer is emitted.
+hosts:
+- host: api.getmembrane.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: integration-app-oauth-authorization-server.json
+    content_type: application/json
+    note: >-
+      RFC 8414 authorization server metadata. issuer https://api.getmembrane.com, authorization_code
+      + refresh_token grants, PKCE S256 required, token_endpoint_auth_methods_supported ["none"]
+      (public clients), and a live RFC 7591 dynamic client registration endpoint at /oauth/register.
+      client_id_metadata_document_supported is true.
+  - path: /.well-known/oauth-protected-resource/mcp/integrate-anything
+    status: 200
+    file: integration-app-oauth-protected-resource-mcp-integrate-anything.json
+    content_type: application/json
+    note: >-
+      RFC 9728 protected resource metadata for the hosted MCP server. Names
+      https://api.getmembrane.com as its own authorization server and token_type "tenant". The bare
+      /.well-known/oauth-protected-resource path returns 404 with a message instructing the caller to
+      append the resource path, so this document is only reachable per-resource.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    note: 'JSON error body: "Resource path is required. Use /.well-known/oauth-protected-resource/<path>".'
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: docs.getmembrane.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: ../a2a/integration-app-agent-card.json
+    content_type: application/json
+    note: >-
+      A real A2A Agent Card. Saved verbatim under a2a/ and graded there; indexed here because this is
+      where the probe found it.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: getmembrane.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    shell_200: true
+    note: HTML single-page-app shell, not a document. Treated as a miss.
+  - path: /.well-known/openid-configuration
+    status: 200
+    shell_200: true
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    shell_200: true
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    shell_200: true
+  - path: /.well-known/api-catalog
+    status: 200
+    shell_200: true
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    shell_200: true
+  - path: /.well-known/agent-card.json
+    status: 200
+    shell_200: true
+  - path: /.well-known/agent.json
+    status: 200
+    shell_200: true
+- host: www.getmembrane.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: console.getmembrane.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    shell_200: true
+    note: HTML single-page-app shell, not a document. Treated as a miss.
+  - path: /.well-known/openid-configuration
+    status: 200
+    shell_200: true
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    shell_200: true
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    shell_200: true
+  - path: /.well-known/api-catalog
+    status: 200
+    shell_200: true
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    shell_200: true
+  - path: /.well-known/agent-card.json
+    status: 200
+    shell_200: true
+  - path: /.well-known/agent.json
+    status: 200
+    shell_200: true
+summary:
+  hosts_probed: 5
+  documents_served: 3
+  security_txt: false
+  api_catalog: false

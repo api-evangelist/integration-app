@@ -1,0 +1,80 @@
+generated: '2026-09-13'
+method: searched
+source: https://docs.getmembrane.com/docs/ways-to-use-membrane/cli
+name: membrane
+binary: membrane
+package: '@membranehq/cli'
+version: 1.18.3
+published: '2026-08-12'
+registry: npm
+install:
+- method: npm global
+  command: npm install -g @membranehq/cli
+- method: npx
+  command: npx @membranehq/cli <command>
+  note: >-
+    The provider's own integrate-anything Agent Skill authenticates with
+    `npx @membranehq/cli login --tenant`, so npx is a first-party invocation path, not an inference.
+auth:
+  command: membrane login
+  detail: >-
+    Opens a browser; in headless environments it prints an authorization URL and accepts a pasted
+    code. `--tenant` requests a tenant-scoped token so --workspaceKey and --tenantKey need not be
+    passed on every later command.
+  logout: membrane logout
+command_groups:
+- group: Setup
+  description: Authenticate, check status, and navigate the workspace.
+  commands:
+  - command: membrane login
+    description: Authenticate with Membrane.
+  - command: membrane logout
+    description: Clear stored credentials.
+  - command: membrane status
+    description: Show current workspace status.
+  - command: membrane open
+    description: Open a resource in the browser (Console).
+  - command: membrane search
+    description: Search Membrane resources.
+- group: Connect
+  description: Create and manage connections to external apps.
+  commands:
+  - command: membrane connect
+    description: Create a new connection to an external app.
+  - command: membrane connection
+    description: Manage existing connections (list, get, ensure, archive).
+  - command: membrane connection-request
+    description: Manage connection requests (OAuth flows).
+- group: Act
+  description: Run actions and make API requests through connections.
+  commands:
+  - command: membrane action
+    description: Run or manage actions (list, get, create, run).
+  - command: membrane request
+    description: Make an HTTP request through a connection.
+- group: Workspace management
+  description: Sync workspace configuration between Membrane and local files.
+  commands:
+  - command: membrane pull
+    description: Pull configuration from Membrane to local files.
+  - command: membrane push
+    description: Push local configuration to Membrane.
+  - command: membrane diff
+    description: Show differences between local and remote.
+key_flows:
+- name: agent self-integration
+  steps:
+  - npx @membranehq/cli login --tenant
+  - membrane connect <app>
+  - membrane action run <action> --connectionKey <key>
+  source: skills/integration-app-integrate-anything.md
+- name: configuration as code
+  steps:
+  - membrane pull
+  - edit local YAML
+  - membrane diff
+  - membrane push
+note: >-
+  The CLI is the substrate the provider's own Agent Skills are written against - the
+  integrate-anything skill routes every external-app call through `membrane`, rather than through
+  the REST API directly.

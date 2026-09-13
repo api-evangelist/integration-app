@@ -1,17 +1,143 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/integration-app-openapi.yml
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://docs.getmembrane.com/docs/how-membrane-works/authentication,
+  https://docs.getmembrane.com/reference/overview/authentication,
+  well-known/integration-app-oauth-authorization-server.json,
+  well-known/integration-app-oauth-protected-resource-mcp-integrate-anything.json, and
+  openapi/integration-app-membrane-api-openapi.json
+docs: https://docs.getmembrane.com/docs/how-membrane-works/authentication
+note: >-
+  Membrane runs TWO distinct authentication models and a reader who sees only the OpenAPI will miss
+  the second. The platform REST API takes a self-signed bearer JWT. The hosted MCP server takes
+  OAuth 2.1 against Membrane's own authorization server, advertised anonymously through RFC 9728
+  and RFC 8414 metadata. On top of both sits a THIRD thing that is Membrane's actual product:
+  managed credentials for the external apps a customer connects to, which the caller never handles.
 summary:
   types:
   - http
+  - oauth2
 schemes:
-- name: bearerAuth
+- name: bearer
   type: http
   scheme: bearer
   bearerFormat: JWT
-  description: |-
-    Bearer token in the Authorization header. Test tokens are available
-    from workspace settings; admin-level tokens are required for
-    administrative operations.
+  surface: platform REST API (https://api.getmembrane.com)
+  header: 'Authorization: Bearer <token>'
+  description: >-
+    A Membrane Token. Unusually, the CALLER mints it - there is no API key to copy from a dashboard.
+    Sign a JWT with your workspace key and secret carrying workspaceKey, tenantKey and name claims.
+  algorithms_documented:
+  - HS512
+  - HS256
+  claims:
+  - name: workspaceKey
+    required: true
+  - name: tenantKey
+    required: false
+    description: Identifier of the tenant (user, team or org). Omit for workspace-level operations.
+  - name: name
+    required: false
+    description: Human-readable tenant name.
+  - name: exp
+    required: true
+    description: Documented examples use 7200 seconds (2 hours).
+  credential_location: Console Settings > Access (https://console.getmembrane.com/w/0/settings/access)
+  languages_documented:
+  - JavaScript
+  - Python
+  - Go
+  - Ruby
+  - Java
   sources:
-  - openapi/integration-app-openapi.yml
+  - openapi/integration-app-membrane-api-openapi.json
+  - https://docs.getmembrane.com/docs/how-membrane-works/authentication
+- name: oauth2
+  type: oauth2
+  surface: hosted MCP server (https://api.getmembrane.com/mcp/integrate-anything)
+  flows:
+    authorizationCode:
+      authorizationUrl: https://api.getmembrane.com/oauth/authorize
+      tokenUrl: https://api.getmembrane.com/oauth/token
+      refreshUrl: https://api.getmembrane.com/oauth/token
+      scopes: {}
+      scopes_note: >-
+        The authorization server metadata declares NO scopes_supported, and no scope reference page
+        is published, so there is no scope surface to record. This is why no scopes/ artifact was
+        written - an empty one would misrepresent the model as scoped when it is tenant-scoped.
+  issuer: https://api.getmembrane.com
+  registration_endpoint: https://api.getmembrane.com/oauth/register
+  revocation_endpoint: https://api.getmembrane.com/oauth/revoke
+  grant_types:
+  - authorization_code
+  - refresh_token
+  response_types:
+  - code
+  token_endpoint_auth_methods:
+  - none
+  pkce: S256
+  pkce_required: true
+  dynamic_client_registration: true
+  client_id_metadata_document_supported: true
+  token_type: tenant
+  bearer_methods_supported:
+  - header
+  discovery:
+  - url: https://api.getmembrane.com/.well-known/oauth-authorization-server
+    rfc: '8414'
+    status: 200
+  - url: https://api.getmembrane.com/.well-known/oauth-protected-resource/mcp/integrate-anything
+    rfc: '9728'
+    status: 200
+  note: >-
+    Public-client OAuth with mandatory PKCE and open dynamic client registration is exactly the
+    profile an unconfigured MCP client needs, and it is served anonymously - an agent can discover
+    and enrol itself without a human pre-registering an application.
+  alternatives_documented:
+  - Bearer token in the Authorization header
+  - token appended to the URL as a query parameter
+    (published in the mcp-server README; a credential in a URL is logged by intermediaries)
+openid_connect:
+  present: false
+  evidence: /.well-known/openid-configuration returns 404 on api.getmembrane.com and docs.getmembrane.com.
+downstream_credentials:
+  model: managed
+  description: >-
+    The connector layer holds OAuth1, OAuth2, client-credentials, API-key and auth-proxy credentials
+    for the external apps a customer connects, refreshes them transparently, and injects them into
+    proxied requests. The caller passes a connectionKey or connectionId and never sees the
+    third-party secret.
+  storage: >-
+    "All tenant credentials are stored in encrypted form in the database. They are only decrypted
+    before making API requests. Decrypted versions are not stored anywhere outside the system
+    memory." - https://docs.getmembrane.com/docs/managing-membrane/security-and-privacy
+  revocation: >-
+    POST /connections/{id}/disconnect revokes and ERASES a connection's credentials; this is not
+    reversible and requires the end user to re-authenticate.
+  connector_auth_types:
+  - oauth2
+  - oauth1
+  - client-credentials
+  - auth-proxy
+  docs: https://docs.getmembrane.com/reference/workspace-elements/connectors/connector-types/oauth2
+privilege_levels:
+- level: tenant
+  description: Token carries tenantKey; scoped to one customer's connections and data.
+- level: workspace
+  description: Token omits tenantKey; workspace-wide operations.
+- level: admin
+  description: >-
+    Required for some operations such as editing users. Generated per the admin-token section of the
+    authentication doc.
+  docs: https://docs.getmembrane.com/docs/how-membrane-works/authentication#admin-token
+- level: org read-only
+  description: >-
+    Read-only org access tokens, added 2026-08-11 per the changelog; GenerateOrgAccessTokenRequest
+    appears in the 2026-08-12 SDK release.
+gaps:
+- finding: >-
+    The published OpenAPI declares a single `bearer` http scheme and nothing else. The OAuth server,
+    the dynamic client registration endpoint, the token expiry model and the admin/org privilege
+    levels are all documented only in prose or in well-known metadata, so a client generated from
+    the contract cannot authenticate to the MCP surface at all.
+  fixable_by: provider

@@ -1,12 +1,12 @@
-aid: integration-app:rules
-name: Integration.app / Membrane Usage Rules
+x-aid: integration-app:rules
+x-name: Integration.app / Membrane Usage Rules
 description: >-
   Operational rules and guardrails for adopting Integration.app (now branded
   Membrane) as the agentic integration infrastructure for embedded and
   AI-driven product workflows. These rules cover connector selection,
   authentication, MCP server scope, data handling, observability, and
   self-hosting decisions.
-modified: '2026-04-28'
+x-modified: '2026-04-28'
 rules:
   - id: brand-awareness
     category: Vendor

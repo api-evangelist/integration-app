@@ -1,0 +1,140 @@
+generated: '2026-09-13'
+method: searched
+source: https://docs.getmembrane.com/reference/overview/errors
+format: custom
+rfc9457: false
+note: >-
+  Membrane does not serve application/problem+json and does not use RFC 9457. It publishes its own
+  two-level error taxonomy - a coarse `type` and a specific `key` - in a single documented envelope.
+  This catalog is read from the provider's error reference, NOT derived from the OpenAPI: the
+  published spec declares only 200 and 204 responses across all 278 operations and documents no
+  error responses at all, so a derivation would have produced nothing. That gap is itself the
+  finding recorded in gaps[] below.
+envelope:
+  content_type: application/json
+  fields:
+  - name: type
+    type: string
+    description: The category of error.
+  - name: key
+    type: string
+    description: Specific error identifier within the type.
+  - name: message
+    type: string
+    description: Human-readable error description.
+  - name: data
+    type: object
+    description: Additional context-specific information.
+  - name: causedByError
+    type: object
+    description: Nested error object if this error was caused by another underlying error.
+  example: |-
+    {
+      "type": "bad_request",
+      "key": "not_found",
+      "message": "Connection with id 'conn_123' not found"
+    }
+status_map:
+- status: 400
+  key: null
+  meaning: Bad Request - invalid input or request. The default mapping.
+- status: 401
+  key: not_authenticated
+  meaning: Unauthorized - authentication required.
+- status: 403
+  key: access_denied
+  meaning: Forbidden - insufficient permissions.
+- status: 404
+  key: not_found
+  meaning: Not Found - resource does not exist.
+- status: 429
+  key: rate_limit_exceeded
+  meaning: Too Many Requests - rate limit exceeded.
+- status: 500
+  key: internal
+  meaning: Internal Server Error.
+types:
+- type: bad_request
+  title: Bad request
+  description: >-
+    Something is wrong with the input received by the API - validation errors, missing required
+    fields, invalid data formats.
+  keys:
+  - key: not_found
+    meaning: The requested resource does not exist.
+    remediation: Check the id or key in the path; most elements accept either, see the selector convention.
+  - key: not_authenticated
+    meaning: Authentication credentials are missing or invalid.
+    remediation: Sign a fresh Membrane Token; default expiry is 2 hours.
+  - key: access_denied
+    meaning: The caller lacks permission for this operation.
+    remediation: Some operations require an admin-level token rather than a tenant token.
+  - key: already_exists
+    meaning: A resource with the same identifier already exists.
+    remediation: >-
+      This is the error a naive retry of a create will hit, because the API publishes no idempotency
+      key. For connections, use POST /connections/ensure instead of POST /connections.
+  - key: rate_limit_exceeded
+    meaning: Too many requests in a given time period.
+    remediation: Back off and retry; no Retry-After header is published.
+- type: connection
+  title: Connection error
+  description: >-
+    An error related to a Connection's authentication or communication with an external system.
+    These describe the THIRD-PARTY app failing, not Membrane.
+  keys:
+  - key: connection_is_defunct
+    meaning: The connection is no longer valid.
+    remediation: Re-authenticate the end user; see disconnectConnection / request-connection flow.
+  - key: access_token_expired
+    meaning: An OAuth token needs refresh.
+    remediation: >-
+      Membrane refreshes transparently in normal operation; a surfaced error means refresh failed
+      and the end user must reconnect.
+  - key: rate_limit_exceeded
+    meaning: The external API rate-limited Membrane.
+    remediation: Back off; this is the external app's limit, not Membrane's.
+  data_fields:
+  - connectionId
+  - connectorKey
+- type: configuration
+  title: Configuration error
+  description: Incorrect or broken configuration in flows, actions, or other configurable elements.
+  data_fields:
+  - fieldMappingId
+  - missingField
+  example_message: "Invalid field mapping: source field 'customer.email' does not exist"
+- type: custom_code
+  title: Custom code error
+  description: Error in custom JavaScript code execution inside a connector, flow node or action.
+  data_fields:
+  - lineNumber
+  - columnNumber
+  - code
+- type: concurrency
+  title: Concurrency error
+  description: Errors related to concurrent operations and resource locking.
+  keys:
+  - key: lock_timeout
+    meaning: Failed to acquire a lock within the timeout period.
+    remediation: >-
+      Membrane serialises work per connection - only one parallel flow run per connection by
+      default - so a burst against a single connection is the usual cause.
+  data_fields:
+  - resourceId
+  - timeoutMs
+- type: internal
+  title: Internal error
+  description: >-
+    Unexpected internal errors. The docs state these are automatically reported to the provider's
+    monitoring systems.
+  data_fields:
+  - errorId
+  remediation: Quote data.errorId to support@getmembrane.com.
+gaps:
+- finding: >-
+    The published OpenAPI declares no 4xx or 5xx responses on any of its 278 operations - only 200
+    (272) and 204 (6). An agent generating a client from the contract alone would have no error
+    model at all, even though the provider documents a good one in prose.
+  evidence: openapi/integration-app-membrane-api-openapi.json
+  fixable_by: provider

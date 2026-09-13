@@ -1,0 +1,145 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Membrane Platform API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-09-13'
+  method: generated
+  extends: openapi/integration-app-membrane-api-openapi.json
+  source: >-
+    Enhancements derived from the provider's own documentation (errors, limits, REST API guide,
+    security and privacy) applied over the untouched harvested spec. The original file is never
+    mutated. Every value below is quoted from a provider page named in the action description.
+actions:
+- target: $.info
+  description: >-
+    The harvested spec's info block is machine-generated and near-empty - description is "API
+    documentation for Membrane Engine" and contact is {}. Add the contact and licence facts the
+    provider publishes elsewhere.
+  update:
+    contact:
+      name: Membrane Support
+      email: support@getmembrane.com
+      url: https://docs.getmembrane.com
+    x-documentation: https://docs.getmembrane.com
+    x-changelog: https://changelog.getmembrane.com
+    x-status-page: https://status.getmembrane.com
+    x-trust-center: https://trust.getmembrane.com
+    x-rebranded-from: Integration.app
+- target: $
+  description: >-
+    Declare the request-header versioning scheme the REST API guide documents. The spec itself
+    carries version "1.0" and no mention of API-Version, so a generated client has no way to pin.
+  update:
+    x-api-version-header:
+      name: API-Version
+      scheme: X.Y
+      example: '2.1'
+      semantics: major on breaking changes, minor on any update
+      source: https://docs.getmembrane.com/docs/ways-to-use-membrane/rest-api
+- target: $
+  description: >-
+    Declare the error envelope. The spec declares no 4xx/5xx response on any of its 278 operations,
+    so the documented error model is invisible to every code generator reading it.
+  update:
+    x-error-envelope:
+      content_type: application/json
+      rfc9457: false
+      fields:
+      - type
+      - key
+      - message
+      - data
+      - causedByError
+      status_map:
+        '400': bad_request
+        '401': not_authenticated
+        '403': access_denied
+        '404': not_found
+        '429': rate_limit_exceeded
+        '500': internal
+      source: https://docs.getmembrane.com/reference/overview/errors
+      catalog: errors/integration-app-problem-types.yml
+- target: $
+  description: Declare the published request/response envelope limits and the 429 behaviour.
+  update:
+    x-limits:
+      max_request_bytes: 10485760
+      max_response_bytes: 31457280
+      max_request_seconds: 60
+      rate_limit_headers_published: false
+      exhaustion_status: 429
+      source: https://docs.getmembrane.com/docs/managing-membrane/limits
+      catalog: rate-limits/integration-app-rate-limits.yml
+- target: $
+  description: >-
+    Declare the reversibility model. DELETE archives rather than erases for 13 entity types, each
+    with a restore twin, and nothing in the spec says so - an agent reading only the contract will
+    treat every DELETE as final.
+  update:
+    x-reversibility:
+      grade: documented
+      model: DELETE archives; POST .../restore un-archives; includeArchived=true lists archived items
+      window_stated: false
+      irreversible_operations:
+      - deleteConnector
+      - deleteConnectorVersion
+      - deleteConnectorFile
+      - deleteConnectorDirectory
+      - deleteApp
+      - deleteDataLink
+      - deleteDataLinkTableLink
+      - deleteConnectedProduct
+      - deleteExternalEventSubscription
+      - disconnectConnection
+      catalog: conventions/integration-app-conventions.yml
+- target: $
+  description: >-
+    Declare the absence of replay protection. This is a safety fact an agent needs before it retries
+    a write, and absence is not representable in OpenAPI.
+  update:
+    x-idempotency:
+      coverage: none
+      header: null
+      note: >-
+        No Idempotency-Key or equivalent is published. Retrying a POST creates or executes again.
+        POST /connections/ensure is find-or-create and is the only safe-retry write.
+- target: $
+  description: Declare the cursor pagination contract uniformly.
+  update:
+    x-pagination:
+      style: cursor
+      request:
+        limit: 1-1000
+        cursor: opaque, from the previous response
+      response:
+        items: array
+        cursor: string
+- target: $
+  description: >-
+    Declare the agent surfaces that front this API, so a reader of the contract can find the MCP
+    endpoint, the agent card and the published skills.
+  update:
+    x-agent-surfaces:
+      mcp: https://api.getmembrane.com/mcp/integrate-anything
+      mcp_auth: oauth (RFC 9728 protected resource metadata)
+      agent_card: https://docs.getmembrane.com/.well-known/agent-card.json
+      agent_skills: https://github.com/membranehq/agent-skills
+      llms_txt: https://docs.getmembrane.com/llms.txt
+      crosswalk: mcp/integration-app-tool-crosswalk.yml
+- target: $.paths['/actions/{selector}/run'].post
+  description: >-
+    The operation is already deprecated:true in the spec but names no successor. Point at the
+    current entry point, and record that the provider's own published agent tools still call this
+    path.
+  update:
+    x-superseded-by: act
+    x-successor-path: POST /act
+    x-note: >-
+      github.com/membranehq/agent-skills tools/integrate-anything.ts still calls this deprecated
+      path from its run-tool definition as of 2026-09-13.
+- target: $.paths['/connections'].get.parameters[?(@.name=='disconnected')]
+  description: The spec's own description marks this parameter deprecated in prose only.
+  update:
+    deprecated: true
+    x-superseded-by: connected

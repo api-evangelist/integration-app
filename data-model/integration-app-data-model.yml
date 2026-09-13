@@ -1,0 +1,205 @@
+generated: '2026-09-13'
+method: derived
+source: openapi/integration-app-membrane-api-openapi.json
+docs: https://docs.getmembrane.com/reference/workspace-elements
+note: >-
+  Derived from the published OpenAPI's 263 component schemas and its id/key reference fields, then
+  checked against the provider's workspace-elements reference for naming. Membrane's model has an
+  unusual shape worth stating plainly: almost every entity is a "workspace element" that can be
+  addressed by internal id OR by a caller-chosen key, is versioned in layers, can be archived and
+  restored, and exists in a UNIVERSAL form (defined once) and an INSTANCE form (specialised per
+  integration). Reading the graph without that in mind makes the API look duplicated.
+identifier_conventions:
+  dual_addressing: >-
+    Elements take a {selector}, {idOrKey} or {elementSelector} path parameter accepting either the
+    internal id or the key. 117 operations use one of these.
+  id_field: id - "Internal database ID of the element. Assigned by the API; unique per element."
+  key_field: key - caller-chosen, stable, used for configuration-as-code (membrane pull/push).
+  instance_key: >-
+    instanceKey (28 schemas) identifies the per-integration instance of a universal element.
+  layer: >-
+    A `layer` query parameter on 71 operations selects which configuration layer is being read or
+    written (universal vs integration vs connection).
+  id_prefixes_observed:
+  - con_ (connection, from webhook payload examples)
+  - int_ (integration)
+  - fr_ (flow run)
+  - cf_ (connection flow)
+  - if_ (integration flow)
+  - alrt_ (alert)
+  - err_ (internal error id)
+  id_prefix_note: >-
+    Read from the provider's documented webhook payload examples, not from the spec, which types
+    every id as a plain string.
+entities:
+- name: Workspace
+  description: The top-level container. Org workspaces group workspaces.
+  relationships:
+  - has_many: Integration
+  - has_many: Connector
+  - has_many: Customer
+  - has_many: Connection
+- name: Customer
+  aka: tenant
+  description: >-
+    The customer's own end user, team or org. The unit of multi-tenancy; a Membrane Token carries a
+    tenantKey identifying it.
+  relationships:
+  - has_many: Connection
+    via: tenantId
+  - referenced_by: userId
+- name: ExternalApp
+  description: The third-party application (Slack, HubSpot, Salesforce) being integrated with.
+  relationships:
+  - has_many: Connector
+    via: externalAppId
+  referenced_by_fields:
+  - externalAppId
+  - externalAppKey
+  reference_count: 56
+- name: Connector
+  description: >-
+    The pre-built adapter for an external app - its auth type, API client, data collections, events
+    and functions. Versioned and publishable.
+  relationships:
+  - belongs_to: ExternalApp
+    via: externalAppId
+  - has_many: ConnectorVersion
+  - has_many: DataCollection
+  - has_many: ExternalEventType
+- name: Integration
+  description: An external app enabled in a workspace; the layer customers' connections hang from.
+  relationships:
+  - belongs_to: Connector
+    via: connectorId
+  - has_many: Connection
+    via: integrationId
+  - has_many: Flow
+  - has_many: FieldMapping
+  - has_many: DataSource
+  referenced_by_fields:
+  - integrationId
+  - integrationKey
+  reference_count: 56
+- name: Connection
+  description: >-
+    An authenticated link between one customer and one integration. The object every runtime call
+    is scoped to, and the unit Membrane serialises work against.
+  relationships:
+  - belongs_to: Integration
+    via: integrationId
+  - belongs_to: Customer
+    via: tenantId
+  - has_many: FlowRun
+  - has_many: ExternalEventSubscription
+  referenced_by_fields:
+  - connectionId
+  - connectionKey
+  reference_count: 38
+  state: 'Carries disconnected and isTest booleans; BUILDING while being provisioned.'
+- name: ConnectionRequest
+  description: >-
+    The end-user OAuth handshake object - created, then polled until success or error. Real and
+    used by the provider's own agent tools, but NOT present in the published OpenAPI.
+  published_in_spec: false
+  relationships:
+  - produces: Connection
+- name: Action
+  aka: tool
+  description: >-
+    A callable operation on a connection. In agent vocabulary an action IS a tool. Universal
+    actions are defined once and instantiated per integration.
+  relationships:
+  - belongs_to: Integration
+  - has_many: ActionRunLog
+  - parent: 'self, via parentId / parentKey (universal -> instance)'
+- name: Flow
+  description: A multi-step workflow triggered by an event.
+  relationships:
+  - belongs_to: Integration
+  - has_many: FlowRun
+    via: flowId
+  - references: Action
+    via: flow nodes
+- name: FlowRun
+  description: One execution of a flow, with state, timings and errors.
+  relationships:
+  - belongs_to: Flow
+    via: integrationFlowId / connectionFlowId
+  - belongs_to: Connection
+- name: DataCollection
+  description: A named record type inside an external app (contacts, deals, messages).
+  relationships:
+  - belongs_to: Connector
+  - has_many: DataCollectionEvent
+  - referenced_by: DataSource
+    via: collectionKey
+- name: DataSource
+  description: A configured selection of a data collection to read from or sync.
+  relationships:
+  - belongs_to: Integration
+  - references: DataCollection
+    via: collectionKey
+  - parent: 'self, via universalDataSourceId'
+- name: FieldMapping
+  description: The transformation between an external app's fields and the customer's own schema.
+  relationships:
+  - belongs_to: Integration
+  - references: AppDataSchema
+  - parent: 'self, via universalFieldMappingId'
+- name: AppDataSchema
+  description: The customer's own data shape that field mappings map onto.
+- name: AppEventType
+  aka: internal event type
+  description: An event the customer's own app emits into Membrane.
+  relationships:
+  - has_many: AppEventSubscription
+- name: ExternalEventType
+  description: An event in the external app that Membrane can subscribe to.
+  relationships:
+  - has_many: ExternalEventSubscription
+    via: externalEventTypeId
+- name: ExternalEventSubscription
+  description: >-
+    A live subscription binding one connection to one external event type, with a delivery URI.
+  relationships:
+  - belongs_to: Connection
+    via: connectionId
+  - belongs_to: ExternalEventType
+    via: externalEventTypeId
+- name: DataLinkTable
+  description: The mapping table between records in the customer's system and records in the external app.
+  relationships:
+  - has_many: DataLink
+    via: dataLinkTableId
+- name: Package
+  description: A bundle of workspace elements that can be exported, imported and published.
+  relationships:
+  - contains: 'Integration, Flow, Action, DataSource, FieldMapping'
+- name: AgentSession
+  description: >-
+    A stateful agent conversation (/agent/sessions) that can be messaged, interrupted and stopped.
+    The newest surface in the API and the one the MCP server fronts.
+  relationships:
+  - belongs_to: Customer
+- name: ConnectedProduct
+  description: The customer's own product as registered for marketplace/install flows.
+patterns:
+- name: universal vs instance
+  description: >-
+    Actions, flows, data sources, field mappings and event types each exist as a universal
+    definition and per-integration instances, linked by parentId/parentKey and
+    universal*Id fields. 20 schemas carry parentKey and 11 carry parentId.
+- name: archive / restore
+  description: >-
+    13 entity types implement DELETE-as-archive with a POST .../restore twin, and remain queryable
+    via includeArchived=true. See the reversibility block in conventions/.
+- name: layered configuration
+  description: >-
+    A `layer` parameter on 71 operations selects the configuration layer being addressed, which is
+    how one element can be overridden per integration or per connection.
+counts:
+  schemas: 263
+  paths: 205
+  operations: 278
+  tags: 41

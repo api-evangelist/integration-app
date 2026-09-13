@@ -61,7 +61,7 @@ tags_raw:
   - Self-Hosting
   - Unified API
 created: '2026-03-27'
-modified: '2026-04-28'
+modified: '2026-09-13'
 url: https://raw.githubusercontent.com/api-evangelist/integration-app/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
@@ -88,10 +88,32 @@ apis:
     url: https://getmembrane.com
   - type: Documentation
     url: https://docs.getmembrane.com
+  - type: OpenAPI
+    url: openapi/integration-app-membrane-api-openapi.json
+  - type: MCPServer
+    url: mcp/integration-app-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Overlay
+    url: overlays/integration-app-membrane-api-overlay.yaml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
   - type: APIReference
     url: https://docs.getmembrane.com/reference/overview/authentication
-  - type: Pricing
-    url: https://getmembrane.com/pricing
   - type: Blog
     url: https://getmembrane.com/articles
   - type: ChangeLog
@@ -268,6 +290,58 @@ apis:
 common:
   - type: Website
     url: https://getmembrane.com/
+  - type: Packages
+    url: packages/integration-app-packages.yml
+  - type: SDKs
+    url: packages/integration-app-packages.yml
+  - type: CLI
+    url: cli/integration-app-cli.yml
+  - type: Components
+    url: components/integration-app-components.yml
+  - type: MCPServer
+    url: mcp/integration-app-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/integration-app-llms.txt
+  - type: WellKnown
+    url: well-known/integration-app-well-known.yml
+  - type: Overlay
+    url: overlays/integration-app-membrane-api-overlay.yaml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/integration-app-lifecycle.yml
+  - type: Deprecation
+    url: lifecycle/integration-app-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/integration-app-changelog.yml
+  - type: Conformance
+    url: conformance/integration-app-conformance.yml
+  - type: Compliance
+    url: conformance/integration-app-conformance.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Plans
+    url: plans/integration-app-plans-pricing.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: GettingStarted
+    url: https://docs.getmembrane.com/docs/getting-started/overview
+  - type: Quickstart
+    url: https://docs.getmembrane.com/docs/getting-started/quickstart-agent
+  - type: Support
+    url: https://docs.getmembrane.com/docs/support
   - type: AgenticAccess
     url: agentic-access/integration-app-agentic-access.yml
   - type: TrustCenter
@@ -282,8 +356,6 @@ common:
     url: https://docs.getmembrane.com
   - type: APIReference
     url: https://docs.getmembrane.com/reference/overview/authentication
-  - type: Pricing
-    url: https://getmembrane.com/pricing
   - type: Blog
     url: https://getmembrane.com/articles
   - type: ChangeLog
@@ -313,3 +385,9 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+
+x-enrichment:
+  date: '2026-09-13'
+  status: enriched
+  artifacts_added: 25
+  pass: local-v3

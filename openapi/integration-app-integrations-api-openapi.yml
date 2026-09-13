@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Membrane (formerly Integration.app) Platform Actions Integrations API
   description: 'The Membrane platform (rebranded from Integration.app) provides a unified
@@ -65,14 +65,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Integration'
 components:
-  parameters:
-    Selector:
-      name: selector
-      in: path
-      required: true
-      description: Resource id or unique key.
-      schema:
-        type: string
   schemas:
     Integration:
       type: object
@@ -85,6 +77,14 @@ components:
           type: string
         connectorId:
           type: string
+  parameters:
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

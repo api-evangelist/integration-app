@@ -1,0 +1,151 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://docs.getmembrane.com/docs/managing-membrane/monitoring-troubleshooting/webhook-notifications,
+  https://docs.getmembrane.com/docs/how-membrane-works/events
+asyncapi_published: false
+asyncapi_note: >-
+  No AsyncAPI document is published on any host. Probed /asyncapi.yaml and /asyncapi.json on
+  api.getmembrane.com and docs.getmembrane.com, and searched the membranehq GitHub org - nothing.
+  The event surface below is read from the provider's documentation, not fabricated into a spec.
+surfaces:
+- name: Webhook Notifications
+  direction: outbound (Membrane -> customer backend)
+  description: >-
+    Workspace-level notifications about what is happening INSIDE Membrane - connections coming and
+    going, flow runs succeeding or failing, alerts opening.
+  setup: >-
+    A single webhook URL configured in Console under Settings > Webhook Notifications
+    (https://console.getmembrane.com/w/0/settings/webhook-notifications). Not configurable via the
+    published API.
+  delivery: HTTP POST
+  envelope:
+    fields:
+    - eventType
+    - data
+    note: 'data is keyed by event category: data.connection, data.flowRun, data.alert.'
+  retry: >-
+    "If your endpoint returns a non-2xx status code, Membrane retries with exponential backoff." No
+    retry count, ceiling or dead-letter behaviour is published.
+  signing:
+    published: false
+    note: >-
+      No signature header, shared secret or timestamp-verification scheme is documented for webhook
+      notifications. A receiver cannot verify the sender from the request alone.
+  docs: https://docs.getmembrane.com/docs/managing-membrane/monitoring-troubleshooting/webhook-notifications
+- name: External Event Subscriptions
+  direction: outbound (Membrane -> customer backend), per subscription
+  description: >-
+    Events originating in the EXTERNAL app (a new HubSpot contact, a Slack message) that Membrane
+    subscribed to on the customer's behalf and forwards on.
+  setup: >-
+    Create an External Event Subscription with a connectionId and externalEventTypeId, then PATCH a
+    webhookUri onto it; Membrane POSTs each emitted event to that URI. 15 REST operations exist for
+    this surface (setup, subscribe, resubscribe, unsubscribe, pull, refresh, restore, delete,
+    download full-sync snapshot).
+  note: >-
+    The changelog entry for 2026-08-12 records a BREAKING SDK rename of the webhookUri field to the
+    outgoing delivery URL; check which name your SDK version uses.
+  docs: https://docs.getmembrane.com/reference/workspace-elements/external-events/external-event-subscriptions
+- name: Flow triggers
+  direction: internal
+  description: >-
+    Events consumed inside Membrane as flow triggers rather than delivered to the customer.
+  docs: https://docs.getmembrane.com/docs/how-membrane-works/events
+events:
+- name: connection.created
+  surface: Webhook Notifications
+  when: A new connection is established (OAuth completed, API key saved).
+  payload_keys:
+  - data.connection.id
+  - data.connection.integrationId
+  - data.connection.integrationKey
+  - data.connection.name
+  - data.connection.disconnected
+  - data.connection.customerId
+- name: connection.disconnected
+  surface: Webhook Notifications
+  when: A connection lost access (token expired, credentials revoked).
+- name: connection.reconnected
+  surface: Webhook Notifications
+  when: A previously disconnected connection is restored.
+- name: connection.deleted
+  surface: Webhook Notifications
+  when: A connection is archived.
+  note: >-
+    The event is named "deleted" but fires on ARCHIVE, which is reversible - see the reversibility
+    block in conventions/.
+- name: flowRun.queued
+  surface: Webhook Notifications
+  when: A flow run is queued for execution.
+- name: flowRun.started
+  surface: Webhook Notifications
+  when: A flow run begins executing.
+- name: flowRun.completed
+  surface: Webhook Notifications
+  when: A flow run finishes successfully.
+  payload_keys:
+  - data.flowRun.id
+  - data.flowRun.connectionFlowId
+  - data.flowRun.integrationFlowId
+  - data.flowRun.state
+  - data.flowRun.startTime
+  - data.flowRun.endTime
+  - data.flowRun.startNodeKey
+  - data.flowRun.launchedBy
+- name: flowRun.failed
+  surface: Webhook Notifications
+  when: A flow run fails with an error.
+  payload_keys:
+  - data.flowRun.errors
+- name: flowRun.stopped
+  surface: Webhook Notifications
+  when: A flow run is manually stopped.
+- name: alert.created
+  surface: Webhook Notifications
+  when: An alert is created or becomes ongoing.
+  payload_keys:
+  - data.alert.id
+  - data.alert.type
+  - data.alert.severity
+  - data.alert.description
+  - data.alert.status
+  - data.alert.workspaceId
+  - data.alert.workspaceUrl
+  - data.alert.createdAt
+- name: data-record-created
+  surface: External Event Subscriptions / flow triggers
+  when: A new record appears in the external app's data collection.
+- name: data-record-updated
+  surface: External Event Subscriptions / flow triggers
+  when: An existing record changes in the external app.
+- name: data-record-deleted
+  surface: External Event Subscriptions / flow triggers
+  when: A record is removed in the external app.
+delivery_mechanics:
+  detection:
+  - webhooks from the external app where it supports them
+  - polling where it does not
+  polling_defaults:
+    pull_based_seconds: 300
+    full_scan_seconds: 10800
+  polling_minimums:
+    incremental_pull_seconds: 60
+    full_sync_minutes: 60
+    note: >-
+      The limits page states a 60-minute minimum full-sync interval; the 2026-08-11 changelog entry
+      records the minimum full-sync interval being raised to 10 minutes. The two statements disagree
+      and both are the provider's own - recorded as found rather than reconciled.
+  concurrency:
+    parallel_incremental_pulls_per_connection: 1
+    parallel_full_sync_pulls_per_connection: 1
+    parallel_pulls_per_workspace: 10
+  source: https://docs.getmembrane.com/docs/managing-membrane/limits
+observability:
+  logs:
+  - External Webhooks - raw incoming payloads from external apps
+  - External Event Pulls - each polling cycle
+  - External Events - processed events with payload and status
+  - Flow Runs - execution logs per triggered flow
+  docs: https://docs.getmembrane.com/docs/managing-membrane/monitoring-troubleshooting/logs
+event_count: 13

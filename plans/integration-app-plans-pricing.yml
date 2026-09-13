@@ -3,155 +3,49 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Integration.app (Membrane)
 providerId: integration-app
+generated: '2026-09-13'
+method: searched
+source: https://getmembrane.com/pricing
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Agentic Integrations
-  - AI Agents
-  - Connectors
-  - Embedded Integrations
-  - Embedded iPaaS
-  - Integration Marketplace
-  - MCP
-  - Model Context Protocol
-  - Self-Hosting
-  - Unified API
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
-plans:
-  - id: integration-app-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Integration.app (Membrane) API surface. Intended for evaluation,
-      prototyping, and low-volume integrations. Real limits and pricing must be reconciled with the provider's
-      published plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.getmembrane.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.getmembrane.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Membrane (formerly Integration.app) Platform
-  - id: integration-app-pro
-    name: Professional
-    type: paid
-    description: Production tier for Integration.app (Membrane). Provides higher quotas, priority support,
-      and access to the broader API portfolio. Pricing placeholder; align with the provider's pricing
-      page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.getmembrane.com
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.getmembrane.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.getmembrane.com
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Membrane (formerly Integration.app) Platform
-  - id: integration-app-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Integration.app (Membrane). Includes dedicated capacity, contractual
-      SLAs, security review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://api.getmembrane.com
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://api.getmembrane.com
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Membrane (formerly Integration.app) Platform
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+modified: '2026-09-13'
+description: >-
+  Membrane publishes no pricing. This file replaces a 2026-05-04 bulk-sweep scaffold that invented a
+  "Free" tier with placeholder limits; that tier was never published by the provider and is removed.
+plan_count: 0
+plans: []
+finding: >-
+  Membrane has WITHDRAWN its public pricing page rather than never having had one. On 2026-09-13
+  https://getmembrane.com/pricing returns HTTP 301 to https://getmembrane.com/ (a 169-byte Cloudflare
+  redirect, not a rendered page), and https://getmembrane.com/packages returns HTTP 301 to
+  /universe. Both URLs are still indexed and still linked from third-party listings, so a buyer
+  following a search result lands on the homepage with no explanation. The enterprise page describes
+  scale and invites contact but names no number, no tier and no unit of billing. There is therefore
+  no self-serve price, no published quota, and no overage schedule to record.
+pricing_model:
+  published: false
+  self_serve_price: false
+  free_tier_published: false
+  contact_sales_only: true
+  note: >-
+    Signup at https://console.getmembrane.com is open and self-serve, so a developer can start
+    without talking to sales; what they cannot do is find out what it costs. Access and price are
+    different gates and only the price one is closed.
+evidence:
+- url: https://getmembrane.com/pricing
+  status: 301
+  location: /
+  checked: '2026-09-13'
+- url: https://getmembrane.com/packages
+  status: 301
+  location: https://getmembrane.com/universe
+  checked: '2026-09-13'
+- url: https://getmembrane.com/enterprise
+  status: 200
+  checked: '2026-09-13'
+  note: Loads, describes enterprise scale, states no prices.
+removed_pointer:
+  type: Pricing
+  url: https://getmembrane.com/pricing
+  reason: >-
+    Confirmed dead (301 to the homepage). Removed from apis.yml common[] and from the platform API
+    properties[] on 2026-09-13 rather than left as a claim we make on the provider's behalf.

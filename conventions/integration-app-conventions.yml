@@ -1,0 +1,221 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://docs.getmembrane.com/docs/ways-to-use-membrane/rest-api,
+  https://docs.getmembrane.com/reference/overview/errors,
+  https://docs.getmembrane.com/docs/how-membrane-works/authentication,
+  https://docs.getmembrane.com/docs/managing-membrane/limits, derived from
+  openapi/integration-app-membrane-api-openapi.json
+api: Membrane (formerly Integration.app) Platform API
+base_url: https://api.getmembrane.com
+auth:
+  style: bearer JWT
+  header: 'Authorization: Bearer <token>'
+  detail: >-
+    A Membrane Token is a JWT the CALLER signs with its own workspace key and secret (HS512/HS256),
+    carrying workspaceKey, tenantKey and name claims, typically with a 2-hour expiry. There is no
+    issued API key to copy; the credential is the workspace secret and the token is minted per
+    tenant. Tenant-scoped tokens carry tenantKey; workspace-level operations omit it; some
+    operations require an admin token.
+  docs: https://docs.getmembrane.com/docs/how-membrane-works/authentication
+  see: authentication/integration-app-authentication.yml
+versioning:
+  scheme: X.Y, pinned by request header
+  header: API-Version
+  example: 'API-Version: 2.1'
+  semantics: >-
+    Major changes on breaking changes, minor on any update. Omitting the header floats to current.
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/rest-api
+  see: lifecycle/integration-app-lifecycle.yml
+pagination:
+  style: cursor
+  request_params:
+  - name: limit
+    in: query
+    range: 1-1000
+    description: Maximum number of items to return
+  - name: cursor
+    in: query
+    description: Pagination cursor from a previous response
+  response_fields:
+  - items
+  - cursor
+  coverage: >-
+    cursor appears on 42 operations and limit on 39 across the published spec; list responses use a
+    *PaginatedResponseDto envelope of {items[], cursor}.
+  derived_from: openapi/integration-app-membrane-api-openapi.json
+filtering:
+  common_params:
+  - integrationId
+  - integrationKey
+  - connectionId
+  - connectionKey
+  - instanceKey
+  - tenantId
+  - userId
+  - search
+  - includeArchived
+  - layer
+  note: >-
+    Most collection endpoints accept the same filter vocabulary. `search` is free-text.
+    `includeArchived` is what makes the archive/restore model below visible to a reader.
+selectors:
+  pattern: '{selector} / {idOrKey} / {elementSelector}'
+  detail: >-
+    Most workspace elements can be addressed by internal id OR by the caller-chosen key, through a
+    single path parameter. 64 operations take {selector}, 31 take {idOrKey}, 22 take
+    {elementSelector}. This is the single most important calling convention in the API and it is why
+    two different-looking paths often address the same object.
+error_envelope:
+  format: custom JSON (not RFC 9457)
+  content_type: application/json
+  fields:
+  - type
+  - key
+  - message
+  - data
+  - causedByError
+  detail: >-
+    Errors are NOT application/problem+json. The envelope is {type, key, message, data,
+    causedByError}, where `type` is the error category and `key` the specific identifier, and
+    causedByError nests the underlying failure. HTTP status is mapped from the type.
+  docs: https://docs.getmembrane.com/reference/overview/errors
+  see: errors/integration-app-problem-types.yml
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  detail: >-
+    No replay protection is published. The string "idempoten" does not appear anywhere in the
+    provider's 278-operation OpenAPI, and neither the REST API guide nor the error reference
+    documents an Idempotency-Key header, a client-supplied request id, or a de-duplication window.
+    Retrying a POST - creating a connection, running an action, creating an action - is expected to
+    create or execute again. The one safe-retry primitive published is POST /connections/ensure
+    ("Find or create a connection"), which is idempotent by semantics for that single operation
+    only; it is a find-or-create, not a keyed replay guard, so it is recorded here rather than being
+    counted as partial coverage of the mutating surface.
+  verified: '2026-09-13'
+  evidence:
+  - openapi/integration-app-membrane-api-openapi.json (0 occurrences of idempoten*)
+  - https://docs.getmembrane.com/reference/overview/errors
+  - https://docs.getmembrane.com/docs/ways-to-use-membrane/rest-api
+reversibility:
+  grade: documented
+  detail: >-
+    Membrane's destructive surface is unusually reversible by design: DELETE on a workspace element
+    ARCHIVES it rather than erasing it, and a matching POST .../restore un-archives it. 23 DELETE
+    operations exist and 13 of them are titled "Archive ...", each with a restore twin. Archived
+    elements stay visible through the includeArchived=true query parameter, which is the reader's
+    proof the object still exists. What is NOT published anywhere is a WINDOW - no doc states how
+    long an archived element remains restorable - so this grades `documented` rather than `verified`.
+    Do not assume the 14-day S3 log retention on the Security and Privacy page applies to archived
+    elements; that statement is about user data flowing through the engine, not workspace
+    configuration, and conflating them would be an invented window.
+  window_stated: false
+  window_evidence_searched:
+  - https://docs.getmembrane.com/docs/managing-membrane/limits
+  - https://docs.getmembrane.com/docs/managing-membrane/security-and-privacy
+  - https://docs.getmembrane.com/reference/overview/errors
+  reversals:
+  - write: archiveConnection (DELETE /connections/{id})
+    reversal: restoreConnection (POST /connections/{elementSelector}/restore)
+    window: null
+  - write: archiveAction (DELETE /actions/{selector})
+    reversal: restoreAction (POST /actions/{selector}/restore)
+    window: null
+  - write: archiveFlow (DELETE /flows/{selector})
+    reversal: restoreFlow (POST /flows/{selector}/restore)
+    window: null
+  - write: archiveIntegration (DELETE /integrations/{id})
+    reversal: restoreIntegration (POST /integrations/{elementSelector}/restore)
+    window: null
+  - write: archiveFieldMapping (DELETE /field-mappings/{selector})
+    reversal: restoreFieldMapping (POST /field-mappings/{selector}/restore)
+    window: null
+  - write: archiveDataSource (DELETE /data-sources/{selector})
+    reversal: restoreDataSource (POST /data-sources/{selector}/restore)
+    window: null
+  - write: archiveAppDataSchema (DELETE /app-data-schemas/{idOrKey})
+    reversal: restoreAppDataSchema (POST /app-data-schemas/{elementSelector}/restore)
+    window: null
+  - write: archiveAppEventSubscription (DELETE /app-event-subscriptions/{id})
+    reversal: restoreAppEventSubscription (POST /app-event-subscriptions/{elementSelector}/restore)
+    window: null
+  - write: deleteAppEventType (DELETE /app-event-types/{id}, titled "Archive internal event type")
+    reversal: restoreAppEventType (POST /app-event-types/{elementSelector}/restore)
+    window: null
+  - write: archiveExternalEventType (DELETE /external-event-types/{selector})
+    reversal: restoreExternalEventType (POST /external-event-types/{selector}/restore)
+    window: null
+  - write: archivePackage (DELETE /packages/{selector})
+    reversal: restorePackage (POST /packages/{selector}/restore)
+    window: null
+  - write: deleteDataLinkTable (DELETE /data-link-tables/{idOrKey}, titled "Archive data link table")
+    reversal: restoreDataLinkTable (POST /data-link-tables/{elementSelector}/restore)
+    window: null
+  - write: archiveOrgWorkspace (DELETE /org-workspaces/{id})
+    reversal: restoreOrgWorkspace (POST /org-workspaces/{id}/restore)
+    window: null
+  - write: deleteCustomer (DELETE /customers/{id})
+    reversal: restoreCustomer (POST /customers/{elementSelector}/restore)
+    window: null
+  other_reversal_paths:
+  - stopFlowRun (POST /flow-runs/{id}/stop) - halts an executing flow run
+  - stopAgentSession (PATCH /agent/sessions/{id}/stop) and interruptAgentSession
+  - unsubscribeFromExternalEventSubscription (POST /external-event-subscriptions/{id}/unsubscribe)
+  - disconnectConnection (POST /connections/{id}/disconnect) - revokes and ERASES credentials; this
+    one is NOT reversible, the connection must be re-authenticated by the end user
+  irreversible:
+  - deleteConnector
+  - deleteConnectorVersion
+  - deleteConnectorFile
+  - deleteConnectorDirectory
+  - deleteApp
+  - deleteDataLink
+  - deleteDataLinkTableLink
+  - deleteConnectedProduct
+  - deleteExternalEventSubscription
+  note: >-
+    Nine DELETE operations are titled "Delete" with no restore twin. An agent should treat
+    Archive-titled deletes as recoverable and Delete-titled ones as final.
+dry_run_mode:
+  supported: false
+  detail: >-
+    No dry-run, preview, validate-only or simulate parameter is published on any of the 278
+    operations. The nearest published rehearsal surfaces are the connector `test` function and the
+    "Test connection validity" endpoint, which check a connection rather than preview a write.
+request_tracing:
+  request_id_header: null
+  detail: >-
+    No request-id or correlation header is documented. Internal errors instead return a
+    data.errorId (e.g. "err_xyz789") in the error body, which is the value to quote to support.
+    Per-request observability is provided through the Console log surfaces (API Requests, Flow Runs,
+    External Events) rather than a response header.
+  docs: https://docs.getmembrane.com/docs/managing-membrane/monitoring-troubleshooting/logs/api-requests
+rate_limit_signaling:
+  headers_documented: false
+  exhaustion_status: 429
+  exhaustion_key: rate_limit_exceeded
+  detail: >-
+    The error reference maps 429 to key `rate_limit_exceeded`, and a connection-level
+    `rate_limit_exceeded` key exists for when the EXTERNAL app rate-limits Membrane. No
+    X-RateLimit-*, RateLimit-* or Retry-After header is documented, so an agent cannot see how much
+    budget is left before it is refused.
+  see: rate-limits/integration-app-rate-limits.yml
+test_mode:
+  flag: isTest
+  detail: >-
+    Connections and workspace elements carry an isTest boolean, filterable as an isTest query
+    parameter, which is how test and live objects are separated inside one workspace. There is no
+    separate sandbox host or test-key prefix.
+  see: sandbox/integration-app-sandbox.yml
+payload_limits:
+  max_request: 10 MB
+  max_response: 30 MB
+  max_request_duration: 60 seconds
+  source: https://docs.getmembrane.com/docs/managing-membrane/limits
+cross_links:
+  errors: errors/integration-app-problem-types.yml
+  lifecycle: lifecycle/integration-app-lifecycle.yml
+  authentication: authentication/integration-app-authentication.yml
+  rate_limits: rate-limits/integration-app-rate-limits.yml

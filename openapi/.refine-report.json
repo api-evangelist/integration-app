@@ -37,6 +37,23 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "integration-app-actions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-app-event-subscriptions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-connections-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-connectors-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-customers-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-data-collections-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-external-event-subscriptions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-field-mappings-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-flow-runs-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-flows-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-integrations-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-logs-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-public-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-search-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "integration-app-sessions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

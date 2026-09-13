@@ -1,0 +1,123 @@
+generated: '2026-09-13'
+method: derived
+source: >-
+  https://raw.githubusercontent.com/membranehq/agent-skills/main/tools/integrate-anything.ts (the
+  provider's own tool definitions, including the exact REST path each tool calls) bound to
+  openapi/integration-app-membrane-api-openapi.json
+note: >-
+  Unusually strong evidence for a crosswalk. The live MCP server is auth-gated, but the provider
+  publishes the integrate-anything tool definitions as TypeScript, and each definition ends in a
+  literal client.request(<METHOD>, <PATH>) call. Every row below was checked against the published
+  OpenAPI, so `high` confidence means the operationId was found in the spec, not that the names
+  looked similar. The one tool pair whose REST path is NOT in the published spec is recorded as
+  mcp_only rather than guessed at.
+surfaces:
+  openapi:
+    file: openapi/integration-app-membrane-api-openapi.json
+    source: https://docs.getmembrane.com/api-reference/membrane-api.json
+    operations: 278
+    paths: 205
+    gated: false
+  mcp:
+    url: https://api.getmembrane.com/mcp/integrate-anything
+    gated: true
+    gate: 401 not_authenticated; OAuth per RFC 9728
+  graphql:
+    present: false
+crosswalk:
+- tool: list-connections
+  category: connections
+  rest:
+  - listConnections
+  binding: GET /connections
+  confidence: high
+- tool: search-connectors
+  category: discovery
+  rest:
+  - searchWorkspaceElements
+  binding: GET /search
+  confidence: high
+  note: >-
+    The tool is named for connectors but calls the generic workspace-element search operation with a
+    filter, which is why the name and the operationId do not match.
+- tool: search-tools
+  category: discovery
+  rest:
+  - listActions
+  binding: GET /actions
+  confidence: high
+  note: In Membrane's vocabulary an agent "tool" is an action, so tool search is action listing.
+- tool: run-tool
+  category: execution
+  rest:
+  - runAction
+  binding: POST /actions/{selector}/run
+  confidence: high
+  note: >-
+    The backing operation is marked deprecated:true in the published OpenAPI, while the top-level
+    POST /act (operationId `act`) is the current entry point. The provider's own tool file still
+    calls the deprecated path. Flagged here rather than silently remapped.
+- tool: ensure-connection
+  category: connections
+  rest:
+  - ensureConnection
+  binding: POST /connections/ensure
+  confidence: high
+- tool: create-connection
+  category: connections
+  rest:
+  - createConnection
+  binding: POST /connections
+  confidence: high
+- tool: get-connection
+  category: connections
+  rest:
+  - getConnection
+  binding: GET /connections/{id}
+  confidence: high
+- tool: create-action
+  category: authoring
+  rest:
+  - createAction
+  binding: POST /actions
+  confidence: high
+- tool: get-action
+  category: authoring
+  rest:
+  - getAction
+  binding: GET /actions/{selector}
+  confidence: high
+mcp_only:
+- tool: request-connection
+  reason: >-
+    Calls POST /connection-requests, which does not appear anywhere in the published OpenAPI. The
+    endpoint is real (the provider's own tool file calls it), but Membrane has not documented it in
+    the machine-readable contract, so an agent working from the OpenAPI alone cannot start an
+    end-user OAuth flow.
+- tool: check-connection-result
+  reason: >-
+    Calls GET /connection-requests/{requestId}, the poll half of the same undocumented pair.
+- tool: enable-tools
+  reason: >-
+    Exists only in the hosted server's dynamic mode (?mode=dynamic) as the single tool returned; it
+    selects which other tools to expose for a session and has no REST analogue.
+rest_only_note: >-
+  The overwhelming majority of the REST surface has no tool. The integrate-anything tool set is a
+  deliberately small agent-facing slice - connect, discover, run - over a 278-operation platform API.
+  Whole tag families are REST-only: Connectors (20 ops), Integrations (16), ExternalEventSubscriptions
+  (15), FieldMappings (14), DataLinkTables (13), Packages (13), DataSources (12), ExternalEventTypes
+  (12), Flows (12), AppEventTypes (11), AppDataSchemas (10), AppEventSubscriptions (10),
+  DataCollections (10), FlowRuns (9), OrgWorkspaces (9), Sessions (7), ConnectedProducts (7),
+  Customers (7), and the log readers. None is reachable through the published tool definitions.
+coverage:
+  mcp_tools_published: 11
+  bound_to_rest: 9
+  mcp_only: 3
+  openapi_operations: 278
+  openapi_operations_with_a_tool: 9
+  openapi_coverage_pct: 3.2
+  caveat: >-
+    These counts describe the PUBLISHED integrate-anything tool definitions. The hosted server in
+    static mode also exposes every action across a tenant's connected integrations, which is
+    unbounded and tenant-specific; it is not counted here because it cannot be enumerated
+    anonymously and is not a projection of this OpenAPI.

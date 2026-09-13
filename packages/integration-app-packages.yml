@@ -1,0 +1,97 @@
+generated: '2026-09-13'
+method: searched
+source: https://docs.getmembrane.com/docs/references/sdks + registry.npmjs.org metadata
+note: >-
+  Membrane (formerly Integration.app) publishes its client libraries on npm only. The company
+  rebranded in 2025 and moved its packages from the @integration-app scope to @membranehq; both
+  scopes are recorded here because the legacy scope is still installable and is the abandonment
+  signal for anyone still pinned to it. No PyPI, RubyGems, Maven, NuGet, crates.io or Go module
+  was found under either name; the docs SDK page lists TypeScript/JavaScript, React, Vue (via the
+  React adapter) and the CLI and nothing else.
+packages:
+- name: '@membranehq/sdk'
+  registry: npm
+  url: https://www.npmjs.com/package/@membranehq/sdk
+  language: TypeScript/JavaScript
+  official: true
+  version: 0.29.2
+  published: '2026-08-13'
+  releases: 92
+  first_published: '2025-07-23'
+  description: Core SDK with typed accessors for all Membrane resources.
+  install: npm install @membranehq/sdk
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk
+- name: '@membranehq/react'
+  registry: npm
+  url: https://www.npmjs.com/package/@membranehq/react
+  language: TypeScript/JavaScript
+  official: true
+  version: 0.29.2
+  published: '2026-08-13'
+  releases: 57
+  first_published: '2025-07-23'
+  description: React hooks and pre-built embedded UI components; also the adapter the Vue.js guide wraps.
+  install: npm install @membranehq/react
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/react
+- name: '@membranehq/cli'
+  registry: npm
+  url: https://www.npmjs.com/package/@membranehq/cli
+  language: TypeScript/JavaScript
+  official: true
+  version: 1.18.3
+  published: '2026-08-12'
+  releases: 125
+  first_published: '2025-07-16'
+  description: Command-line interface for managing integrations, connections and actions.
+  install: npm install -g @membranehq/cli
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/cli
+- name: '@integration-app/sdk'
+  registry: npm
+  url: https://www.npmjs.com/package/@integration-app/sdk
+  language: TypeScript/JavaScript
+  official: true
+  status: superseded
+  version: 1.14.1
+  published: '2025-07-22'
+  releases: 477
+  first_published: '2021-06-29'
+  description: >-
+    Pre-rebrand core SDK. Last published 2025-07-22, the day before @membranehq/sdk 0.1.0 appeared;
+    superseded by @membranehq/sdk. Still installable, no longer maintained.
+  superseded_by: '@membranehq/sdk'
+- name: '@integration-app/react'
+  registry: npm
+  url: https://www.npmjs.com/package/@integration-app/react
+  language: TypeScript/JavaScript
+  official: true
+  status: superseded
+  version: 2.25.1
+  published: '2025-07-22'
+  releases: 125
+  first_published: '2022-10-28'
+  description: >-
+    Pre-rebrand React SDK. Its own npm description now reads "Package has moved to
+    @membranehq/react", which is the provider stating the move itself.
+  superseded_by: '@membranehq/react'
+not_found:
+  note: >-
+    Probed and absent, recorded so a later run does not re-litigate them. Each returned a registry
+    404 / "Not found" on 2026-09-13.
+  packages:
+  - name: integration-app-mcp-server
+    registry: npm
+    version: null
+    note: >-
+      The name declared in package.json of github.com/membranehq/mcp-server (v1.3.0), but the package
+      is not published to npm. The self-hosted MCP server is distributed as a git clone + Docker
+      build only, which is why mcp/ records no npx install line.
+  - name: '@membranehq/agent-skills'
+    registry: npm
+    version: null
+    note: >-
+      The Agent Skills are distributed through `npx skills add membranehq/agent-skills`, which reads
+      the GitHub repo directly; there is no npm package behind that command.
+  - name: '@membranehq/vue'
+    registry: npm
+    version: null
+    note: The Vue.js guide wraps @membranehq/react; no dedicated Vue package exists.

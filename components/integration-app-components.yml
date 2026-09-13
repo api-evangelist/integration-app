@@ -1,0 +1,58 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://docs.getmembrane.com/docs/ways-to-use-membrane/embedded-ui,
+  https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/react
+note: >-
+  Membrane is an EMBEDDED integration platform, so its client-side component surface is a product
+  in its own right rather than an SDK afterthought: the components are how a customer's end users
+  see and authorise their own integrations inside the customer's app. Distinct from the packages
+  in packages/ - the loader libraries are listed there, the component families here.
+loaders:
+- package: '@membranehq/react'
+  version: 0.29.2
+  framework: React
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/react
+- package: '@membranehq/react'
+  framework: Vue.js
+  via: Vue composables wrapping the core SDK
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/vue
+- package: '@membranehq/sdk'
+  framework: framework-agnostic
+  note: >-
+    The docs publish a "Connection UI Without the Front-End SDK" path, so the embedded surface can
+    be driven from a plain browser app or a server-rendered page.
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/embedded-ui/connection-ui/connection-ui-without-the-front-end-sdk
+families:
+- family: Embedded UI
+  description: >-
+    Prebuilt surfaces a customer drops into its own product so its users can browse, connect and
+    configure integrations.
+  members:
+  - name: Connection UI
+    docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/embedded-ui/connection-ui
+  - name: Integration Catalog
+    docs: https://docs.getmembrane.com/docs/getting-started/product-integrations/integration-catalog
+  - name: In-app AI Agent
+    docs: https://docs.getmembrane.com/docs/getting-started/product-integrations/in-app-ai-agent
+  - name: In-app Workflow Builder
+    docs: https://docs.getmembrane.com/docs/getting-started/product-integrations/in-app-workflow-builder
+- family: React components
+  description: Lower-level building blocks for customers assembling their own integration UI.
+  members:
+  - name: Hooks
+    docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/react/hooks
+  - name: UI Components
+    docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/react/ui-components
+  - name: Data Input
+    docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/react/data-input
+  - name: Combobox
+    docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/react/combobox
+  - name: Portal Boundary
+    docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/react/portal-boundary
+integration_requirements:
+- requirement: Content Security Policy
+  detail: >-
+    The docs publish a dedicated CSP rules page, which is the usual sign the components load
+    cross-origin assets and iframes that a host app's CSP will otherwise block.
+  docs: https://docs.getmembrane.com/docs/ways-to-use-membrane/sdk/csp-rules
