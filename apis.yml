@@ -65,71 +65,6 @@ modified: '2026-09-13'
 url: https://raw.githubusercontent.com/api-evangelist/integration-app/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
-- aid: integration-app:platform
-  name: Membrane (formerly Integration.app) Platform
-  description: >-
-    The Membrane platform (formerly Integration.app) provides a unified surface for building embedded
-    and agentic integrations across 100,000+ apps with managed OAuth, observability, MCP server support,
-    and embedded UI. The platform is consumed via REST API, CLI, SDKs, and Model Context Protocol servers.
-  humanURL: https://getmembrane.com
-  baseURL: https://api.getmembrane.com
-  tags:
-  - Agentic Integrations
-  - Embedded iPaaS
-  - MCP
-  - Unified-API
-  tags_raw:
-  - Agentic Integrations
-  - Embedded iPaaS
-  - MCP
-  - Unified API
-  properties:
-  - type: Portal
-    url: https://getmembrane.com
-  - type: Documentation
-    url: https://docs.getmembrane.com
-  - type: OpenAPI
-    url: openapi/integration-app-membrane-api-openapi.json
-  - type: MCPServer
-    url: mcp/integration-app-mcp.yml
-  - type: ToolCrosswalk
-    url: mcp/integration-app-tool-crosswalk.yml
-  - type: AgentCard
-    url: a2a/integration-app-a2a.yml
-  - type: Authentication
-    url: authentication/integration-app-authentication.yml
-  - type: Conventions
-    url: conventions/integration-app-conventions.yml
-  - type: ErrorCatalog
-    url: errors/integration-app-problem-types.yml
-  - type: RateLimits
-    url: rate-limits/integration-app-rate-limits.yml
-  - type: Webhooks
-    url: asyncapi/integration-app-webhooks.yml
-  - type: DataModel
-    url: data-model/integration-app-data-model.yml
-  - type: Overlay
-    url: overlays/integration-app-membrane-api-overlay.yaml
-  - type: Sandbox
-    url: sandbox/integration-app-sandbox.yml
-  - type: APIReference
-    url: https://docs.getmembrane.com/reference/overview/authentication
-  - type: Blog
-    url: https://getmembrane.com/articles
-  - type: ChangeLog
-    url: https://changelog.getmembrane.com
-  - type: Signup
-    url: https://console.getmembrane.com
-  - type: Login
-    url: https://console.getmembrane.com
-  - type: StatusPage
-    url: https://status.getmembrane.com
-  - type: TrustCenter
-    url: https://trust.getmembrane.com
-  - type: GitHubOrg
-    url: https://github.com/membranehq
-  - type: Rules
-    url: rules/integration-app-rules.yml
 - aid: integration-app:integration-app-actions-api
   name: Integration.app (Membrane) Actions API
   description: The Actions API from Integration.app (Membrane) — 2 operation(s) for actions.
@@ -287,6 +222,1678 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/integration-app-sessions-api-openapi.yml
+- aid: integration-app:integration-app-act-api
+  name: Integration.app (Membrane) Act API
+  description: The Act API from Integration.app (Membrane) — 1 operation(s) for act.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Act
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-act-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-actionrunlogs-api
+  name: Integration.app (Membrane) Action Run Logs API
+  description: >-
+    The ActionRunLogs API from Integration.app (Membrane) — 3 operation(s) for actionrunlogs.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ActionRunLogs
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-actionrunlogs-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-appdataschemas-api
+  name: Integration.app (Membrane) App Data Schemas API
+  description: >-
+    The AppDataSchemas API from Integration.app (Membrane) — 6 operation(s) for appdataschemas.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - AppDataSchemas
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-appdataschemas-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-appeventlogrecords-api
+  name: Integration.app (Membrane) App Event Log Records API
+  description: >-
+    The AppEventLogRecords API from Integration.app (Membrane) — 2 operation(s) for appeventlogrecords.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - AppEventLogRecords
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-appeventlogrecords-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-appeventsubscriptions-api
+  name: Integration.app (Membrane) App Event Subscriptions API
+  description: >-
+    The AppEventSubscriptions API from Integration.app (Membrane) — 6 operation(s) for appeventsubscriptions.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - AppEventSubscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-appeventsubscriptions-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-appeventtypes-api
+  name: Integration.app (Membrane) App Event Types API
+  description: >-
+    The AppEventTypes API from Integration.app (Membrane) — 7 operation(s) for appeventtypes.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - AppEventTypes
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-appeventtypes-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-appsuniverse-api
+  name: Integration.app (Membrane) Apps Universe API
+  description: The AppsUniverse API from Integration.app (Membrane) — 1 operation(s) for appsuniverse.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - AppsUniverse
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-appsuniverse-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-checkpoints-api
+  name: Integration.app (Membrane) Checkpoints API
+  description: The Checkpoints API from Integration.app (Membrane) — 4 operation(s) for checkpoints.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Checkpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-checkpoints-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-connectedproducts-api
+  name: Integration.app (Membrane) Connected Products API
+  description: >-
+    The ConnectedProducts API from Integration.app (Membrane) — 3 operation(s) for connectedproducts.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ConnectedProducts
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-connectedproducts-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-connectorsuniverse-api
+  name: Integration.app (Membrane) Connectors Universe API
+  description: >-
+    The ConnectorsUniverse API from Integration.app (Membrane) — 1 operation(s) for connectorsuniverse.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ConnectorsUniverse
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-connectorsuniverse-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-datacollections-api
+  name: Integration.app (Membrane) Data Collections API
+  description: >-
+    The DataCollections API from Integration.app (Membrane) — 10 operation(s) for datacollections.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - DataCollections
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-datacollections-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-datalinks-api
+  name: Integration.app (Membrane) Data Links API
+  description: The DataLinks API from Integration.app (Membrane) — 2 operation(s) for datalinks.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - DataLinks
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-datalinks-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-datalinktables-api
+  name: Integration.app (Membrane) Data Link Tables API
+  description: >-
+    The DataLinkTables API from Integration.app (Membrane) — 7 operation(s) for datalinktables.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - DataLinkTables
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-datalinktables-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-datasources-api
+  name: Integration.app (Membrane) Data Sources API
+  description: The DataSources API from Integration.app (Membrane) — 8 operation(s) for datasources.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - DataSources
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-datasources-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-exportmembraneinterfaces-api
+  name: Integration.app (Membrane) Export Membrane Interfaces API
+  description: >-
+    The ExportMembraneInterfaces API from Integration.app (Membrane) — 1 operation(s) for exportmembraneinterfaces.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ExportMembraneInterfaces
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-exportmembraneinterfaces-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-externalapilogs-api
+  name: Integration.app (Membrane) External API Logs API
+  description: >-
+    The ExternalApiLogs API from Integration.app (Membrane) — 1 operation(s) for externalapilogs.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ExternalApiLogs
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-externalapilogs-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-externalapps-api
+  name: Integration.app (Membrane) External Apps API
+  description: The ExternalApps API from Integration.app (Membrane) — 2 operation(s) for externalapps.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ExternalApps
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-externalapps-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-externaleventlogrecords-api
+  name: Integration.app (Membrane) External Event Log Records API
+  description: >-
+    The ExternalEventLogRecords API from Integration.app (Membrane) — 3 operation(s) for externaleventlogrecords.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ExternalEventLogRecords
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-externaleventlogrecords-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-externaleventpulls-api
+  name: Integration.app (Membrane) External Event Pulls API
+  description: >-
+    The ExternalEventPulls API from Integration.app (Membrane) — 4 operation(s) for externaleventpulls.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ExternalEventPulls
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-externaleventpulls-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-externaleventsubscriptions-api
+  name: Integration.app (Membrane) External Event Subscriptions API
+  description: >-
+    The ExternalEventSubscriptions API from Integration.app (Membrane) — 10 operation(s) for externaleventsubscriptions.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ExternalEventSubscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-externaleventsubscriptions-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-externaleventtypes-api
+  name: Integration.app (Membrane) External Event Types API
+  description: >-
+    The ExternalEventTypes API from Integration.app (Membrane) — 8 operation(s) for externaleventtypes.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ExternalEventTypes
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-externaleventtypes-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-fieldmappings-api
+  name: Integration.app (Membrane) Field Mappings API
+  description: >-
+    The FieldMappings API from Integration.app (Membrane) — 9 operation(s) for fieldmappings.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - FieldMappings
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-fieldmappings-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-files-api
+  name: Integration.app (Membrane) Files API
+  description: The Files API from Integration.app (Membrane) — 1 operation(s) for files.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-files-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-flowruns-api
+  name: Integration.app (Membrane) Flow Runs API
+  description: The FlowRuns API from Integration.app (Membrane) — 5 operation(s) for flowruns.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - FlowRuns
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-flowruns-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-importmembraneinterfaces-api
+  name: Integration.app (Membrane) Import Membrane Interfaces API
+  description: >-
+    The ImportMembraneInterfaces API from Integration.app (Membrane) — 1 operation(s) for importmembraneinterfaces.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - ImportMembraneInterfaces
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-importmembraneinterfaces-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-incomingwebhooksreader-api
+  name: Integration.app (Membrane) Incoming Webhooks Reader API
+  description: >-
+    The IncomingWebhooksReader API from Integration.app (Membrane) — 3 operation(s) for incomingwebhooksreader.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - IncomingWebhooksReader
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-incomingwebhooksreader-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-orgworkspaces-api
+  name: Integration.app (Membrane) Org Workspaces API
+  description: >-
+    The OrgWorkspaces API from Integration.app (Membrane) — 6 operation(s) for orgworkspaces.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - OrgWorkspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-orgworkspaces-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-orgworkspacestransfer-api
+  name: Integration.app (Membrane) Org Workspaces Transfer API
+  description: >-
+    The OrgWorkspacesTransfer API from Integration.app (Membrane) — 1 operation(s) for orgworkspacestransfer.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - OrgWorkspacesTransfer
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-orgworkspacestransfer-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-packages-api
+  name: Integration.app (Membrane) Packages API
+  description: The Packages API from Integration.app (Membrane) — 9 operation(s) for packages.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Packages
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-packages-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-packagesuniverse-api
+  name: Integration.app (Membrane) Packages Universe API
+  description: >-
+    The PackagesUniverse API from Integration.app (Membrane) — 1 operation(s) for packagesuniverse.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - PackagesUniverse
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-packagesuniverse-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-tools-api
+  name: Integration.app (Membrane) Tools API
+  description: The Tools API from Integration.app (Membrane) — 2 operation(s) for tools.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Tools
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-tools-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-universe-api
+  name: Integration.app (Membrane) Universe API
+  description: The Universe API from Integration.app (Membrane) — 1 operation(s) for universe.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - Universe
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-universe-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
+- aid: integration-app:integration-app-workspaceelementssearch-api
+  name: Integration.app (Membrane) Workspace Elements Search API
+  description: >-
+    The WorkspaceElementsSearch API from Integration.app (Membrane) — 2 operation(s) for workspaceelementssearch.
+  humanURL: https://getmembrane.com
+  baseURL: https://api.getmembrane.com
+  tags:
+  - WorkspaceElementsSearch
+  properties:
+  - type: OpenAPI
+    url: openapi/integration-app-workspaceelementssearch-api-openapi.yml
+  - type: Portal
+    url: https://getmembrane.com
+  - type: Documentation
+    url: https://docs.getmembrane.com
+  - type: ToolCrosswalk
+    url: mcp/integration-app-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/integration-app-a2a.yml
+  - type: Authentication
+    url: authentication/integration-app-authentication.yml
+  - type: Conventions
+    url: conventions/integration-app-conventions.yml
+  - type: ErrorCatalog
+    url: errors/integration-app-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/integration-app-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/integration-app-webhooks.yml
+  - type: DataModel
+    url: data-model/integration-app-data-model.yml
+  - type: Sandbox
+    url: sandbox/integration-app-sandbox.yml
+  - type: APIReference
+    url: https://docs.getmembrane.com/reference/overview/authentication
+  - type: Blog
+    url: https://getmembrane.com/articles
+  - type: ChangeLog
+    url: https://changelog.getmembrane.com
+  - type: Signup
+    url: https://console.getmembrane.com
+  - type: Login
+    url: https://console.getmembrane.com
+  - type: StatusPage
+    url: https://status.getmembrane.com
+  - type: TrustCenter
+    url: https://trust.getmembrane.com
+  - type: GitHubOrg
+    url: https://github.com/membranehq
+  - type: Rules
+    url: rules/integration-app-rules.yml
 common:
   - type: Website
     url: https://getmembrane.com/
