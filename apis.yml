@@ -166,6 +166,8 @@ apis:
   humanURL: https://getmembrane.com
   baseURL: https://api.getmembrane.com
   tags:
+  - Flow
+  tags_raw:
   - Flows
   properties:
   - type: OpenAPI
@@ -228,6 +230,8 @@ apis:
   humanURL: https://getmembrane.com
   baseURL: https://api.getmembrane.com
   tags:
+  - ACT
+  tags_raw:
   - Act
   properties:
   - type: OpenAPI
@@ -583,6 +587,8 @@ apis:
   humanURL: https://getmembrane.com
   baseURL: https://api.getmembrane.com
   tags:
+  - Connected Products
+  tags_raw:
   - ConnectedProducts
   properties:
   - type: OpenAPI
@@ -990,6 +996,8 @@ apis:
   humanURL: https://getmembrane.com
   baseURL: https://api.getmembrane.com
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
