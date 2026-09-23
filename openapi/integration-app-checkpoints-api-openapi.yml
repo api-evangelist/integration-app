@@ -1,0 +1,219 @@
+openapi: 3.2.0
+info:
+  title: Membrane Checkpoints API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: Checkpoints
+paths:
+  /checkpoints:
+    get:
+      operationId: getCheckpoints
+      parameters:
+      - name: elementType
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: elementId
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckpointApiResponseDto'
+      summary: List checkpoints for a workspace element
+      tags:
+      - Checkpoints
+  /checkpoints/{id}:
+    get:
+      operationId: getCheckpoint
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckpointApiResponseDto'
+      summary: Get a checkpoint by ID
+      tags:
+      - Checkpoints
+  /checkpoints/{id}/diff:
+    get:
+      operationId: getCheckpointDiff
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckpointDiffResponseDto'
+      summary: Get diff between current element state and checkpoint
+      tags:
+      - Checkpoints
+  /checkpoints/{id}/revert:
+    post:
+      operationId: revertToCheckpoint
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseWorkspaceElementDto'
+      summary: Revert workspace element to checkpoint state
+      tags:
+      - Checkpoints
+components:
+  schemas:
+    CheckpointDiffResponseDto:
+      type: array
+      items:
+        type: object
+        properties:
+          op:
+            type: string
+            enum:
+            - add
+            - remove
+            - replace
+          path:
+            type: string
+            description: Dot/bracket path, e.g. name, nodes[0].id
+          value:
+            type: object
+          oldValue:
+            type: object
+        required:
+        - op
+        - path
+    CheckpointApiResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        elementType:
+          type: string
+          enum:
+          - customer
+          - app
+          - connector
+          - integration
+          - flow
+          - flow-instance
+          - flow-run
+          - action
+          - package
+          - action-instance
+          - connection
+          - field-mapping
+          - field-mapping-instance
+          - data-source
+          - data-source-instance
+          - data-link-table
+          - data-link-table-instance
+          - app-event-type
+          - app-event-subscription
+          - app-event-log-record
+          - app-data-schema
+          - app-data-schema-instance
+          - external-event-subscription
+          - external-event-log-record
+          - external-event-pull
+          - external-event-type
+          - screen
+          - action-run-log-record
+          - external-api-log-record
+          - incoming-webhook-log-record
+          - connected-product
+        elementId:
+          type: string
+        checkpointNumber:
+          type: number
+        snapshot:
+          type: object
+          additionalProperties:
+            type: object
+        createdAt:
+          type: string
+        asyncRequestId:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - id
+      - elementType
+      - elementId
+      - checkpointNumber
+      - snapshot
+      - createdAt
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

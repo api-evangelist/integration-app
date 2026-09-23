@@ -1,0 +1,119 @@
+openapi: 3.2.0
+info:
+  title: Membrane Data links API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: Data links
+paths:
+  /data-links:
+    get:
+      operationId: listDataLinks
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: dataLinkTableInstanceId
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: externalRecordId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: appRecordId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: direction
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLinksPaginatedResponseDto'
+      summary: List data links
+      tags:
+      - Data links
+  /data-links/{dataLinkId}:
+    delete:
+      operationId: deleteDataLink
+      parameters:
+      - name: dataLinkId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Delete data link
+      tags:
+      - Data links
+components:
+  schemas:
+    DataLinksPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              dataLinkTableInstanceId:
+                type: string
+              externalRecordId:
+                type: string
+              appRecordId:
+                type: string
+              direction:
+                type: string
+                enum:
+                - import
+                - export
+                - both
+            required:
+            - id
+            - dataLinkTableInstanceId
+            - externalRecordId
+            - appRecordId
+            - direction
+        cursor:
+          type: string
+      required:
+      - items
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

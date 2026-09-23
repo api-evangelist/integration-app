@@ -1,0 +1,89 @@
+openapi: 3.2.0
+info:
+  title: Membrane Org Workspaces Transfer API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: OrgWorkspacesTransfer
+paths:
+  /org-workspaces/import:
+    post:
+      operationId: importOrgWorkspaces
+      parameters:
+      - name: sourceOrgWorkspaceId
+        required: true
+        in: query
+        schema:
+          minLength: 1
+          type: string
+      - name: targetOrgWorkspaceIds
+        required: true
+        in: query
+        schema:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: array
+            items:
+              type: string
+              minLength: 1
+      - name: dryRun
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: partial
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: diff
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: force
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: simplified
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgWorkspacesImportResultDto'
+      summary: Import a source workspace into one or more target workspaces
+      tags:
+      - OrgWorkspacesTransfer
+      x-experimental: true
+components:
+  schemas:
+    OrgWorkspacesImportResultDto:
+      type: object
+      properties:
+        exportJobId:
+          type: string
+        importJobIds:
+          type: array
+          items:
+            type: string
+      required:
+      - exportJobId
+      - importJobIds
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

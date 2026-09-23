@@ -1,0 +1,4183 @@
+openapi: 3.2.0
+info:
+  title: Membrane Data Sources API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: Data Sources
+paths:
+  /data-sources:
+    get:
+      operationId: listDataSources
+      parameters:
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Text search query to filter results
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: includeArchived
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: universalParentId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: tenantId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: userId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: isUniversal
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: externalAppId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: dataSourceId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: universalDataSourceId
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourcePaginatedResponse'
+      summary: List data sources
+      tags:
+      - Data Sources
+    post:
+      operationId: createDataSource
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDataSource'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceApiResponse'
+      summary: Create a new data source
+      tags:
+      - Data Sources
+  /data-sources/{selector}:
+    get:
+      operationId: getDataSource
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceApiResponse'
+      summary: Get data source by selector
+      tags:
+      - Data Sources
+    patch:
+      operationId: patchDataSource
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDataSource'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceApiResponse'
+      summary: Update data source partially
+      tags:
+      - Data Sources
+    put:
+      operationId: replaceDataSource
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDataSource'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceApiResponse'
+      summary: Replace data source completely
+      tags:
+      - Data Sources
+    delete:
+      operationId: archiveDataSource
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Archive data source
+      tags:
+      - Data Sources
+  /data-sources/{selector}/clone:
+    post:
+      operationId: cloneDataSource
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceApiResponse'
+      summary: Clone data source
+      tags:
+      - Data Sources
+  /data-sources/{selector}/dependencies:
+    get:
+      operationId: getDataSourceDependencies
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+      summary: Get dependencies of data source (flat interface)
+      tags:
+      - Data Sources
+  /data-sources/{selector}/export:
+    get:
+      operationId: exportDataSource
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceExportProperties'
+      summary: Export data source (flat interface)
+      tags:
+      - Data Sources
+  /data-sources/{selector}/refresh:
+    post:
+      operationId: refreshDataSource
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceApiResponse'
+      summary: Refresh data source
+      tags:
+      - Data Sources
+  /data-sources/{selector}/reset:
+    post:
+      description: Refreshes all the dependencies, then resets the element to the default state (from parent)
+      operationId: resetDataSource
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceApiResponse'
+      summary: Reset data source
+      tags:
+      - Data Sources
+  /data-sources/{selector}/restore:
+    post:
+      operationId: restoreDataSource
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceApiResponse'
+      summary: Restore data source (flat interface)
+      tags:
+      - Data Sources
+components:
+  schemas:
+    DataSourceApiResponse__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+        items:
+          $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    CreateDataSource:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          type: string
+        instanceKey:
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        dataSourceId:
+          type: string
+        universalDataSourceId:
+          type: string
+        udm:
+          type: string
+        pullUpdatesIntervalSeconds:
+          type: number
+        fullSyncIntervalSeconds:
+          type: number
+        collectionKey:
+          type: string
+        collectionParameters:
+          type: object
+        path:
+          deprecated: true
+          type: string
+        defaultPath:
+          deprecated: true
+          type: string
+    DataSourcePaginatedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Internal database ID of the element. Assigned by the API; unique per element.
+              name:
+                type: string
+                description: Display name. Always present in API responses (filled by API if not set on create).
+              uuid:
+                description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                type: string
+              key:
+                description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                type: string
+              description:
+                description: Optional human-readable description.
+                type: string
+              meta:
+                description: Optional key-value metadata.
+                type: object
+                additionalProperties:
+                  type: object
+              state:
+                description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                type: string
+                enum:
+                - BUILDING
+                - CLIENT_ACTION_REQUIRED
+                - CONFIGURATION_ERROR
+                - SETUP_FAILED
+                - READY
+                - DISCONNECTING
+              errors:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSourcePaginatedResponse__schema0'
+              revision:
+                description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                type: string
+              createdAt:
+                description: ISO date when the element was created.
+                type: string
+              updatedAt:
+                description: ISO date when the element was last updated.
+                type: string
+              archivedAt:
+                description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+                type: string
+              isDeactivated:
+                description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                type: boolean
+              isReadOnly:
+                description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                type: boolean
+              integrationId:
+                description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+                type: string
+              integrationUuid:
+                description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+                type: string
+              integrationKey:
+                description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+                type: string
+              parentUuid:
+                description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+                type: string
+              parentKey:
+                description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+                type: string
+              connectionId:
+                type: string
+              instanceKey:
+                type: string
+              isUniversal:
+                description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+                type: boolean
+              externalAppId:
+                description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+                type: string
+              externalAppUuid:
+                description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+                type: string
+              externalAppKey:
+                description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+                type: string
+              dataSourceId:
+                type: string
+              universalDataSourceId:
+                type: string
+              udm:
+                type: string
+              pullUpdatesIntervalSeconds:
+                type: number
+              fullSyncIntervalSeconds:
+                type: number
+              collectionKey:
+                type: string
+              collectionParameters:
+                type: object
+              isCustomized:
+                type: boolean
+              userId:
+                type: string
+              tenantId:
+                type: string
+              dataSourceRevision:
+                type: string
+              universalDataSourceRevision:
+                type: string
+              defaultCollectionKey:
+                type: string
+              defaultCollectionParameters:
+                type: object
+              collectionSpec:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - collection
+                  key:
+                    type: string
+                  name:
+                    type: string
+                  parametersSchema:
+                    $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+                  fieldsSchema:
+                    $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+                  list:
+                    type: object
+                    properties:
+                      apiRequests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            path:
+                              type: object
+                            method:
+                              type: object
+                          required:
+                          - path
+                          - method
+                      filterFields:
+                        type: array
+                        items:
+                          type: string
+                  search:
+                    type: object
+                    properties:
+                      apiRequests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            path:
+                              type: object
+                            method:
+                              type: object
+                          required:
+                          - path
+                          - method
+                  match:
+                    type: object
+                    properties:
+                      apiRequests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            path:
+                              type: object
+                            method:
+                              type: object
+                          required:
+                          - path
+                          - method
+                      fields:
+                        type: array
+                        items:
+                          type: string
+                  findById:
+                    type: object
+                    properties:
+                      apiRequests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            path:
+                              type: object
+                            method:
+                              type: object
+                          required:
+                          - path
+                          - method
+                  create:
+                    type: object
+                    properties:
+                      apiRequests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            path:
+                              type: object
+                            method:
+                              type: object
+                          required:
+                          - path
+                          - method
+                      fields:
+                        type: array
+                        items:
+                          type: string
+                      requiredFields:
+                        type: array
+                        items:
+                          type: string
+                      excludedFields:
+                        type: array
+                        items:
+                          type: string
+                  update:
+                    type: object
+                    properties:
+                      apiRequests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            path:
+                              type: object
+                            method:
+                              type: object
+                          required:
+                          - path
+                          - method
+                      fields:
+                        type: array
+                        items:
+                          type: string
+                      excludedFields:
+                        type: array
+                        items:
+                          type: string
+                  delete:
+                    type: object
+                    properties:
+                      apiRequests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            path:
+                              type: object
+                            method:
+                              type: object
+                          required:
+                          - path
+                          - method
+                  events:
+                    type: object
+                    properties:
+                      created:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - push
+                            - pull
+                          isFullScan:
+                            type: boolean
+                          isIdOnly:
+                            type: boolean
+                        required:
+                        - type
+                      updated:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - push
+                            - pull
+                          isFullScan:
+                            type: boolean
+                          isIdOnly:
+                            type: boolean
+                        required:
+                        - type
+                      deleted:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - push
+                            - pull
+                          isFullScan:
+                            type: boolean
+                          isIdOnly:
+                            type: boolean
+                        required:
+                        - type
+                      all:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - push
+                            - pull
+                          isFullScan:
+                            type: boolean
+                          isIdOnly:
+                            type: boolean
+                        required:
+                        - type
+                    additionalProperties:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                          - push
+                          - pull
+                        isFullScan:
+                          type: boolean
+                        isIdOnly:
+                          type: boolean
+                      required:
+                      - type
+                  customFields:
+                    type: boolean
+                  udm:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        fields:
+                          type: array
+                          items:
+                            type: string
+                        extract:
+                          type: object
+                          additionalProperties:
+                            type: object
+                        parse:
+                          type: object
+                          additionalProperties:
+                            type: object
+                  find:
+                    type: object
+                    properties:
+                      apiRequests:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            path:
+                              type: object
+                            method:
+                              type: object
+                          required:
+                          - path
+                          - method
+                      queryFields:
+                        type: array
+                        items:
+                          type: string
+                required:
+                - type
+                - name
+              integration:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    description: Validation or setup errors when state is not READY.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DataSourcePaginatedResponse__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  logoUri:
+                    type: string
+                  connectorId:
+                    type: string
+                  connectorVersion:
+                    type: string
+                  oAuthCallbackUri:
+                    type: string
+                  parameters:
+                    type: object
+                  hasMissingParameters:
+                    type: boolean
+                  hasDocumentation:
+                    type: boolean
+                  hasOperations:
+                    type: boolean
+                  operationsCount:
+                    type: number
+                  hasData:
+                    type: boolean
+                  dataCollectionsCount:
+                    type: number
+                  hasEvents:
+                    type: boolean
+                  eventsCount:
+                    type: number
+                  hasGlobalWebhooks:
+                    type: boolean
+                  hasUdm:
+                    type: boolean
+                  isTest:
+                    type: boolean
+                  externalAppId:
+                    type: string
+                  authType:
+                    type: string
+                    enum:
+                    - integration-app-token
+                    - membrane-token
+                    - oauth2
+                    - oauth1
+                    - client-credentials
+                    - proxy
+                  optionsConfig:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        disabled:
+                          type: boolean
+                        parameters:
+                          type: object
+                          additionalProperties:
+                            type: object
+                required:
+                - id
+                - name
+                - logoUri
+              appliedToIntegrations:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    element:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Internal database ID of the element. Assigned by the API; unique per element.
+                        name:
+                          type: string
+                          description: Display name. Always present in API responses (filled by API if not set on create).
+                        uuid:
+                          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                          type: string
+                        key:
+                          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                          type: string
+                        description:
+                          description: Optional human-readable description.
+                          type: string
+                        meta:
+                          description: Optional key-value metadata.
+                          type: object
+                          additionalProperties:
+                            type: object
+                        state:
+                          description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                          type: string
+                          enum:
+                          - BUILDING
+                          - CLIENT_ACTION_REQUIRED
+                          - CONFIGURATION_ERROR
+                          - SETUP_FAILED
+                          - READY
+                          - DISCONNECTING
+                        errors:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/DataSourcePaginatedResponse__schema0'
+                        revision:
+                          description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                          type: string
+                        createdAt:
+                          description: ISO date when the element was created.
+                          type: string
+                        updatedAt:
+                          description: ISO date when the element was last updated.
+                          type: string
+                        archivedAt:
+                          description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+                          type: string
+                        isDeactivated:
+                          description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                          type: boolean
+                        isReadOnly:
+                          description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                          type: boolean
+                        integrationId:
+                          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+                          type: string
+                        integrationUuid:
+                          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+                          type: string
+                        integrationKey:
+                          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+                          type: string
+                        parentUuid:
+                          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+                          type: string
+                        parentKey:
+                          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+                          type: string
+                        connectionId:
+                          type: string
+                        instanceKey:
+                          type: string
+                        isUniversal:
+                          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+                          type: boolean
+                        externalAppId:
+                          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+                          type: string
+                        externalAppUuid:
+                          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+                          type: string
+                        externalAppKey:
+                          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+                          type: string
+                        dataSourceId:
+                          type: string
+                        universalDataSourceId:
+                          type: string
+                        udm:
+                          type: string
+                        pullUpdatesIntervalSeconds:
+                          type: number
+                        fullSyncIntervalSeconds:
+                          type: number
+                        collectionKey:
+                          type: string
+                        collectionParameters:
+                          type: object
+                        isCustomized:
+                          type: boolean
+                        userId:
+                          type: string
+                        tenantId:
+                          type: string
+                        dataSourceRevision:
+                          type: string
+                        universalDataSourceRevision:
+                          type: string
+                        defaultCollectionKey:
+                          type: string
+                        defaultCollectionParameters:
+                          type: object
+                        collectionSpec:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                              - collection
+                            key:
+                              type: string
+                            name:
+                              type: string
+                            parametersSchema:
+                              $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+                            fieldsSchema:
+                              $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+                            list:
+                              type: object
+                              properties:
+                                apiRequests:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      path:
+                                        type: object
+                                      method:
+                                        type: object
+                                    required:
+                                    - path
+                                    - method
+                                filterFields:
+                                  type: array
+                                  items:
+                                    type: string
+                            search:
+                              type: object
+                              properties:
+                                apiRequests:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      path:
+                                        type: object
+                                      method:
+                                        type: object
+                                    required:
+                                    - path
+                                    - method
+                            match:
+                              type: object
+                              properties:
+                                apiRequests:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      path:
+                                        type: object
+                                      method:
+                                        type: object
+                                    required:
+                                    - path
+                                    - method
+                                fields:
+                                  type: array
+                                  items:
+                                    type: string
+                            findById:
+                              type: object
+                              properties:
+                                apiRequests:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      path:
+                                        type: object
+                                      method:
+                                        type: object
+                                    required:
+                                    - path
+                                    - method
+                            create:
+                              type: object
+                              properties:
+                                apiRequests:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      path:
+                                        type: object
+                                      method:
+                                        type: object
+                                    required:
+                                    - path
+                                    - method
+                                fields:
+                                  type: array
+                                  items:
+                                    type: string
+                                requiredFields:
+                                  type: array
+                                  items:
+                                    type: string
+                                excludedFields:
+                                  type: array
+                                  items:
+                                    type: string
+                            update:
+                              type: object
+                              properties:
+                                apiRequests:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      path:
+                                        type: object
+                                      method:
+                                        type: object
+                                    required:
+                                    - path
+                                    - method
+                                fields:
+                                  type: array
+                                  items:
+                                    type: string
+                                excludedFields:
+                                  type: array
+                                  items:
+                                    type: string
+                            delete:
+                              type: object
+                              properties:
+                                apiRequests:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      path:
+                                        type: object
+                                      method:
+                                        type: object
+                                    required:
+                                    - path
+                                    - method
+                            events:
+                              type: object
+                              properties:
+                                created:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      enum:
+                                      - push
+                                      - pull
+                                    isFullScan:
+                                      type: boolean
+                                    isIdOnly:
+                                      type: boolean
+                                  required:
+                                  - type
+                                updated:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      enum:
+                                      - push
+                                      - pull
+                                    isFullScan:
+                                      type: boolean
+                                    isIdOnly:
+                                      type: boolean
+                                  required:
+                                  - type
+                                deleted:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      enum:
+                                      - push
+                                      - pull
+                                    isFullScan:
+                                      type: boolean
+                                    isIdOnly:
+                                      type: boolean
+                                  required:
+                                  - type
+                                all:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      enum:
+                                      - push
+                                      - pull
+                                    isFullScan:
+                                      type: boolean
+                                    isIdOnly:
+                                      type: boolean
+                                  required:
+                                  - type
+                              additionalProperties:
+                                type: object
+                                properties:
+                                  type:
+                                    type: string
+                                    enum:
+                                    - push
+                                    - pull
+                                  isFullScan:
+                                    type: boolean
+                                  isIdOnly:
+                                    type: boolean
+                                required:
+                                - type
+                            customFields:
+                              type: boolean
+                            udm:
+                              type: object
+                              additionalProperties:
+                                type: object
+                                properties:
+                                  fields:
+                                    type: array
+                                    items:
+                                      type: string
+                                  extract:
+                                    type: object
+                                    additionalProperties:
+                                      type: object
+                                  parse:
+                                    type: object
+                                    additionalProperties:
+                                      type: object
+                            find:
+                              type: object
+                              properties:
+                                apiRequests:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      path:
+                                        type: object
+                                      method:
+                                        type: object
+                                    required:
+                                    - path
+                                    - method
+                                queryFields:
+                                  type: array
+                                  items:
+                                    type: string
+                          required:
+                          - type
+                          - name
+                      required:
+                      - id
+                      - name
+                    integration:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Internal database ID of the element. Assigned by the API; unique per element.
+                        name:
+                          type: string
+                          description: Display name. Always present in API responses (filled by API if not set on create).
+                        uuid:
+                          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                          type: string
+                        key:
+                          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                          type: string
+                        description:
+                          description: Optional human-readable description.
+                          type: string
+                        meta:
+                          description: Optional key-value metadata.
+                          type: object
+                          additionalProperties:
+                            type: object
+                        state:
+                          description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                          type: string
+                          enum:
+                          - BUILDING
+                          - CLIENT_ACTION_REQUIRED
+                          - CONFIGURATION_ERROR
+                          - SETUP_FAILED
+                          - READY
+                          - DISCONNECTING
+                        errors:
+                          description: Validation or setup errors when state is not READY.
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/DataSourcePaginatedResponse__schema0'
+                        revision:
+                          description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                          type: string
+                        createdAt:
+                          description: ISO date when the element was created.
+                          type: string
+                        updatedAt:
+                          description: ISO date when the element was last updated.
+                          type: string
+                        archivedAt:
+                          type: string
+                        isDeactivated:
+                          type: boolean
+                        isReadOnly:
+                          description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                          type: boolean
+                        logoUri:
+                          type: string
+                        connectorId:
+                          type: string
+                        connectorVersion:
+                          type: string
+                        oAuthCallbackUri:
+                          type: string
+                        parameters:
+                          type: object
+                        hasMissingParameters:
+                          type: boolean
+                        hasDocumentation:
+                          type: boolean
+                        hasOperations:
+                          type: boolean
+                        operationsCount:
+                          type: number
+                        hasData:
+                          type: boolean
+                        dataCollectionsCount:
+                          type: number
+                        hasEvents:
+                          type: boolean
+                        eventsCount:
+                          type: number
+                        hasGlobalWebhooks:
+                          type: boolean
+                        hasUdm:
+                          type: boolean
+                        isTest:
+                          type: boolean
+                        externalAppId:
+                          type: string
+                        authType:
+                          type: string
+                          enum:
+                          - integration-app-token
+                          - membrane-token
+                          - oauth2
+                          - oauth1
+                          - client-credentials
+                          - proxy
+                        optionsConfig:
+                          type: object
+                          additionalProperties:
+                            type: object
+                            properties:
+                              disabled:
+                                type: boolean
+                              parameters:
+                                type: object
+                                additionalProperties:
+                                  type: object
+                      required:
+                      - id
+                      - name
+                      - logoUri
+                  required:
+                  - element
+                  - integration
+              user:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  meta:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  internalId:
+                    type: string
+                  fields:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  credentials:
+                    type: object
+                  lastActiveAt:
+                    type: string
+                  isTest:
+                    type: boolean
+                  isBillable:
+                    type: boolean
+                  isActive:
+                    type: boolean
+                  aiCreditsRolling30DayLimit:
+                    type:
+                    - number
+                    - 'null'
+                    minimum: 0
+                  createdAt:
+                    type: string
+                  archivedAt:
+                    type: string
+                required:
+                - id
+                - name
+                - internalId
+              connection:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                  userId:
+                    type: string
+                  tenantId:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                    - connector
+                    - mcp
+                  key:
+                    type: string
+                  isTest:
+                    type: boolean
+                  connected:
+                    type: boolean
+                  disconnected:
+                    description: Use `connected` instead.
+                    type: boolean
+                    deprecated: true
+                  isDefunct:
+                    type: boolean
+                  state:
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DataSourcePaginatedResponse__schema0'
+                  requestError:
+                    $ref: '#/components/schemas/DataSourcePaginatedResponse__schema0'
+                  error:
+                    description: Use `requestError` and `errors` instead.
+                    $ref: '#/components/schemas/DataSourcePaginatedResponse__schema0'
+                    deprecated: true
+                  integrationId:
+                    type: string
+                  connectorId:
+                    type: string
+                  externalAppId:
+                    type: string
+                  connectorVersion:
+                    type: string
+                  authOptionKey:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  lastActiveAt:
+                    type: string
+                  nextCredentialsRefreshAt:
+                    type: string
+                  nextRetryTimestamp:
+                    type: string
+                  retryAttempts:
+                    type: number
+                  canTest:
+                    type: boolean
+                  canRefreshCredentials:
+                    type: boolean
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  meta:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  buildingAgentSessionId:
+                    description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
+                    type: string
+                  clientAction:
+                    description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - connect
+                        - provide-input
+                      description:
+                        type: string
+                      uiUrl:
+                        type: string
+                      agentInstructions:
+                        type: string
+                      handoffAgentInstructions:
+                        type: string
+                    required:
+                    - type
+                    - description
+                required:
+                - id
+                - name
+                - userId
+                - createdAt
+                - updatedAt
+              dataSource:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DataSourcePaginatedResponse__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+                    type: string
+                  isDeactivated:
+                    description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  integrationId:
+                    description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+                    type: string
+                  integrationUuid:
+                    description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+                    type: string
+                  integrationKey:
+                    description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+                    type: string
+                  parentUuid:
+                    description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+                    type: string
+                  parentKey:
+                    description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+                    type: string
+                  connectionId:
+                    type: string
+                  instanceKey:
+                    type: string
+                  isUniversal:
+                    description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+                    type: boolean
+                  externalAppId:
+                    description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+                    type: string
+                  externalAppUuid:
+                    description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+                    type: string
+                  externalAppKey:
+                    description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+                    type: string
+                  dataSourceId:
+                    type: string
+                  universalDataSourceId:
+                    type: string
+                  udm:
+                    type: string
+                  pullUpdatesIntervalSeconds:
+                    type: number
+                  fullSyncIntervalSeconds:
+                    type: number
+                  collectionKey:
+                    type: string
+                  collectionParameters:
+                    type: object
+                  isCustomized:
+                    type: boolean
+                  userId:
+                    type: string
+                  tenantId:
+                    type: string
+                  dataSourceRevision:
+                    type: string
+                  universalDataSourceRevision:
+                    type: string
+                  defaultCollectionKey:
+                    type: string
+                  defaultCollectionParameters:
+                    type: object
+                  collectionSpec:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - collection
+                      key:
+                        type: string
+                      name:
+                        type: string
+                      parametersSchema:
+                        $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+                      fieldsSchema:
+                        $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+                      list:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          filterFields:
+                            type: array
+                            items:
+                              type: string
+                      search:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                      match:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          fields:
+                            type: array
+                            items:
+                              type: string
+                      findById:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                      create:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          fields:
+                            type: array
+                            items:
+                              type: string
+                          requiredFields:
+                            type: array
+                            items:
+                              type: string
+                          excludedFields:
+                            type: array
+                            items:
+                              type: string
+                      update:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          fields:
+                            type: array
+                            items:
+                              type: string
+                          excludedFields:
+                            type: array
+                            items:
+                              type: string
+                      delete:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                      events:
+                        type: object
+                        properties:
+                          created:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - push
+                                - pull
+                              isFullScan:
+                                type: boolean
+                              isIdOnly:
+                                type: boolean
+                            required:
+                            - type
+                          updated:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - push
+                                - pull
+                              isFullScan:
+                                type: boolean
+                              isIdOnly:
+                                type: boolean
+                            required:
+                            - type
+                          deleted:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - push
+                                - pull
+                              isFullScan:
+                                type: boolean
+                              isIdOnly:
+                                type: boolean
+                            required:
+                            - type
+                          all:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - push
+                                - pull
+                              isFullScan:
+                                type: boolean
+                              isIdOnly:
+                                type: boolean
+                            required:
+                            - type
+                        additionalProperties:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                              - push
+                              - pull
+                            isFullScan:
+                              type: boolean
+                            isIdOnly:
+                              type: boolean
+                          required:
+                          - type
+                      customFields:
+                        type: boolean
+                      udm:
+                        type: object
+                        additionalProperties:
+                          type: object
+                          properties:
+                            fields:
+                              type: array
+                              items:
+                                type: string
+                            extract:
+                              type: object
+                              additionalProperties:
+                                type: object
+                            parse:
+                              type: object
+                              additionalProperties:
+                                type: object
+                      find:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          queryFields:
+                            type: array
+                            items:
+                              type: string
+                    required:
+                    - type
+                    - name
+                required:
+                - id
+                - name
+              path:
+                type: string
+              defaultPath:
+                type: string
+            required:
+            - id
+            - name
+        cursor:
+          type: string
+      required:
+      - items
+    DataSourceApiResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal database ID of the element. Assigned by the API; unique per element.
+        name:
+          type: string
+          description: Display name. Always present in API responses (filled by API if not set on create).
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        state:
+          description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSourceApiResponse__schema0'
+        revision:
+          description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+          type: string
+        createdAt:
+          description: ISO date when the element was created.
+          type: string
+        updatedAt:
+          description: ISO date when the element was last updated.
+          type: string
+        archivedAt:
+          description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+          type: string
+        isDeactivated:
+          description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+          type: boolean
+        isReadOnly:
+          description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+          type: boolean
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          type: string
+        instanceKey:
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        dataSourceId:
+          type: string
+        universalDataSourceId:
+          type: string
+        udm:
+          type: string
+        pullUpdatesIntervalSeconds:
+          type: number
+        fullSyncIntervalSeconds:
+          type: number
+        collectionKey:
+          type: string
+        collectionParameters:
+          type: object
+        isCustomized:
+          type: boolean
+        userId:
+          type: string
+        tenantId:
+          type: string
+        dataSourceRevision:
+          type: string
+        universalDataSourceRevision:
+          type: string
+        defaultCollectionKey:
+          type: string
+        defaultCollectionParameters:
+          type: object
+        collectionSpec:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - collection
+            key:
+              type: string
+            name:
+              type: string
+            parametersSchema:
+              $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+            fieldsSchema:
+              $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+            list:
+              type: object
+              properties:
+                apiRequests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      method:
+                        type: object
+                    required:
+                    - path
+                    - method
+                filterFields:
+                  type: array
+                  items:
+                    type: string
+            search:
+              type: object
+              properties:
+                apiRequests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      method:
+                        type: object
+                    required:
+                    - path
+                    - method
+            match:
+              type: object
+              properties:
+                apiRequests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      method:
+                        type: object
+                    required:
+                    - path
+                    - method
+                fields:
+                  type: array
+                  items:
+                    type: string
+            findById:
+              type: object
+              properties:
+                apiRequests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      method:
+                        type: object
+                    required:
+                    - path
+                    - method
+            create:
+              type: object
+              properties:
+                apiRequests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      method:
+                        type: object
+                    required:
+                    - path
+                    - method
+                fields:
+                  type: array
+                  items:
+                    type: string
+                requiredFields:
+                  type: array
+                  items:
+                    type: string
+                excludedFields:
+                  type: array
+                  items:
+                    type: string
+            update:
+              type: object
+              properties:
+                apiRequests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      method:
+                        type: object
+                    required:
+                    - path
+                    - method
+                fields:
+                  type: array
+                  items:
+                    type: string
+                excludedFields:
+                  type: array
+                  items:
+                    type: string
+            delete:
+              type: object
+              properties:
+                apiRequests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      method:
+                        type: object
+                    required:
+                    - path
+                    - method
+            events:
+              type: object
+              properties:
+                created:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - push
+                      - pull
+                    isFullScan:
+                      type: boolean
+                    isIdOnly:
+                      type: boolean
+                  required:
+                  - type
+                updated:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - push
+                      - pull
+                    isFullScan:
+                      type: boolean
+                    isIdOnly:
+                      type: boolean
+                  required:
+                  - type
+                deleted:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - push
+                      - pull
+                    isFullScan:
+                      type: boolean
+                    isIdOnly:
+                      type: boolean
+                  required:
+                  - type
+                all:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - push
+                      - pull
+                    isFullScan:
+                      type: boolean
+                    isIdOnly:
+                      type: boolean
+                  required:
+                  - type
+              additionalProperties:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - push
+                    - pull
+                  isFullScan:
+                    type: boolean
+                  isIdOnly:
+                    type: boolean
+                required:
+                - type
+            customFields:
+              type: boolean
+            udm:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  fields:
+                    type: array
+                    items:
+                      type: string
+                  extract:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  parse:
+                    type: object
+                    additionalProperties:
+                      type: object
+            find:
+              type: object
+              properties:
+                apiRequests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      method:
+                        type: object
+                    required:
+                    - path
+                    - method
+                queryFields:
+                  type: array
+                  items:
+                    type: string
+          required:
+          - type
+          - name
+        integration:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/DataSourceApiResponse__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            logoUri:
+              type: string
+            connectorId:
+              type: string
+            connectorVersion:
+              type: string
+            oAuthCallbackUri:
+              type: string
+            parameters:
+              type: object
+            hasMissingParameters:
+              type: boolean
+            hasDocumentation:
+              type: boolean
+            hasOperations:
+              type: boolean
+            operationsCount:
+              type: number
+            hasData:
+              type: boolean
+            dataCollectionsCount:
+              type: number
+            hasEvents:
+              type: boolean
+            eventsCount:
+              type: number
+            hasGlobalWebhooks:
+              type: boolean
+            hasUdm:
+              type: boolean
+            isTest:
+              type: boolean
+            externalAppId:
+              type: string
+            authType:
+              type: string
+              enum:
+              - integration-app-token
+              - membrane-token
+              - oauth2
+              - oauth1
+              - client-credentials
+              - proxy
+            optionsConfig:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  disabled:
+                    type: boolean
+                  parameters:
+                    type: object
+                    additionalProperties:
+                      type: object
+          required:
+          - id
+          - name
+          - logoUri
+        appliedToIntegrations:
+          type: array
+          items:
+            type: object
+            properties:
+              element:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DataSourceApiResponse__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+                    type: string
+                  isDeactivated:
+                    description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  integrationId:
+                    description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+                    type: string
+                  integrationUuid:
+                    description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+                    type: string
+                  integrationKey:
+                    description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+                    type: string
+                  parentUuid:
+                    description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+                    type: string
+                  parentKey:
+                    description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+                    type: string
+                  connectionId:
+                    type: string
+                  instanceKey:
+                    type: string
+                  isUniversal:
+                    description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+                    type: boolean
+                  externalAppId:
+                    description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+                    type: string
+                  externalAppUuid:
+                    description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+                    type: string
+                  externalAppKey:
+                    description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+                    type: string
+                  dataSourceId:
+                    type: string
+                  universalDataSourceId:
+                    type: string
+                  udm:
+                    type: string
+                  pullUpdatesIntervalSeconds:
+                    type: number
+                  fullSyncIntervalSeconds:
+                    type: number
+                  collectionKey:
+                    type: string
+                  collectionParameters:
+                    type: object
+                  isCustomized:
+                    type: boolean
+                  userId:
+                    type: string
+                  tenantId:
+                    type: string
+                  dataSourceRevision:
+                    type: string
+                  universalDataSourceRevision:
+                    type: string
+                  defaultCollectionKey:
+                    type: string
+                  defaultCollectionParameters:
+                    type: object
+                  collectionSpec:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - collection
+                      key:
+                        type: string
+                      name:
+                        type: string
+                      parametersSchema:
+                        $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+                      fieldsSchema:
+                        $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+                      list:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          filterFields:
+                            type: array
+                            items:
+                              type: string
+                      search:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                      match:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          fields:
+                            type: array
+                            items:
+                              type: string
+                      findById:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                      create:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          fields:
+                            type: array
+                            items:
+                              type: string
+                          requiredFields:
+                            type: array
+                            items:
+                              type: string
+                          excludedFields:
+                            type: array
+                            items:
+                              type: string
+                      update:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          fields:
+                            type: array
+                            items:
+                              type: string
+                          excludedFields:
+                            type: array
+                            items:
+                              type: string
+                      delete:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                      events:
+                        type: object
+                        properties:
+                          created:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - push
+                                - pull
+                              isFullScan:
+                                type: boolean
+                              isIdOnly:
+                                type: boolean
+                            required:
+                            - type
+                          updated:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - push
+                                - pull
+                              isFullScan:
+                                type: boolean
+                              isIdOnly:
+                                type: boolean
+                            required:
+                            - type
+                          deleted:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - push
+                                - pull
+                              isFullScan:
+                                type: boolean
+                              isIdOnly:
+                                type: boolean
+                            required:
+                            - type
+                          all:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - push
+                                - pull
+                              isFullScan:
+                                type: boolean
+                              isIdOnly:
+                                type: boolean
+                            required:
+                            - type
+                        additionalProperties:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                              - push
+                              - pull
+                            isFullScan:
+                              type: boolean
+                            isIdOnly:
+                              type: boolean
+                          required:
+                          - type
+                      customFields:
+                        type: boolean
+                      udm:
+                        type: object
+                        additionalProperties:
+                          type: object
+                          properties:
+                            fields:
+                              type: array
+                              items:
+                                type: string
+                            extract:
+                              type: object
+                              additionalProperties:
+                                type: object
+                            parse:
+                              type: object
+                              additionalProperties:
+                                type: object
+                      find:
+                        type: object
+                        properties:
+                          apiRequests:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: object
+                                method:
+                                  type: object
+                              required:
+                              - path
+                              - method
+                          queryFields:
+                            type: array
+                            items:
+                              type: string
+                    required:
+                    - type
+                    - name
+                required:
+                - id
+                - name
+              integration:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    description: Validation or setup errors when state is not READY.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DataSourceApiResponse__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  logoUri:
+                    type: string
+                  connectorId:
+                    type: string
+                  connectorVersion:
+                    type: string
+                  oAuthCallbackUri:
+                    type: string
+                  parameters:
+                    type: object
+                  hasMissingParameters:
+                    type: boolean
+                  hasDocumentation:
+                    type: boolean
+                  hasOperations:
+                    type: boolean
+                  operationsCount:
+                    type: number
+                  hasData:
+                    type: boolean
+                  dataCollectionsCount:
+                    type: number
+                  hasEvents:
+                    type: boolean
+                  eventsCount:
+                    type: number
+                  hasGlobalWebhooks:
+                    type: boolean
+                  hasUdm:
+                    type: boolean
+                  isTest:
+                    type: boolean
+                  externalAppId:
+                    type: string
+                  authType:
+                    type: string
+                    enum:
+                    - integration-app-token
+                    - membrane-token
+                    - oauth2
+                    - oauth1
+                    - client-credentials
+                    - proxy
+                  optionsConfig:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        disabled:
+                          type: boolean
+                        parameters:
+                          type: object
+                          additionalProperties:
+                            type: object
+                required:
+                - id
+                - name
+                - logoUri
+            required:
+            - element
+            - integration
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            internalId:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            credentials:
+              type: object
+            lastActiveAt:
+              type: string
+            isTest:
+              type: boolean
+            isBillable:
+              type: boolean
+            isActive:
+              type: boolean
+            aiCreditsRolling30DayLimit:
+              type:
+              - number
+              - 'null'
+              minimum: 0
+            createdAt:
+              type: string
+            archivedAt:
+              type: string
+          required:
+          - id
+          - name
+          - internalId
+        connection:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+            userId:
+              type: string
+            tenantId:
+              type: string
+            type:
+              type: string
+              enum:
+              - connector
+              - mcp
+            key:
+              type: string
+            isTest:
+              type: boolean
+            connected:
+              type: boolean
+            disconnected:
+              description: Use `connected` instead.
+              type: boolean
+              deprecated: true
+            isDefunct:
+              type: boolean
+            state:
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/DataSourceApiResponse__schema0'
+            requestError:
+              $ref: '#/components/schemas/DataSourceApiResponse__schema0'
+            error:
+              description: Use `requestError` and `errors` instead.
+              $ref: '#/components/schemas/DataSourceApiResponse__schema0'
+              deprecated: true
+            integrationId:
+              type: string
+            connectorId:
+              type: string
+            externalAppId:
+              type: string
+            connectorVersion:
+              type: string
+            authOptionKey:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+            lastActiveAt:
+              type: string
+            nextCredentialsRefreshAt:
+              type: string
+            nextRetryTimestamp:
+              type: string
+            retryAttempts:
+              type: number
+            canTest:
+              type: boolean
+            canRefreshCredentials:
+              type: boolean
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            buildingAgentSessionId:
+              description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
+              type: string
+            clientAction:
+              description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - connect
+                  - provide-input
+                description:
+                  type: string
+                uiUrl:
+                  type: string
+                agentInstructions:
+                  type: string
+                handoffAgentInstructions:
+                  type: string
+              required:
+              - type
+              - description
+          required:
+          - id
+          - name
+          - userId
+          - createdAt
+          - updatedAt
+        dataSource:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/DataSourceApiResponse__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+              type: string
+            isDeactivated:
+              description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            integrationId:
+              description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+              type: string
+            integrationUuid:
+              description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+              type: string
+            integrationKey:
+              description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+              type: string
+            parentUuid:
+              description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+              type: string
+            parentKey:
+              description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+              type: string
+            connectionId:
+              type: string
+            instanceKey:
+              type: string
+            isUniversal:
+              description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+              type: boolean
+            externalAppId:
+              description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+              type: string
+            externalAppUuid:
+              description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+              type: string
+            externalAppKey:
+              description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+              type: string
+            dataSourceId:
+              type: string
+            universalDataSourceId:
+              type: string
+            udm:
+              type: string
+            pullUpdatesIntervalSeconds:
+              type: number
+            fullSyncIntervalSeconds:
+              type: number
+            collectionKey:
+              type: string
+            collectionParameters:
+              type: object
+            isCustomized:
+              type: boolean
+            userId:
+              type: string
+            tenantId:
+              type: string
+            dataSourceRevision:
+              type: string
+            universalDataSourceRevision:
+              type: string
+            defaultCollectionKey:
+              type: string
+            defaultCollectionParameters:
+              type: object
+            collectionSpec:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - collection
+                key:
+                  type: string
+                name:
+                  type: string
+                parametersSchema:
+                  $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+                fieldsSchema:
+                  $ref: '#/components/schemas/DataSourceApiResponse__schema1'
+                list:
+                  type: object
+                  properties:
+                    apiRequests:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          path:
+                            type: object
+                          method:
+                            type: object
+                        required:
+                        - path
+                        - method
+                    filterFields:
+                      type: array
+                      items:
+                        type: string
+                search:
+                  type: object
+                  properties:
+                    apiRequests:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          path:
+                            type: object
+                          method:
+                            type: object
+                        required:
+                        - path
+                        - method
+                match:
+                  type: object
+                  properties:
+                    apiRequests:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          path:
+                            type: object
+                          method:
+                            type: object
+                        required:
+                        - path
+                        - method
+                    fields:
+                      type: array
+                      items:
+                        type: string
+                findById:
+                  type: object
+                  properties:
+                    apiRequests:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          path:
+                            type: object
+                          method:
+                            type: object
+                        required:
+                        - path
+                        - method
+                create:
+                  type: object
+                  properties:
+                    apiRequests:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          path:
+                            type: object
+                          method:
+                            type: object
+                        required:
+                        - path
+                        - method
+                    fields:
+                      type: array
+                      items:
+                        type: string
+                    requiredFields:
+                      type: array
+                      items:
+                        type: string
+                    excludedFields:
+                      type: array
+                      items:
+                        type: string
+                update:
+                  type: object
+                  properties:
+                    apiRequests:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          path:
+                            type: object
+                          method:
+                            type: object
+                        required:
+                        - path
+                        - method
+                    fields:
+                      type: array
+                      items:
+                        type: string
+                    excludedFields:
+                      type: array
+                      items:
+                        type: string
+                delete:
+                  type: object
+                  properties:
+                    apiRequests:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          path:
+                            type: object
+                          method:
+                            type: object
+                        required:
+                        - path
+                        - method
+                events:
+                  type: object
+                  properties:
+                    created:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                          - push
+                          - pull
+                        isFullScan:
+                          type: boolean
+                        isIdOnly:
+                          type: boolean
+                      required:
+                      - type
+                    updated:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                          - push
+                          - pull
+                        isFullScan:
+                          type: boolean
+                        isIdOnly:
+                          type: boolean
+                      required:
+                      - type
+                    deleted:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                          - push
+                          - pull
+                        isFullScan:
+                          type: boolean
+                        isIdOnly:
+                          type: boolean
+                      required:
+                      - type
+                    all:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                          - push
+                          - pull
+                        isFullScan:
+                          type: boolean
+                        isIdOnly:
+                          type: boolean
+                      required:
+                      - type
+                  additionalProperties:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - push
+                        - pull
+                      isFullScan:
+                        type: boolean
+                      isIdOnly:
+                        type: boolean
+                    required:
+                    - type
+                customFields:
+                  type: boolean
+                udm:
+                  type: object
+                  additionalProperties:
+                    type: object
+                    properties:
+                      fields:
+                        type: array
+                        items:
+                          type: string
+                      extract:
+                        type: object
+                        additionalProperties:
+                          type: object
+                      parse:
+                        type: object
+                        additionalProperties:
+                          type: object
+                find:
+                  type: object
+                  properties:
+                    apiRequests:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          path:
+                            type: object
+                          method:
+                            type: object
+                        required:
+                        - path
+                        - method
+                    queryFields:
+                      type: array
+                      items:
+                        type: string
+              required:
+              - type
+              - name
+          required:
+          - id
+          - name
+        path:
+          type: string
+        defaultPath:
+          type: string
+      required:
+      - id
+      - name
+    UpdateDataSource:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          type: string
+        instanceKey:
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        dataSourceId:
+          type: string
+        universalDataSourceId:
+          type: string
+        udm:
+          type: string
+        pullUpdatesIntervalSeconds:
+          type: number
+        fullSyncIntervalSeconds:
+          type: number
+        collectionKey:
+          type: string
+        collectionParameters:
+          type: object
+        path:
+          deprecated: true
+          type: string
+        defaultPath:
+          deprecated: true
+          type: string
+    DataSourcePaginatedResponse__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+        items:
+          $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSourcePaginatedResponse__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    DataSourceApiResponse__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/DataSourceApiResponse__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    DataSourceExportProperties:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationUuid:
+          type: string
+        parentUuid:
+          type: string
+        externalAppUuid:
+          type: string
+        isCustomized:
+          type: boolean
+        isUniversal:
+          type: boolean
+        instanceKey:
+          type: string
+        udm:
+          type: string
+        pullUpdatesIntervalSeconds:
+          type: number
+        fullSyncIntervalSeconds:
+          type: number
+        collectionKey:
+          type: string
+        collectionParameters:
+          type: object
+        path:
+          deprecated: true
+          type: string
+        defaultPath:
+          deprecated: true
+          type: string
+      required:
+      - uuid
+      - key
+    DataSourcePaginatedResponse__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/DataSourcePaginatedResponse__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

@@ -1,0 +1,365 @@
+openapi: 3.2.0
+info:
+  title: Membrane Connected Products API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: ConnectedProducts
+paths:
+  /connected-products:
+    get:
+      operationId: listConnectedProducts
+      parameters:
+      - name: type
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - ai-agent
+          - app
+      - name: audience
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - personal
+          - customers
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Text search query to filter results
+        schema:
+          type: string
+      - name: includeArchived
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedProductsPaginatedResponseDto'
+      summary: List all connected products
+      tags:
+      - ConnectedProducts
+    post:
+      operationId: createConnectedProduct
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConnectedProductRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedProductApiResponseDto'
+      summary: Create a new connected product
+      tags:
+      - ConnectedProducts
+  /connected-products/{elementSelector}/restore:
+    post:
+      operationId: restoreConnectedProduct
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseWorkspaceElementDto'
+      summary: Restore (unarchive) connected product
+      tags:
+      - ConnectedProducts
+  /connected-products/{id}:
+    get:
+      operationId: getConnectedProduct
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedProductApiResponseDto'
+      summary: Get connected product by ID
+      tags:
+      - ConnectedProducts
+    put:
+      operationId: updateConnectedProduct
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConnectedProductRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedProductApiResponseDto'
+      summary: Update connected product completely
+      tags:
+      - ConnectedProducts
+    patch:
+      operationId: patchConnectedProduct
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConnectedProductRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedProductApiResponseDto'
+      summary: Update connected product partially
+      tags:
+      - ConnectedProducts
+    delete:
+      operationId: deleteConnectedProduct
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Delete a connected product
+      tags:
+      - ConnectedProducts
+components:
+  schemas:
+    ConnectedProductsPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              key:
+                type: string
+              type:
+                type: string
+                enum:
+                - ai-agent
+                - app
+              audience:
+                type: string
+                enum:
+                - personal
+                - customers
+              parameters:
+                type: object
+                properties:
+                  agentType:
+                    type: string
+                additionalProperties:
+                  type: object
+              isConnected:
+                type: boolean
+              lastApiRequestDate:
+                type: string
+              createdAt:
+                type: string
+              archivedAt:
+                type: string
+            required:
+            - id
+            - name
+            - key
+            - type
+        cursor:
+          type: string
+      required:
+      - items
+    UpdateConnectedProductRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+          - ai-agent
+          - app
+        audience:
+          type: string
+          enum:
+          - personal
+          - customers
+        parameters:
+          type: object
+          properties:
+            agentType:
+              type: string
+          additionalProperties:
+            type: object
+    CreateConnectedProductRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+          - ai-agent
+          - app
+        audience:
+          type: string
+          enum:
+          - personal
+          - customers
+        parameters:
+          type: object
+          properties:
+            agentType:
+              type: string
+          additionalProperties:
+            type: object
+      required:
+      - name
+      - type
+    ConnectedProductApiResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+          - ai-agent
+          - app
+        audience:
+          type: string
+          enum:
+          - personal
+          - customers
+        parameters:
+          type: object
+          properties:
+            agentType:
+              type: string
+          additionalProperties:
+            type: object
+        isConnected:
+          type: boolean
+        lastApiRequestDate:
+          type: string
+        createdAt:
+          type: string
+        archivedAt:
+          type: string
+      required:
+      - id
+      - name
+      - key
+      - type
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

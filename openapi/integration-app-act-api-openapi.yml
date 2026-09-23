@@ -1,0 +1,112 @@
+openapi: 3.2.0
+info:
+  title: Membrane Act API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: Act
+paths:
+  /act:
+    post:
+      operationId: act
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActResponseDto'
+      summary: Run an action
+      tags:
+      - Act
+components:
+  schemas:
+    ActResponseDto:
+      type: object
+      properties:
+        output:
+          type: object
+        actionRunId:
+          type: string
+    ActRequestDto:
+      type: object
+      properties:
+        id:
+          description: ID of the action to run.
+          type: string
+        key:
+          description: Key of the action to run. If the same key exists across multiple integrations, also pass `integrationId`, `integrationKey`, or `connectionId` so we know which one you mean.
+          type: string
+        api:
+          description: Inline HTTP request spec, sent through the resolved connection's auth layer and base URL. Pair with `connectionId`, `connectionKey`, `integrationId`, or `integrationKey` to pick the connection.
+          type: object
+          properties:
+            method:
+              type: string
+              enum:
+              - GET
+              - POST
+              - PATCH
+              - PUT
+              - DELETE
+              description: HTTP method to use.
+            path:
+              description: Path appended to the connection's base URL, e.g. `/v2/users/me`. Required.
+              type: string
+            body:
+              description: Request body. For JSON APIs, pass a plain object.
+            headers:
+              description: Additional HTTP headers.
+              type: object
+              additionalProperties:
+                type: string
+            query:
+              description: Query-string parameters.
+              type: object
+              additionalProperties:
+                anyOf:
+                - type: string
+                - type: number
+                - type: boolean
+          required:
+          - method
+        code:
+          description: Inline JavaScript executed in a sandbox. The module must export a function that receives `{ input, membrane, ... }`. Its return value becomes the action output.
+          type: string
+        integrationId:
+          description: ID of the integration to run the action on. When `key` is provided, looks up the action within this integration. When no connection is specified, runs against this integration's default connection.
+          type: string
+        integrationKey:
+          description: Key of the integration to run the action on. When `key` is provided, looks up the action within this integration. When no connection is specified, runs against this integration's default connection.
+          type: string
+        connectionId:
+          description: ID of the connection to run the action against. If a connection-level version of the action exists on this connection, that version is used; otherwise the integration-level or universal action is used.
+          type: string
+        connectionKey:
+          description: Key of the connection to run the action against. Use when you have a stable key for the connection instead of an ID.
+          type: string
+        input:
+          description: Input passed to the action, matching its input schema.
+        meta:
+          description: Arbitrary metadata stored on the action run log.
+          type: object
+          additionalProperties:
+            type: object
+      additionalProperties: false
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

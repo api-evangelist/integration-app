@@ -1,0 +1,845 @@
+openapi: 3.2.0
+info:
+  title: Membrane App Event Types API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: AppEventTypes
+paths:
+  /app-event-types:
+    get:
+      operationId: listAppEventTypes
+      parameters:
+      - name: search
+        required: false
+        in: query
+        description: Text search query to filter results
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: includeArchived
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto'
+      summary: List internal event types
+      tags:
+      - AppEventTypes
+    post:
+      operationId: createAppEventType
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAppEventTypeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEventTypeApiResponseDto'
+      summary: Create internal event type
+      tags:
+      - AppEventTypes
+  /app-event-types/{elementSelector}/dependencies:
+    get:
+      operationId: getAppEventTypeDependencies
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+      summary: Get dependencies of a app event type
+      tags:
+      - AppEventTypes
+  /app-event-types/{elementSelector}/refresh:
+    post:
+      operationId: refreshAppEventType
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseWorkspaceElementDto'
+      summary: Refresh app event type
+      tags:
+      - AppEventTypes
+  /app-event-types/{elementSelector}/restore:
+    post:
+      operationId: restoreAppEventType
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseWorkspaceElementDto'
+      summary: Restore (unarchive) app event type
+      tags:
+      - AppEventTypes
+  /app-event-types/{id}:
+    get:
+      operationId: getAppEventType
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEventTypeApiResponseDto'
+      summary: Get internal event type
+      tags:
+      - AppEventTypes
+    put:
+      operationId: updateAppEventType
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppEventTypeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEventTypeApiResponseDto'
+      summary: Update internal event type
+      tags:
+      - AppEventTypes
+    patch:
+      operationId: patchAppEventType
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppEventTypeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEventTypeApiResponseDto'
+      summary: Patch internal event type
+      tags:
+      - AppEventTypes
+    delete:
+      operationId: deleteAppEventType
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Archive internal event type
+      tags:
+      - AppEventTypes
+  /app-event-types/{id}/export:
+    get:
+      operationId: exportAppEventType
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEventTypeExportDto'
+      summary: Export Internal Event Type to JSON
+      tags:
+      - AppEventTypes
+  /app-event-types/{id}/schema:
+    get:
+      operationId: getAppEventTypeSchema
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppEventSubscriptionSchemaResponseDto'
+      summary: Get internal event type schema
+      tags:
+      - AppEventTypes
+components:
+  schemas:
+    AppEventTypesPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Internal database ID of the element. Assigned by the API; unique per element.
+              name:
+                type: string
+                description: Display name. Always present in API responses (filled by API if not set on create).
+              uuid:
+                description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                type: string
+              key:
+                description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                type: string
+              description:
+                description: Optional human-readable description.
+                type: string
+              meta:
+                description: Optional key-value metadata.
+                type: object
+                additionalProperties:
+                  type: object
+              state:
+                description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                type: string
+                enum:
+                - BUILDING
+                - CLIENT_ACTION_REQUIRED
+                - CONFIGURATION_ERROR
+                - SETUP_FAILED
+                - READY
+                - DISCONNECTING
+              errors:
+                description: Validation or setup errors when state is not READY.
+                type: array
+                items:
+                  $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema0'
+              revision:
+                type: string
+              createdAt:
+                description: ISO date when the element was created.
+                type: string
+              updatedAt:
+                description: ISO date when the element was last updated.
+                type: string
+              archivedAt:
+                type: string
+              isDeactivated:
+                description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                type: boolean
+              isReadOnly:
+                description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                type: boolean
+              webhookKey:
+                type: string
+              subscribeRequest:
+                type: object
+                properties:
+                  method:
+                    type: string
+                  uri:
+                    type: object
+                  headers:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  query:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  body:
+                    type: object
+                required:
+                - uri
+              example:
+                type: object
+              schema:
+                $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
+              globalWebhookUri:
+                type: string
+              tenantIdFormula:
+                type: object
+              userIdFormula:
+                type: object
+            required:
+            - id
+            - name
+            - revision
+            - webhookKey
+            - globalWebhookUri
+        cursor:
+          type: string
+      required:
+      - items
+    AppEventSubscriptionSchemaResponseDto:
+      type: object
+      properties: {}
+    AppEventTypesPaginatedResponseDto__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
+        items:
+          $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    AppEventTypeExportDto:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        uuid:
+          type: string
+        example:
+          type: object
+        schema:
+          type: object
+        subscribeRequest:
+          type: object
+          properties:
+            method:
+              type: string
+            uri:
+              type: string
+            body:
+              type: object
+            query:
+              type: object
+            headers:
+              type: object
+          required:
+          - uri
+        tenantIdFormula:
+          type: object
+        userIdFormula:
+          type: object
+      required:
+      - name
+      - uuid
+    AppEventTypeApiResponseDto__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AppEventTypeApiResponseDto__schema1'
+        items:
+          $ref: '#/components/schemas/AppEventTypeApiResponseDto__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/AppEventTypeApiResponseDto__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppEventTypeApiResponseDto__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    AppEventTypesPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    AppEventTypeApiResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AppEventTypeApiResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    UpdateAppEventTypeDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        schema:
+          type: object
+        example:
+          type: object
+        tenantIdFormula:
+          type: object
+        userIdFormula:
+          type: object
+        subscribeRequest:
+          type: object
+          properties:
+            method:
+              type: string
+            uri:
+              type: string
+            body:
+              type: object
+            query:
+              type: object
+            headers:
+              type: object
+          required:
+          - uri
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
+    AppEventTypeApiResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal database ID of the element. Assigned by the API; unique per element.
+        name:
+          type: string
+          description: Display name. Always present in API responses (filled by API if not set on create).
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        state:
+          description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          description: Validation or setup errors when state is not READY.
+          type: array
+          items:
+            $ref: '#/components/schemas/AppEventTypeApiResponseDto__schema0'
+        revision:
+          type: string
+        createdAt:
+          description: ISO date when the element was created.
+          type: string
+        updatedAt:
+          description: ISO date when the element was last updated.
+          type: string
+        archivedAt:
+          type: string
+        isDeactivated:
+          description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+          type: boolean
+        isReadOnly:
+          description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+          type: boolean
+        webhookKey:
+          type: string
+        subscribeRequest:
+          type: object
+          properties:
+            method:
+              type: string
+            uri:
+              type: object
+            headers:
+              type: object
+              additionalProperties:
+                type: object
+            query:
+              type: object
+              additionalProperties:
+                type: object
+            body:
+              type: object
+          required:
+          - uri
+        example:
+          type: object
+        schema:
+          $ref: '#/components/schemas/AppEventTypeApiResponseDto__schema1'
+        globalWebhookUri:
+          type: string
+        tenantIdFormula:
+          type: object
+        userIdFormula:
+          type: object
+      required:
+      - id
+      - name
+      - revision
+      - webhookKey
+      - globalWebhookUri
+    CreateAppEventTypeDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        schema:
+          type: object
+        example:
+          type: object
+        tenantIdFormula:
+          type: object
+        userIdFormula:
+          type: object
+        subscribeRequest:
+          type: object
+          properties:
+            method:
+              type: string
+            uri:
+              type: string
+            body:
+              type: object
+            query:
+              type: object
+            headers:
+              type: object
+          required:
+          - uri
+      required:
+      - name
+      - key
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

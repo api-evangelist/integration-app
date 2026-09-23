@@ -1,0 +1,49 @@
+openapi: 3.2.0
+info:
+  title: Export Membrane Interfaces API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: ExportMembraneInterfaces
+paths:
+  /export:
+    get:
+      operationId: exportWorkspace
+      parameters:
+      - name: simplified
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: The job id and access key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncRequestTriggerResponseDto'
+      summary: Export all workspace elements
+      tags:
+      - ExportMembraneInterfaces
+components:
+  schemas:
+    AsyncRequestTriggerResponseDto:
+      type: object
+      properties:
+        jobId:
+          type: string
+        accessKey:
+          type: string
+      required:
+      - jobId
+      - accessKey
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

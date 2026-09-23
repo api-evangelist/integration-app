@@ -1,28 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Membrane (formerly Integration.app) Platform Actions API
-  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
-
-    API for building embedded and agentic integrations across 100,000+ apps.
-
-    The REST API surfaces resources for connections, connectors, integrations,
-
-    flows, actions, data collections, customers, packages, app event
-
-    subscriptions, MCP-style agent sessions, and observability logs. Most
-
-    selectable resources accept either an id or a key as `{selector}`.
-
-    '
+  title: Integration App Actions API
   version: '1.0'
-  contact:
-    name: Membrane Documentation
-    url: https://docs.getmembrane.com
+  description: 'Operations tagged Actions across 2 of this provider''s published API definitions: integration-app-openapi.yml, integration-app-actions-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.getmembrane.com
   description: Production API
-security:
-- bearerAuth: []
 tags:
 - name: Actions
 paths:
@@ -35,6 +18,8 @@ paths:
       responses:
         '200':
           description: Action list
+      security:
+      - bearerAuth: []
     post:
       tags:
       - Actions
@@ -49,6 +34,11 @@ paths:
       responses:
         '201':
           description: Action created
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /actions/{selector}:
     parameters:
     - $ref: '#/components/parameters/Selector'
@@ -64,6 +54,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Action'
+      security:
+      - bearerAuth: []
     put:
       tags:
       - Actions
@@ -78,6 +70,8 @@ paths:
       responses:
         '200':
           description: Updated
+      security:
+      - bearerAuth: []
     patch:
       tags:
       - Actions
@@ -92,6 +86,471 @@ paths:
       responses:
         '200':
           description: Updated
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+    delete:
+      operationId: archiveAction
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Archive action
+      tags:
+      - Actions
+      security:
+      - bearerAuth: []
+  /actions/{selector}/clone:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      operationId: cloneAction
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionApiResponse'
+      summary: Clone action
+      tags:
+      - Actions
+      security:
+      - bearer: []
+  /actions/{selector}/dependencies:
+    servers:
+    - url: https://api.getmembrane.com
+    get:
+      operationId: getActionDependencies
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+      summary: Get dependencies of action (flat interface)
+      tags:
+      - Actions
+      security:
+      - bearer: []
+  /actions/{selector}/export:
+    servers:
+    - url: https://api.getmembrane.com
+    get:
+      operationId: exportAction
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionExportProperties'
+      summary: Export action (flat interface)
+      tags:
+      - Actions
+      security:
+      - bearer: []
+  /actions/{selector}/refresh:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      operationId: refreshAction
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionApiResponse'
+      summary: Refresh action
+      tags:
+      - Actions
+      security:
+      - bearer: []
+  /actions/{selector}/reset:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      description: Refreshes all the dependencies, then resets the element to the default state (from parent)
+      operationId: resetAction
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionApiResponse'
+      summary: Reset action
+      tags:
+      - Actions
+      security:
+      - bearer: []
+  /actions/{selector}/restore:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      operationId: restoreAction
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionApiResponse'
+      summary: Restore action (flat interface)
+      tags:
+      - Actions
+      security:
+      - bearer: []
+  /actions/{selector}/run:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      deprecated: true
+      description: 'Deprecated: Use POST /act with { action: { id } } or { integrationKey, key } in the body instead.'
+      operationId: runAction
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActionRunRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionRunResponseDto'
+      summary: Run an action
+      tags:
+      - Actions
+      security:
+      - bearer: []
 components:
   schemas:
     Action:
@@ -109,6 +568,1005 @@ components:
           type: object
         outputSchema:
           type: object
+    ActionExportProperties:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationUuid:
+          type: string
+        parentUuid:
+          type: string
+        externalAppUuid:
+          type: string
+        isCustomized:
+          type: boolean
+        isUniversal:
+          type: boolean
+        instanceKey:
+          description: Key for the connection-level instance when multiple exist per connection. Same semantics as base integration-level property.
+          type: string
+        inputSchema:
+          description: JSON Schema for the action input. Used by the action engine for template output schema, run-time variables, and output mapping.
+          $ref: '#/components/schemas/ActionExportProperties__schema0'
+        type:
+          description: Action type (e.g. ConnectorOperation, RunJavascript). Determines which handler runs and which config schema is used for validation.
+          type: string
+          enum:
+          - list-data-records
+          - find-data-record-by-id
+          - match-data-record
+          - create-data-record
+          - find-or-create-data-record
+          - update-data-record
+          - delete-data-record
+          - search-data-record
+          - connector-operation
+          - api-request-to-external-app
+          - api-request-to-your-app
+          - http-request
+          - run-javascript
+          - api-request
+        config:
+          description: Type-specific configuration object. Validated by the handler's config schema; passed to handler setup/run and getTemplateOutputSchema.
+          type: object
+          properties: {}
+          additionalProperties:
+            type: object
+        outputMapping:
+          description: Mapping expression to transform the action's raw output. Evaluated with access to input, output, and user; used to compute transformed output schema and at run time.
+        customOutputSchema:
+          description: Explicit output schema for the action. Takes precedence over the transformed or default output schema when resolving outputSchema.
+          $ref: '#/components/schemas/ActionExportProperties__schema0'
+      required:
+      - uuid
+      - key
+    ActionApiResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal database ID of the element. Assigned by the API; unique per element.
+        name:
+          type: string
+          description: Display name. Always present in API responses (filled by API if not set on create).
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        state:
+          description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          description: Validation or setup errors when state is not READY.
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionApiResponse__schema0'
+        revision:
+          description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+          type: string
+        createdAt:
+          description: ISO date when the element was created.
+          type: string
+        updatedAt:
+          description: ISO date when the element was last updated.
+          type: string
+        archivedAt:
+          description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+          type: string
+        isDeactivated:
+          description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+          type: boolean
+        isReadOnly:
+          description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+          type: boolean
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentId:
+          description: Internal ID of the parent workspace element. Used for hierarchy (e.g. integration-level under universal). Child key uniqueness is scoped by parent and integration.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          description: Connection ID for filtering or for connection-level instances. Same semantics as base integration-level property.
+          type: string
+        instanceKey:
+          description: Key for the connection-level instance when multiple exist per connection. Same semantics as base integration-level property.
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app when this action is published in a package that has an external app. Populated in API responses for published actions.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        inputSchema:
+          description: JSON Schema for the action input. Used by the action engine for template output schema, run-time variables, and output mapping.
+          $ref: '#/components/schemas/ActionApiResponse__schema1'
+        type:
+          description: Action type (e.g. ConnectorOperation, RunJavascript). Determines which handler runs and which config schema is used for validation.
+          type: string
+          enum:
+          - list-data-records
+          - find-data-record-by-id
+          - match-data-record
+          - create-data-record
+          - find-or-create-data-record
+          - update-data-record
+          - delete-data-record
+          - search-data-record
+          - connector-operation
+          - api-request-to-external-app
+          - api-request-to-your-app
+          - http-request
+          - run-javascript
+          - api-request
+        config:
+          description: Type-specific configuration object. Validated by the handler's config schema; passed to handler setup/run and getTemplateOutputSchema.
+          type: object
+          properties: {}
+          additionalProperties:
+            type: object
+        outputMapping:
+          description: Mapping expression to transform the action's raw output. Evaluated with access to input, output, and user; used to compute transformed output schema and at run time.
+        customOutputSchema:
+          description: Explicit output schema for the action. Takes precedence over the transformed or default output schema when resolving outputSchema.
+          $ref: '#/components/schemas/ActionApiResponse__schema1'
+        isCustomized:
+          type: boolean
+        userId:
+          type: string
+        tenantId:
+          type: string
+        universalParentId:
+          description: 'For connection-level instances: ID of the universal (root) action in the hierarchy. Set automatically when creating an instance; used in list/selector queries to filter by universal parent.'
+          type: string
+        outputSchema:
+          $ref: '#/components/schemas/ActionApiResponse__schema1'
+        isPublic:
+          description: When true, the element is publicly listed (e.g. in universe). Used for published packages; publish/unpublish updates this on published elements.
+          type: boolean
+        integration:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/ActionApiResponse__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            logoUri:
+              type: string
+            connectorId:
+              type: string
+            connectorVersion:
+              type: string
+            oAuthCallbackUri:
+              type: string
+            parameters:
+              type: object
+            hasMissingParameters:
+              type: boolean
+            hasDocumentation:
+              type: boolean
+            hasOperations:
+              type: boolean
+            operationsCount:
+              type: number
+            hasData:
+              type: boolean
+            dataCollectionsCount:
+              type: number
+            hasEvents:
+              type: boolean
+            eventsCount:
+              type: number
+            hasGlobalWebhooks:
+              type: boolean
+            hasUdm:
+              type: boolean
+            isTest:
+              type: boolean
+            externalAppId:
+              type: string
+            authType:
+              type: string
+              enum:
+              - integration-app-token
+              - membrane-token
+              - oauth2
+              - oauth1
+              - client-credentials
+              - proxy
+            optionsConfig:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  disabled:
+                    type: boolean
+                  parameters:
+                    type: object
+                    additionalProperties:
+                      type: object
+          required:
+          - id
+          - name
+          - logoUri
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            internalId:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            credentials:
+              type: object
+            lastActiveAt:
+              type: string
+            isTest:
+              type: boolean
+            isBillable:
+              type: boolean
+            isActive:
+              type: boolean
+            aiCreditsRolling30DayLimit:
+              type:
+              - number
+              - 'null'
+              minimum: 0
+            createdAt:
+              type: string
+            archivedAt:
+              type: string
+          required:
+          - id
+          - name
+          - internalId
+        parent:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/ActionApiResponse__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+              type: string
+            isDeactivated:
+              description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            integrationId:
+              description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+              type: string
+            integrationUuid:
+              description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+              type: string
+            integrationKey:
+              description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+              type: string
+            parentId:
+              description: Internal ID of the parent workspace element. Used for hierarchy (e.g. integration-level under universal). Child key uniqueness is scoped by parent and integration.
+              type: string
+            parentUuid:
+              description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+              type: string
+            parentKey:
+              description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+              type: string
+            connectionId:
+              description: Connection ID for filtering or for connection-level instances. Same semantics as base integration-level property.
+              type: string
+            instanceKey:
+              description: Key for the connection-level instance when multiple exist per connection. Same semantics as base integration-level property.
+              type: string
+            isUniversal:
+              description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+              type: boolean
+            externalAppId:
+              description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+              type: string
+            externalAppUuid:
+              description: UUID of the external app when this action is published in a package that has an external app. Populated in API responses for published actions.
+              type: string
+            externalAppKey:
+              description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+              type: string
+            inputSchema:
+              description: JSON Schema for the action input. Used by the action engine for template output schema, run-time variables, and output mapping.
+              $ref: '#/components/schemas/ActionApiResponse__schema1'
+            type:
+              description: Action type (e.g. ConnectorOperation, RunJavascript). Determines which handler runs and which config schema is used for validation.
+              type: string
+              enum:
+              - list-data-records
+              - find-data-record-by-id
+              - match-data-record
+              - create-data-record
+              - find-or-create-data-record
+              - update-data-record
+              - delete-data-record
+              - search-data-record
+              - connector-operation
+              - api-request-to-external-app
+              - api-request-to-your-app
+              - http-request
+              - run-javascript
+              - api-request
+            config:
+              description: Type-specific configuration object. Validated by the handler's config schema; passed to handler setup/run and getTemplateOutputSchema.
+              type: object
+              properties: {}
+              additionalProperties:
+                type: object
+            outputMapping:
+              description: Mapping expression to transform the action's raw output. Evaluated with access to input, output, and user; used to compute transformed output schema and at run time.
+            customOutputSchema:
+              description: Explicit output schema for the action. Takes precedence over the transformed or default output schema when resolving outputSchema.
+              $ref: '#/components/schemas/ActionApiResponse__schema1'
+            isCustomized:
+              type: boolean
+            userId:
+              type: string
+            tenantId:
+              type: string
+            universalParentId:
+              description: 'For connection-level instances: ID of the universal (root) action in the hierarchy. Set automatically when creating an instance; used in list/selector queries to filter by universal parent.'
+              type: string
+            outputSchema:
+              description: Resolved output schema (cached after setup). Derived from customOutputSchema, transformed schema from outputMapping, default output schema, or parent custom output schema. Read-only.
+            isPublic:
+              description: When true, the element is publicly listed (e.g. in universe). Used for published packages; publish/unpublish updates this on published elements.
+              type: boolean
+          required:
+          - id
+          - name
+        appliedToIntegrations:
+          type: array
+          items:
+            type: object
+            properties:
+              element:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    description: Validation or setup errors when state is not READY.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ActionApiResponse__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+                    type: string
+                  isDeactivated:
+                    description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  integrationId:
+                    description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+                    type: string
+                  integrationUuid:
+                    description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+                    type: string
+                  integrationKey:
+                    description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+                    type: string
+                  parentId:
+                    description: Internal ID of the parent workspace element. Used for hierarchy (e.g. integration-level under universal). Child key uniqueness is scoped by parent and integration.
+                    type: string
+                  parentUuid:
+                    description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+                    type: string
+                  parentKey:
+                    description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+                    type: string
+                  connectionId:
+                    description: Connection ID for filtering or for connection-level instances. Same semantics as base integration-level property.
+                    type: string
+                  instanceKey:
+                    description: Key for the connection-level instance when multiple exist per connection. Same semantics as base integration-level property.
+                    type: string
+                  isUniversal:
+                    description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+                    type: boolean
+                  externalAppId:
+                    description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+                    type: string
+                  externalAppUuid:
+                    description: UUID of the external app when this action is published in a package that has an external app. Populated in API responses for published actions.
+                    type: string
+                  externalAppKey:
+                    description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+                    type: string
+                  inputSchema:
+                    description: JSON Schema for the action input. Used by the action engine for template output schema, run-time variables, and output mapping.
+                    $ref: '#/components/schemas/ActionApiResponse__schema1'
+                  type:
+                    description: Action type (e.g. ConnectorOperation, RunJavascript). Determines which handler runs and which config schema is used for validation.
+                    type: string
+                    enum:
+                    - list-data-records
+                    - find-data-record-by-id
+                    - match-data-record
+                    - create-data-record
+                    - find-or-create-data-record
+                    - update-data-record
+                    - delete-data-record
+                    - search-data-record
+                    - connector-operation
+                    - api-request-to-external-app
+                    - api-request-to-your-app
+                    - http-request
+                    - run-javascript
+                    - api-request
+                  config:
+                    description: Type-specific configuration object. Validated by the handler's config schema; passed to handler setup/run and getTemplateOutputSchema.
+                    type: object
+                    properties: {}
+                    additionalProperties:
+                      type: object
+                  outputMapping:
+                    description: Mapping expression to transform the action's raw output. Evaluated with access to input, output, and user; used to compute transformed output schema and at run time.
+                  customOutputSchema:
+                    description: Explicit output schema for the action. Takes precedence over the transformed or default output schema when resolving outputSchema.
+                    $ref: '#/components/schemas/ActionApiResponse__schema1'
+                  isCustomized:
+                    type: boolean
+                  userId:
+                    type: string
+                  tenantId:
+                    type: string
+                  universalParentId:
+                    description: 'For connection-level instances: ID of the universal (root) action in the hierarchy. Set automatically when creating an instance; used in list/selector queries to filter by universal parent.'
+                    type: string
+                  outputSchema:
+                    description: Resolved output schema (cached after setup). Derived from customOutputSchema, transformed schema from outputMapping, default output schema, or parent custom output schema. Read-only.
+                  isPublic:
+                    description: When true, the element is publicly listed (e.g. in universe). Used for published packages; publish/unpublish updates this on published elements.
+                    type: boolean
+                required:
+                - id
+                - name
+              integration:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    description: Validation or setup errors when state is not READY.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ActionApiResponse__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  logoUri:
+                    type: string
+                  connectorId:
+                    type: string
+                  connectorVersion:
+                    type: string
+                  oAuthCallbackUri:
+                    type: string
+                  parameters:
+                    type: object
+                  hasMissingParameters:
+                    type: boolean
+                  hasDocumentation:
+                    type: boolean
+                  hasOperations:
+                    type: boolean
+                  operationsCount:
+                    type: number
+                  hasData:
+                    type: boolean
+                  dataCollectionsCount:
+                    type: number
+                  hasEvents:
+                    type: boolean
+                  eventsCount:
+                    type: number
+                  hasGlobalWebhooks:
+                    type: boolean
+                  hasUdm:
+                    type: boolean
+                  isTest:
+                    type: boolean
+                  externalAppId:
+                    type: string
+                  authType:
+                    type: string
+                    enum:
+                    - integration-app-token
+                    - membrane-token
+                    - oauth2
+                    - oauth1
+                    - client-credentials
+                    - proxy
+                  optionsConfig:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        disabled:
+                          type: boolean
+                        parameters:
+                          type: object
+                          additionalProperties:
+                            type: object
+                required:
+                - id
+                - name
+                - logoUri
+            required:
+            - element
+            - integration
+        defaultOutputSchema:
+          $ref: '#/components/schemas/ActionApiResponse__schema1'
+        transformedOutputSchema:
+          $ref: '#/components/schemas/ActionApiResponse__schema1'
+        dependencies:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
+    ActionExportProperties__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionExportProperties__schema0'
+        items:
+          $ref: '#/components/schemas/ActionExportProperties__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/ActionExportProperties__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionExportProperties__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    ActionApiResponse__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/ActionApiResponse__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    ActionApiResponse__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionApiResponse__schema1'
+        items:
+          $ref: '#/components/schemas/ActionApiResponse__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/ActionApiResponse__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionApiResponse__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    ActionRunRequestDto:
+      type: object
+      properties:
+        input:
+          description: Input data for the action, matching the action inputSchema
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+    ActionRunResponseDto:
+      type: object
+      properties:
+        output:
+          type: object
+        actionRunId:
+          type: string
   parameters:
     Selector:
       name: selector
@@ -129,3 +1587,10 @@ components:
         administrative operations.
 
         '
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+x-refined-from:
+- integration-app-openapi.yml
+- integration-app-actions-api-openapi.yml

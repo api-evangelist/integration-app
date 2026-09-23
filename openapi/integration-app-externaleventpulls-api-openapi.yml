@@ -1,0 +1,1173 @@
+openapi: 3.2.0
+info:
+  title: Membrane External Event Pulls API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: ExternalEventPulls
+paths:
+  /external-event-pulls:
+    get:
+      operationId: listExternalEventPulls
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: externalEventSubscriptionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: tenantId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: userId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: status
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - running
+          - success
+          - error
+          - queued
+      - name: externalAppId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: from
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: to
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalEventPullsPaginatedResponseDto'
+      summary: List external event pulls
+      tags:
+      - ExternalEventPulls
+  /external-event-pulls/{id}:
+    get:
+      operationId: getExternalEventPull
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalEventPullApiResponseDto'
+      summary: Get external event pull
+      tags:
+      - ExternalEventPulls
+  /external-event-pulls/{id}/logs:
+    get:
+      operationId: getExternalEventPullLogs
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementLogsResponseDto'
+      summary: Get external event pull logs
+      tags:
+      - ExternalEventPulls
+  /external-event-pulls/{id}/telemetry:
+    get:
+      operationId: getExternalEventPullTelemetry
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalEventPullTelemetryDto'
+      summary: Get external event pull telemetry
+      tags:
+      - ExternalEventPulls
+components:
+  schemas:
+    ElementLogsResponseDto:
+      type: array
+      items:
+        type: object
+        properties: {}
+    ExternalEventPullsPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+              tenantId:
+                type: string
+              id:
+                type: string
+              integrationId:
+                type: string
+              connectionId:
+                type: string
+              externalAppId:
+                type: string
+              name:
+                type: string
+              externalEventSubscriptionId:
+                type: string
+              startDatetime:
+                type: string
+              endDatetime:
+                type: string
+              isFullScan:
+                type: boolean
+              status:
+                type: string
+                enum:
+                - running
+                - success
+                - error
+                - queued
+              collectedEventIds:
+                type: array
+                items:
+                  type: string
+              telemetryUri:
+                description: Storage key of the per-pull diagnostic telemetry artifact (what this pull observed and why it did or did not emit events). Read via GET /external-event-pulls/{id}/telemetry.
+                type: string
+              error:
+                $ref: '#/components/schemas/ExternalEventPullsPaginatedResponseDto__schema0'
+              user:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  meta:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  internalId:
+                    type: string
+                  fields:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  credentials:
+                    type: object
+                  lastActiveAt:
+                    type: string
+                  isTest:
+                    type: boolean
+                  isBillable:
+                    type: boolean
+                  isActive:
+                    type: boolean
+                  aiCreditsRolling30DayLimit:
+                    type:
+                    - number
+                    - 'null'
+                    minimum: 0
+                  createdAt:
+                    type: string
+                  archivedAt:
+                    type: string
+                required:
+                - id
+                - name
+                - internalId
+              externalEventSubscription:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  tenantId:
+                    type: string
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  connectionId:
+                    type: string
+                  integrationId:
+                    type: string
+                  externalEventTypeId:
+                    type: string
+                  config:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - data-record-created
+                        - data-record-updated
+                        - data-record-deleted
+                        - connector-event
+                      dataSource:
+                        type: object
+                        properties:
+                          key:
+                            type: object
+                          collectionKey:
+                            type: object
+                          collectionParameters:
+                            type: object
+                          udm:
+                            type: object
+                          pullUpdatesIntervalSeconds:
+                            type: number
+                          fullSyncIntervalSeconds:
+                            type: number
+                          path:
+                            type: object
+                          defaultPath:
+                            type: object
+                      eventKey:
+                        type: string
+                      eventParameters:
+                        type: object
+                    required:
+                    - type
+                  status:
+                    type: string
+                    enum:
+                    - subscribed
+                    - unsubscribed
+                    - error
+                  error:
+                    $ref: '#/components/schemas/ExternalEventPullsPaginatedResponseDto__schema0'
+                  isRealTime:
+                    type: boolean
+                  requiresPull:
+                    type: boolean
+                  requiresFullSync:
+                    type: boolean
+                  createdAt:
+                    type: string
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  stateData:
+                    type: object
+                  nextPullEventsTimestamp:
+                    type: number
+                  pullUpdatesIntervalSeconds:
+                    type: number
+                  fullSyncIntervalSeconds:
+                    type: number
+                  nextRefreshTimestamp:
+                    type: number
+                  globalWebhookKey:
+                    type: string
+                  globalWebhookEventSelector:
+                    type: string
+                  incomingWebhookUri:
+                    type: string
+                  webhookUri:
+                    type: string
+                required:
+                - userId
+                - id
+                - connectionId
+                - integrationId
+              integration:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    description: Validation or setup errors when state is not READY.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ExternalEventPullsPaginatedResponseDto__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  logoUri:
+                    type: string
+                  connectorId:
+                    type: string
+                  connectorVersion:
+                    type: string
+                  oAuthCallbackUri:
+                    type: string
+                  parameters:
+                    type: object
+                  hasMissingParameters:
+                    type: boolean
+                  hasDocumentation:
+                    type: boolean
+                  hasOperations:
+                    type: boolean
+                  operationsCount:
+                    type: number
+                  hasData:
+                    type: boolean
+                  dataCollectionsCount:
+                    type: number
+                  hasEvents:
+                    type: boolean
+                  eventsCount:
+                    type: number
+                  hasGlobalWebhooks:
+                    type: boolean
+                  hasUdm:
+                    type: boolean
+                  isTest:
+                    type: boolean
+                  externalAppId:
+                    type: string
+                  authType:
+                    type: string
+                    enum:
+                    - integration-app-token
+                    - membrane-token
+                    - oauth2
+                    - oauth1
+                    - client-credentials
+                    - proxy
+                  optionsConfig:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        disabled:
+                          type: boolean
+                        parameters:
+                          type: object
+                          additionalProperties:
+                            type: object
+                required:
+                - id
+                - name
+                - logoUri
+              connection:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                  userId:
+                    type: string
+                  tenantId:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                    - connector
+                    - mcp
+                  key:
+                    type: string
+                  isTest:
+                    type: boolean
+                  connected:
+                    type: boolean
+                  disconnected:
+                    description: Use `connected` instead.
+                    type: boolean
+                    deprecated: true
+                  isDefunct:
+                    type: boolean
+                  state:
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ExternalEventPullsPaginatedResponseDto__schema0'
+                  requestError:
+                    $ref: '#/components/schemas/ExternalEventPullsPaginatedResponseDto__schema0'
+                  error:
+                    description: Use `requestError` and `errors` instead.
+                    $ref: '#/components/schemas/ExternalEventPullsPaginatedResponseDto__schema0'
+                    deprecated: true
+                  integrationId:
+                    type: string
+                  connectorId:
+                    type: string
+                  externalAppId:
+                    type: string
+                  connectorVersion:
+                    type: string
+                  authOptionKey:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  lastActiveAt:
+                    type: string
+                  nextCredentialsRefreshAt:
+                    type: string
+                  nextRetryTimestamp:
+                    type: string
+                  retryAttempts:
+                    type: number
+                  canTest:
+                    type: boolean
+                  canRefreshCredentials:
+                    type: boolean
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  meta:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  buildingAgentSessionId:
+                    description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
+                    type: string
+                  clientAction:
+                    description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - connect
+                        - provide-input
+                      description:
+                        type: string
+                      uiUrl:
+                        type: string
+                      agentInstructions:
+                        type: string
+                      handoffAgentInstructions:
+                        type: string
+                    required:
+                    - type
+                    - description
+                required:
+                - id
+                - name
+                - userId
+                - createdAt
+                - updatedAt
+            required:
+            - userId
+            - id
+            - integrationId
+            - connectionId
+            - externalEventSubscriptionId
+            - startDatetime
+            - endDatetime
+            - status
+            - collectedEventIds
+        cursor:
+          type: string
+      required:
+      - items
+    ExternalEventPullTelemetryDto:
+      type: object
+      properties:
+        pullId:
+          type: string
+        subscriptionId:
+          type: string
+        connectionId:
+          type: string
+        strategy:
+          type: string
+          enum:
+          - full-scan
+          - pull-latest-records
+          - custom-pull
+          - skipped
+          - unknown
+        eventType:
+          type: string
+        collectionKey:
+          type: string
+        startedAt:
+          type: string
+        finishedAt:
+          type: string
+        emittedEventCount:
+          type: number
+        emittedEvents:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              recordId:
+                type: string
+            required:
+            - type
+        notes:
+          type: array
+          items:
+            type: string
+        fullScan:
+          type: object
+          properties:
+            totalRecords:
+              type: number
+            totalPages:
+              type: number
+            previousSnapshotId:
+              type: string
+            previousSnapshotRecordCount:
+              type: number
+            previousSnapshotMissing:
+              type: boolean
+            newSnapshotId:
+              type: string
+            isBaseline:
+              type: boolean
+          required:
+          - totalRecords
+          - totalPages
+          - previousSnapshotMissing
+          - isBaseline
+        pullLatest:
+          type: object
+          properties:
+            stateBefore:
+              type: object
+              properties:
+                id:
+                  type: string
+                datetime:
+                  type: string
+            stateAfter:
+              type: object
+              properties:
+                id:
+                  type: string
+                datetime:
+                  type: string
+            pagesScanned:
+              type: number
+            scannedRecords:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  datetime:
+                    type: string
+                required:
+                - id
+            newRecordIds:
+              type: array
+              items:
+                type: string
+            isBaseline:
+              type: boolean
+          required:
+          - pagesScanned
+          - scannedRecords
+          - newRecordIds
+          - isBaseline
+      required:
+      - pullId
+      - subscriptionId
+      - strategy
+      - startedAt
+      - finishedAt
+      - emittedEventCount
+      - emittedEvents
+      - notes
+    ExternalEventPullApiResponseDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        tenantId:
+          type: string
+        id:
+          type: string
+        integrationId:
+          type: string
+        connectionId:
+          type: string
+        externalAppId:
+          type: string
+        name:
+          type: string
+        externalEventSubscriptionId:
+          type: string
+        startDatetime:
+          type: string
+        endDatetime:
+          type: string
+        isFullScan:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - running
+          - success
+          - error
+          - queued
+        collectedEventIds:
+          type: array
+          items:
+            type: string
+        telemetryUri:
+          description: Storage key of the per-pull diagnostic telemetry artifact (what this pull observed and why it did or did not emit events). Read via GET /external-event-pulls/{id}/telemetry.
+          type: string
+        error:
+          $ref: '#/components/schemas/ExternalEventPullApiResponseDto__schema0'
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            internalId:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            credentials:
+              type: object
+            lastActiveAt:
+              type: string
+            isTest:
+              type: boolean
+            isBillable:
+              type: boolean
+            isActive:
+              type: boolean
+            aiCreditsRolling30DayLimit:
+              type:
+              - number
+              - 'null'
+              minimum: 0
+            createdAt:
+              type: string
+            archivedAt:
+              type: string
+          required:
+          - id
+          - name
+          - internalId
+        externalEventSubscription:
+          type: object
+          properties:
+            userId:
+              type: string
+            tenantId:
+              type: string
+            id:
+              type: string
+            name:
+              type: string
+            connectionId:
+              type: string
+            integrationId:
+              type: string
+            externalEventTypeId:
+              type: string
+            config:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - data-record-created
+                  - data-record-updated
+                  - data-record-deleted
+                  - connector-event
+                dataSource:
+                  type: object
+                  properties:
+                    key:
+                      type: object
+                    collectionKey:
+                      type: object
+                    collectionParameters:
+                      type: object
+                    udm:
+                      type: object
+                    pullUpdatesIntervalSeconds:
+                      type: number
+                    fullSyncIntervalSeconds:
+                      type: number
+                    path:
+                      type: object
+                    defaultPath:
+                      type: object
+                eventKey:
+                  type: string
+                eventParameters:
+                  type: object
+              required:
+              - type
+            status:
+              type: string
+              enum:
+              - subscribed
+              - unsubscribed
+              - error
+            error:
+              $ref: '#/components/schemas/ExternalEventPullApiResponseDto__schema0'
+            isRealTime:
+              type: boolean
+            requiresPull:
+              type: boolean
+            requiresFullSync:
+              type: boolean
+            createdAt:
+              type: string
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            stateData:
+              type: object
+            nextPullEventsTimestamp:
+              type: number
+            pullUpdatesIntervalSeconds:
+              type: number
+            fullSyncIntervalSeconds:
+              type: number
+            nextRefreshTimestamp:
+              type: number
+            globalWebhookKey:
+              type: string
+            globalWebhookEventSelector:
+              type: string
+            incomingWebhookUri:
+              type: string
+            webhookUri:
+              type: string
+          required:
+          - userId
+          - id
+          - connectionId
+          - integrationId
+        integration:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/ExternalEventPullApiResponseDto__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            logoUri:
+              type: string
+            connectorId:
+              type: string
+            connectorVersion:
+              type: string
+            oAuthCallbackUri:
+              type: string
+            parameters:
+              type: object
+            hasMissingParameters:
+              type: boolean
+            hasDocumentation:
+              type: boolean
+            hasOperations:
+              type: boolean
+            operationsCount:
+              type: number
+            hasData:
+              type: boolean
+            dataCollectionsCount:
+              type: number
+            hasEvents:
+              type: boolean
+            eventsCount:
+              type: number
+            hasGlobalWebhooks:
+              type: boolean
+            hasUdm:
+              type: boolean
+            isTest:
+              type: boolean
+            externalAppId:
+              type: string
+            authType:
+              type: string
+              enum:
+              - integration-app-token
+              - membrane-token
+              - oauth2
+              - oauth1
+              - client-credentials
+              - proxy
+            optionsConfig:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  disabled:
+                    type: boolean
+                  parameters:
+                    type: object
+                    additionalProperties:
+                      type: object
+          required:
+          - id
+          - name
+          - logoUri
+        connection:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+            userId:
+              type: string
+            tenantId:
+              type: string
+            type:
+              type: string
+              enum:
+              - connector
+              - mcp
+            key:
+              type: string
+            isTest:
+              type: boolean
+            connected:
+              type: boolean
+            disconnected:
+              description: Use `connected` instead.
+              type: boolean
+              deprecated: true
+            isDefunct:
+              type: boolean
+            state:
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/ExternalEventPullApiResponseDto__schema0'
+            requestError:
+              $ref: '#/components/schemas/ExternalEventPullApiResponseDto__schema0'
+            error:
+              description: Use `requestError` and `errors` instead.
+              $ref: '#/components/schemas/ExternalEventPullApiResponseDto__schema0'
+              deprecated: true
+            integrationId:
+              type: string
+            connectorId:
+              type: string
+            externalAppId:
+              type: string
+            connectorVersion:
+              type: string
+            authOptionKey:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+            lastActiveAt:
+              type: string
+            nextCredentialsRefreshAt:
+              type: string
+            nextRetryTimestamp:
+              type: string
+            retryAttempts:
+              type: number
+            canTest:
+              type: boolean
+            canRefreshCredentials:
+              type: boolean
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            buildingAgentSessionId:
+              description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
+              type: string
+            clientAction:
+              description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - connect
+                  - provide-input
+                description:
+                  type: string
+                uiUrl:
+                  type: string
+                agentInstructions:
+                  type: string
+                handoffAgentInstructions:
+                  type: string
+              required:
+              - type
+              - description
+          required:
+          - id
+          - name
+          - userId
+          - createdAt
+          - updatedAt
+      required:
+      - userId
+      - id
+      - integrationId
+      - connectionId
+      - externalEventSubscriptionId
+      - startDatetime
+      - endDatetime
+      - status
+      - collectedEventIds
+    ExternalEventPullApiResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/ExternalEventPullApiResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    ExternalEventPullsPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/ExternalEventPullsPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

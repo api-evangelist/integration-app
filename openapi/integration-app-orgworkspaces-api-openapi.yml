@@ -1,0 +1,2548 @@
+openapi: 3.2.0
+info:
+  title: Membrane Org Workspaces API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: OrgWorkspaces
+paths:
+  /org-workspaces:
+    post:
+      operationId: createOrgWorkspace
+      parameters:
+      - name: skipAddingCurrentUser
+        required: true
+        in: query
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgWorkspaceCreateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgWorkspaceDto'
+      summary: Create a workspace in an organization
+      tags:
+      - OrgWorkspaces
+      x-experimental: true
+    get:
+      operationId: listOrgWorkspaces
+      parameters:
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: cursor
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: limit
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: orgId
+        required: false
+        in: query
+        description: Filter by organization ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrgWorkspacesResponseDto'
+      summary: List organization workspaces accessible to the current user
+      tags:
+      - OrgWorkspaces
+      x-experimental: true
+  /org-workspaces/{id}:
+    get:
+      operationId: getOrgWorkspace
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: includeArchived
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgWorkspaceDto'
+      summary: Get an organization workspace
+      tags:
+      - OrgWorkspaces
+      x-experimental: true
+    patch:
+      operationId: updateOrgWorkspace
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgWorkspacePatchDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgWorkspaceDto'
+      summary: Update an organization workspace
+      tags:
+      - OrgWorkspaces
+      x-experimental: true
+    delete:
+      operationId: archiveOrgWorkspace
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgWorkspaceDto'
+      summary: Archive an organization workspace
+      tags:
+      - OrgWorkspaces
+      x-experimental: true
+  /org-workspaces/{id}/access-token:
+    post:
+      operationId: generateOrgWorkspaceAccessToken
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateAccessTokenRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateAccessTokenResponseDto'
+      summary: Generate an access token for an organization workspace
+      tags:
+      - OrgWorkspaces
+      x-experimental: true
+  /org-workspaces/{id}/restore:
+    post:
+      operationId: restoreOrgWorkspace
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgWorkspaceDto'
+      summary: Restore an archived organization workspace
+      tags:
+      - OrgWorkspaces
+      x-experimental: true
+  /org-workspaces/{id}/rotate-secret:
+    post:
+      operationId: rotateOrgWorkspaceSecret
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RotateOrgWorkspaceSecretResponseDto'
+      summary: Rotate the secret for an organization workspace
+      tags:
+      - OrgWorkspaces
+      x-experimental: true
+  /org-workspaces/{id}/user-settings:
+    patch:
+      operationId: patchUserWorkspaceSettings
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchUserWorkspaceSettingsDto'
+      responses:
+        '204':
+          description: ''
+      summary: Update current user workspace settings
+      tags:
+      - OrgWorkspaces
+      x-experimental: true
+components:
+  schemas:
+    PatchUserWorkspaceSettingsDto:
+      type: object
+      properties: {}
+    OrgWorkspacePatchDto:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        logoUri:
+          type: string
+        limits:
+          type: object
+          properties:
+            parallelEventPulls:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelIncrementalEventPullsPerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelFullSyncEventPullsPerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelFlowRuns:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelFlowRunsPerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelApiRequests:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelSseRequests:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelBackgroundJobs:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelEventProcessingJobs:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelEventProcessingJobsPerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelInstantTasksActiveJobs:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelAgentSessions:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelCustomCodeRuns:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            ParallelWriteDatabaseRequests:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            fileUploadsMbPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            apiRequestsPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            apiRequestsPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            webhookRequestsPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            webhookRequestsPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            workspaceElementCreationsPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            workspaceElementCreationsPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            workspaceElementSearchIndexingPerMinute:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            mcpOAuthAuthorizationsPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            mcpOAuthTokensPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfCustomers:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfConnections:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfWorkspaceElements:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfWorkspaceDatabaseRecords:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            flowRunsQueueSizePerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            instantTasksQueueSize:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            QueuedTasksQueueSize:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelApiRequestsPerCustomer:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelBackgroundJobsPerCustomer:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelCustomCodeRunsPerCustomer:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfDatabaseEntitiesPerCustomer:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            apiRequestsPerCustomerPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            apiRequestsPerCustomerPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            webhookRequestsPerCustomerPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            webhookRequestsPerCustomerPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            externalEventsPerCustomerPerDay:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            defaultTenantAiCreditsRolling30DayLimit:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+        settings:
+          type: object
+          properties:
+            enableApiLogs:
+              type: boolean
+            enableWebhookLogs:
+              type: boolean
+            enableActionRunLogs:
+              type: boolean
+            disableSecretKeyAuth:
+              type: boolean
+            useMembraneUniverse:
+              type: boolean
+            useRemoteRepository:
+              type: boolean
+            autoGenerateIntegrationsFromConnectors:
+              type: boolean
+            autoGenerateIntegrationsFromExternalApps:
+              type: boolean
+            autoGenerateIntegrationsFromWebSearch:
+              type: boolean
+        publicKeys:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              publicKey:
+                type: string
+            required:
+            - name
+            - publicKey
+        userFieldsSchema:
+          type: object
+        webhookUri:
+          type: string
+        enabledWebhookEvents:
+          type: array
+          items:
+            type: string
+        alertDeliverySettings:
+          type: object
+          properties:
+            alertTypes:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  internal:
+                    type: boolean
+                    enum:
+                    - true
+                  webhook:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                    required:
+                    - enabled
+                  email:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                    required:
+                    - enabled
+                required:
+                - internal
+              required:
+              - fileUploadsMbPerHour
+              - apiRequestsPerSecond
+              - apiRequestsPerHour
+              - webhookRequestsPerSecond
+              - webhookRequestsPerHour
+              - workspaceElementCreationsPerSecond
+              - workspaceElementCreationsPerHour
+              - workspaceElementSearchIndexingPerMinute
+              - externalEventsPerCustomerPerDay
+              - apiRequestsPerCustomerPerSecond
+              - apiRequestsPerCustomerPerHour
+              - webhookRequestsPerCustomerPerSecond
+              - webhookRequestsPerCustomerPerHour
+              - parallelApiRequestsPerCustomer
+              - engineCreditsExhaustionProjected
+              - engineCreditsExhaustionActual
+              - aiCreditsDebtAccumulated
+              - totalNumberOfDatabaseEntitiesPerCustomer
+              - totalNumberOfCustomers
+              - totalNumberOfConnections
+              - totalNumberOfWorkspaceElements
+              - totalNumberOfWorkspaceDatabaseRecords
+              - instantTasksQueueSize
+              - queuedTasksQueueSize
+              - flowRunsQueueSizePerConnection
+              - eventsProcessingQueueSizePerConnection
+              - parallelApiRequests
+              - testAlert
+        jwksUri:
+          type:
+          - string
+          - 'null'
+        type:
+          type: string
+          description: Workspace type (production or development)
+          enum:
+          - production
+          - development
+        isReadOnly:
+          type: boolean
+          description: Whether the workspace is in read-only mode
+    GenerateAccessTokenResponseDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The generated access token
+      required:
+      - token
+    GenerateAccessTokenRequestDto:
+      type: object
+      properties:
+        isAdmin:
+          type: boolean
+          description: Whether to generate an admin token
+        tenantId:
+          type: string
+          description: Customer ID to scope the token to
+        tenantKey:
+          type: string
+          description: Customer key to scope the token to (resolved to tenantId)
+        name:
+          type: string
+          description: Name for the generated token
+        fields:
+          type: object
+          description: Custom fields to include in the token
+          additionalProperties:
+            type: object
+    OrgWorkspaceCreateDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the workspace
+          minLength: 1
+        logoUri:
+          type: string
+          description: URI for the workspace logo
+        orgId:
+          type: string
+          description: Organization ID to create the workspace in
+      required:
+      - orgId
+    RotateOrgWorkspaceSecretResponseDto:
+      type: object
+      properties:
+        secret:
+          type: string
+          description: The new workspace secret
+      required:
+      - secret
+    ListOrgWorkspacesResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              orgId:
+                type: string
+              key:
+                type: string
+                description: Unique workspace key
+              createdAt:
+                type: string
+              updatedAt:
+                type: string
+              logoUri:
+                description: URI for the workspace logo
+                type: string
+              limits:
+                type: object
+                properties:
+                  parallelEventPulls:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelIncrementalEventPullsPerConnection:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelFullSyncEventPullsPerConnection:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelFlowRuns:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelFlowRunsPerConnection:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelApiRequests:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelSseRequests:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelBackgroundJobs:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelEventProcessingJobs:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelEventProcessingJobsPerConnection:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelInstantTasksActiveJobs:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelAgentSessions:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelCustomCodeRuns:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  ParallelWriteDatabaseRequests:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  fileUploadsMbPerHour:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  apiRequestsPerSecond:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  apiRequestsPerHour:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  webhookRequestsPerSecond:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  webhookRequestsPerHour:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  workspaceElementCreationsPerSecond:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  workspaceElementCreationsPerHour:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  workspaceElementSearchIndexingPerMinute:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  mcpOAuthAuthorizationsPerHour:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  mcpOAuthTokensPerHour:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  totalNumberOfCustomers:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  totalNumberOfConnections:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  totalNumberOfWorkspaceElements:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  totalNumberOfWorkspaceDatabaseRecords:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  flowRunsQueueSizePerConnection:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  instantTasksQueueSize:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  QueuedTasksQueueSize:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelApiRequestsPerCustomer:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelBackgroundJobsPerCustomer:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  parallelCustomCodeRunsPerCustomer:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  totalNumberOfDatabaseEntitiesPerCustomer:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  apiRequestsPerCustomerPerSecond:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  apiRequestsPerCustomerPerHour:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  webhookRequestsPerCustomerPerSecond:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  webhookRequestsPerCustomerPerHour:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  externalEventsPerCustomerPerDay:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+                  defaultTenantAiCreditsRolling30DayLimit:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      defaultValue:
+                        type: number
+                      unit:
+                        type: string
+                        enum:
+                        - number
+                        - msec
+                        - Mb
+                    required:
+                    - unit
+              settings:
+                type: object
+                properties:
+                  enableApiLogs:
+                    type: boolean
+                  enableWebhookLogs:
+                    type: boolean
+                  enableActionRunLogs:
+                    type: boolean
+                  disableSecretKeyAuth:
+                    type: boolean
+                  useMembraneUniverse:
+                    type: boolean
+                  useRemoteRepository:
+                    type: boolean
+                  autoGenerateIntegrationsFromConnectors:
+                    type: boolean
+                  autoGenerateIntegrationsFromExternalApps:
+                    type: boolean
+                  autoGenerateIntegrationsFromWebSearch:
+                    type: boolean
+              publicKeys:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    publicKey:
+                      type: string
+                  required:
+                  - name
+                  - publicKey
+              userFieldsSchema:
+                type: object
+              webhookUri:
+                type: string
+              enabledWebhookEvents:
+                type: array
+                items:
+                  type: string
+              alertDeliverySettings:
+                type: object
+                properties:
+                  alertTypes:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        internal:
+                          type: boolean
+                          enum:
+                          - true
+                        webhook:
+                          type: object
+                          properties:
+                            enabled:
+                              type: boolean
+                          required:
+                          - enabled
+                        email:
+                          type: object
+                          properties:
+                            enabled:
+                              type: boolean
+                          required:
+                          - enabled
+                      required:
+                      - internal
+                    required:
+                    - fileUploadsMbPerHour
+                    - apiRequestsPerSecond
+                    - apiRequestsPerHour
+                    - webhookRequestsPerSecond
+                    - webhookRequestsPerHour
+                    - workspaceElementCreationsPerSecond
+                    - workspaceElementCreationsPerHour
+                    - workspaceElementSearchIndexingPerMinute
+                    - externalEventsPerCustomerPerDay
+                    - apiRequestsPerCustomerPerSecond
+                    - apiRequestsPerCustomerPerHour
+                    - webhookRequestsPerCustomerPerSecond
+                    - webhookRequestsPerCustomerPerHour
+                    - parallelApiRequestsPerCustomer
+                    - engineCreditsExhaustionProjected
+                    - engineCreditsExhaustionActual
+                    - aiCreditsDebtAccumulated
+                    - totalNumberOfDatabaseEntitiesPerCustomer
+                    - totalNumberOfCustomers
+                    - totalNumberOfConnections
+                    - totalNumberOfWorkspaceElements
+                    - totalNumberOfWorkspaceDatabaseRecords
+                    - instantTasksQueueSize
+                    - queuedTasksQueueSize
+                    - flowRunsQueueSizePerConnection
+                    - eventsProcessingQueueSizePerConnection
+                    - parallelApiRequests
+                    - testAlert
+              jwksUri:
+                type:
+                - string
+                - 'null'
+              type:
+                description: Workspace type (production or development)
+                type: string
+                enum:
+                - production
+                - development
+              isReadOnly:
+                description: Whether the workspace is in read-only mode
+                type: boolean
+            required:
+            - id
+            - name
+            - orgId
+            - key
+            - createdAt
+            - updatedAt
+        cursor:
+          type: string
+      required:
+      - items
+    OrgWorkspaceDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        orgId:
+          type: string
+        key:
+          type: string
+          description: Unique workspace key
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        logoUri:
+          description: URI for the workspace logo
+          type: string
+        limits:
+          type: object
+          properties:
+            parallelEventPulls:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelIncrementalEventPullsPerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelFullSyncEventPullsPerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelFlowRuns:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelFlowRunsPerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelApiRequests:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelSseRequests:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelBackgroundJobs:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelEventProcessingJobs:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelEventProcessingJobsPerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelInstantTasksActiveJobs:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelAgentSessions:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelCustomCodeRuns:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            ParallelWriteDatabaseRequests:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            fileUploadsMbPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            apiRequestsPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            apiRequestsPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            webhookRequestsPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            webhookRequestsPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            workspaceElementCreationsPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            workspaceElementCreationsPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            workspaceElementSearchIndexingPerMinute:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            mcpOAuthAuthorizationsPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            mcpOAuthTokensPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfCustomers:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfConnections:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfWorkspaceElements:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfWorkspaceDatabaseRecords:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            flowRunsQueueSizePerConnection:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            instantTasksQueueSize:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            QueuedTasksQueueSize:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelApiRequestsPerCustomer:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelBackgroundJobsPerCustomer:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            parallelCustomCodeRunsPerCustomer:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            totalNumberOfDatabaseEntitiesPerCustomer:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            apiRequestsPerCustomerPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            apiRequestsPerCustomerPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            webhookRequestsPerCustomerPerSecond:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            webhookRequestsPerCustomerPerHour:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            externalEventsPerCustomerPerDay:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+            defaultTenantAiCreditsRolling30DayLimit:
+              type: object
+              properties:
+                value:
+                  type: number
+                defaultValue:
+                  type: number
+                unit:
+                  type: string
+                  enum:
+                  - number
+                  - msec
+                  - Mb
+              required:
+              - unit
+        settings:
+          type: object
+          properties:
+            enableApiLogs:
+              type: boolean
+            enableWebhookLogs:
+              type: boolean
+            enableActionRunLogs:
+              type: boolean
+            disableSecretKeyAuth:
+              type: boolean
+            useMembraneUniverse:
+              type: boolean
+            useRemoteRepository:
+              type: boolean
+            autoGenerateIntegrationsFromConnectors:
+              type: boolean
+            autoGenerateIntegrationsFromExternalApps:
+              type: boolean
+            autoGenerateIntegrationsFromWebSearch:
+              type: boolean
+        publicKeys:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              publicKey:
+                type: string
+            required:
+            - name
+            - publicKey
+        userFieldsSchema:
+          type: object
+        webhookUri:
+          type: string
+        enabledWebhookEvents:
+          type: array
+          items:
+            type: string
+        alertDeliverySettings:
+          type: object
+          properties:
+            alertTypes:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  internal:
+                    type: boolean
+                    enum:
+                    - true
+                  webhook:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                    required:
+                    - enabled
+                  email:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                    required:
+                    - enabled
+                required:
+                - internal
+              required:
+              - fileUploadsMbPerHour
+              - apiRequestsPerSecond
+              - apiRequestsPerHour
+              - webhookRequestsPerSecond
+              - webhookRequestsPerHour
+              - workspaceElementCreationsPerSecond
+              - workspaceElementCreationsPerHour
+              - workspaceElementSearchIndexingPerMinute
+              - externalEventsPerCustomerPerDay
+              - apiRequestsPerCustomerPerSecond
+              - apiRequestsPerCustomerPerHour
+              - webhookRequestsPerCustomerPerSecond
+              - webhookRequestsPerCustomerPerHour
+              - parallelApiRequestsPerCustomer
+              - engineCreditsExhaustionProjected
+              - engineCreditsExhaustionActual
+              - aiCreditsDebtAccumulated
+              - totalNumberOfDatabaseEntitiesPerCustomer
+              - totalNumberOfCustomers
+              - totalNumberOfConnections
+              - totalNumberOfWorkspaceElements
+              - totalNumberOfWorkspaceDatabaseRecords
+              - instantTasksQueueSize
+              - queuedTasksQueueSize
+              - flowRunsQueueSizePerConnection
+              - eventsProcessingQueueSizePerConnection
+              - parallelApiRequests
+              - testAlert
+        jwksUri:
+          type:
+          - string
+          - 'null'
+        type:
+          description: Workspace type (production or development)
+          type: string
+          enum:
+          - production
+          - development
+        isReadOnly:
+          description: Whether the workspace is in read-only mode
+          type: boolean
+      required:
+      - id
+      - name
+      - orgId
+      - key
+      - createdAt
+      - updatedAt
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

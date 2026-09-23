@@ -1,0 +1,49 @@
+openapi: 3.2.0
+info:
+  title: Membrane Files API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: Files
+paths:
+  /files:
+    post:
+      operationId: uploadFile
+      parameters: []
+      requestBody:
+        required: true
+        description: File binary data
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponseDto'
+      summary: Upload a file
+      tags:
+      - Files
+components:
+  schemas:
+    FileUploadResponseDto:
+      type: object
+      properties:
+        downloadUri:
+          type: string
+      required:
+      - downloadUri
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

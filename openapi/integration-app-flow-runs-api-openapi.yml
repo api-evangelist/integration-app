@@ -1,23 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Membrane (formerly Integration.app) Platform Actions Flow Runs API
-  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
-
-    API for building embedded and agentic integrations across 100,000+ apps.
-
-    The REST API surfaces resources for connections, connectors, integrations,
-
-    flows, actions, data collections, customers, packages, app event
-
-    subscriptions, MCP-style agent sessions, and observability logs. Most
-
-    selectable resources accept either an id or a key as `{selector}`.
-
-    '
+  title: Integration App Flow Runs API
   version: '1.0'
   contact:
     name: Membrane Documentation
     url: https://docs.getmembrane.com
+  description: 'Operations tagged Flow Runs across 2 of this provider''s published API definitions: integration-app-openapi.yml, integration-app-flow-runs-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.getmembrane.com
   description: Production API
@@ -48,6 +36,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FlowRun'
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /flow-runs:
     get:
       tags:
@@ -57,6 +48,9 @@ paths:
       responses:
         '200':
           description: Flow run list
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /flow-runs/{id}:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -72,6 +66,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FlowRun'
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /flow-runs/{id}/output:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -83,6 +80,9 @@ paths:
       responses:
         '200':
           description: Output payload
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /flow-runs/{id}/stop:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -94,21 +94,170 @@ paths:
       responses:
         '200':
           description: Stopped
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /flow-runs/{id}/nodes/{nodeKey}/outputs:
+    get:
+      operationId: getNodeRunOutputs
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: nodeKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: cursor
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowNodeRunOutputDto'
+      summary: Get node run outputs
+      tags:
+      - Flow Runs
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /flow-runs/{id}/nodes/{nodeKey}/outputs/{outputId}:
+    get:
+      operationId: getNodeRunOutput
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: nodeKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: outputId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowNodeRunOutputResponseDto'
+      summary: Get specific node run output
+      tags:
+      - Flow Runs
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /flow-runs/{id}/nodes/{nodeKey}/runs:
+    get:
+      operationId: getNodeRuns
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: nodeKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: cursor
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowNodeRunsDto'
+      summary: Get node runs for flow run
+      tags:
+      - Flow Runs
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /flow-runs/{id}/nodes/{nodeKey}/runs/{nodeRunId}:
+    get:
+      operationId: getNodeRun
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: nodeKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: nodeRunId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowNodeRunRecordWithoutOutputsDataDto'
+      summary: Get specific node run
+      tags:
+      - Flow Runs
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /flow-runs/{id}/output/{nodeKey}:
+    get:
+      operationId: getNodeOutput
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: nodeKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: cursor
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowRunOutputDto'
+      summary: Get flow run output for specific node
+      tags:
+      - Flow Runs
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
 components:
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
-    Selector:
-      name: selector
-      in: path
-      required: true
-      description: Resource id or unique key.
-      schema:
-        type: string
   schemas:
     FlowRun:
       type: object
@@ -130,6 +279,284 @@ components:
         finishedAt:
           type: string
           format: date-time
+    FlowNodeRunRecordWithoutOutputsDataDto:
+      type: object
+      properties:
+        id:
+          type: string
+        upstreamRuns:
+          type: array
+          items:
+            type: object
+            properties:
+              nodeKey:
+                type: string
+              runId:
+                type: string
+              outputId:
+                type: string
+            required:
+            - nodeKey
+            - runId
+            - outputId
+        input:
+          type: object
+        status:
+          type: string
+          enum:
+          - completed
+          - failed
+          - skipped
+        logs:
+          type: array
+          items:
+            type: object
+        outputs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              downstreamRuns:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    runId:
+                      type: string
+                    nodeKey:
+                      type: string
+                  required:
+                  - runId
+                  - nodeKey
+            required:
+            - id
+            - downstreamRuns
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowNodeRunRecordWithoutOutputsDataDto__schema0'
+      required:
+      - id
+      - upstreamRuns
+      - input
+      - status
+      - logs
+      - outputs
+      - errors
+    FlowNodeRunsDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              upstreamRuns:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nodeKey:
+                      type: string
+                    runId:
+                      type: string
+                    outputId:
+                      type: string
+                  required:
+                  - nodeKey
+                  - runId
+                  - outputId
+              input:
+                type: object
+              status:
+                type: string
+                enum:
+                - completed
+                - failed
+                - skipped
+              logs:
+                type: array
+                items:
+                  type: object
+              outputs:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    downstreamRuns:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          runId:
+                            type: string
+                          nodeKey:
+                            type: string
+                        required:
+                        - runId
+                        - nodeKey
+                  required:
+                  - id
+                  - downstreamRuns
+              errors:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FlowNodeRunsDto__schema0'
+            required:
+            - id
+            - upstreamRuns
+            - input
+            - status
+            - logs
+            - outputs
+            - errors
+        cursor:
+          type: string
+      required:
+      - items
+    FlowRunOutputDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+        cursor:
+          type: string
+      required:
+      - items
+    FlowNodeRunRecordWithoutOutputsDataDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/FlowNodeRunRecordWithoutOutputsDataDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    FlowNodeRunOutputResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        nodeKey:
+          type: string
+        outputId:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: object
+        metadata:
+          type: object
+          properties:
+            timestamp:
+              type: string
+            size:
+              type: number
+          required:
+          - timestamp
+          - size
+      required:
+      - id
+      - nodeKey
+      - outputId
+      - data
+      - metadata
+    FlowNodeRunsDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/FlowNodeRunsDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    FlowNodeRunOutputDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+        cursor:
+          type: string
+      required:
+      - items
+  parameters:
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
@@ -142,3 +569,10 @@ components:
         administrative operations.
 
         '
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+x-refined-from:
+- integration-app-openapi.yml
+- integration-app-flow-runs-api-openapi.yml

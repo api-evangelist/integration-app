@@ -1,28 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Membrane (formerly Integration.app) Platform Actions Connections API
-  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
-
-    API for building embedded and agentic integrations across 100,000+ apps.
-
-    The REST API surfaces resources for connections, connectors, integrations,
-
-    flows, actions, data collections, customers, packages, app event
-
-    subscriptions, MCP-style agent sessions, and observability logs. Most
-
-    selectable resources accept either an id or a key as `{selector}`.
-
-    '
+  title: Integration App Connections API
   version: '1.0'
-  contact:
-    name: Membrane Documentation
-    url: https://docs.getmembrane.com
+  description: 'Operations tagged Connections across 2 of this provider''s published API definitions: integration-app-openapi.yml, integration-app-connections-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.getmembrane.com
   description: Production API
-security:
-- bearerAuth: []
 tags:
 - name: Connections
 paths:
@@ -39,6 +22,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ConnectionList'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - Connections
@@ -57,6 +42,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Connection'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /connections/{id}:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -72,6 +62,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Connection'
+      security:
+      - bearerAuth: []
     put:
       tags:
       - Connections
@@ -90,6 +82,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Connection'
+      security:
+      - bearerAuth: []
     patch:
       tags:
       - Connections
@@ -108,6 +102,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Connection'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+    delete:
+      operationId: archiveConnection
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Archive a connection
+      tags:
+      - Connections
+      security:
+      - bearerAuth: []
   /connections/{id}/archive:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -119,6 +134,11 @@ paths:
       responses:
         '200':
           description: Archived
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /connections/{id}/restore:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -130,6 +150,11 @@ paths:
       responses:
         '200':
           description: Restored
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /connections/{id}/refresh-credentials:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -141,6 +166,11 @@ paths:
       responses:
         '200':
           description: Credentials refreshed
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /connections/{id}/test:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -152,6 +182,11 @@ paths:
       responses:
         '200':
           description: Test result
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /connections/{id}/logs:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -163,8 +198,194 @@ paths:
       responses:
         '200':
           description: Logs
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/ensure:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      operationId: ensureConnection
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnsureConnectionDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionApiResponseDto'
+      summary: Find or create a connection
+      tags:
+      - Connections
+      security:
+      - bearer: []
+  /connections/{elementSelector}/dependencies:
+    servers:
+    - url: https://api.getmembrane.com
+    get:
+      operationId: getConnectionDependencies
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+      summary: Get dependencies of a connection
+      tags:
+      - Connections
+      security:
+      - bearer: []
+  /connections/{elementSelector}/logs:
+    servers:
+    - url: https://api.getmembrane.com
+    get:
+      operationId: getConnectionLogs
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementLogsResponseDto'
+      summary: Get connection logs
+      tags:
+      - Connections
+      security:
+      - bearer: []
+  /connections/{elementSelector}/refresh:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      operationId: refreshConnection
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseWorkspaceElementDto'
+      summary: Refresh connection
+      tags:
+      - Connections
+      security:
+      - bearer: []
+  /connections/{elementSelector}/restore:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      operationId: restoreConnection
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseWorkspaceElementDto'
+      summary: Restore (unarchive) connection
+      tags:
+      - Connections
+      security:
+      - bearer: []
+  /connections/{id}/disconnect:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      operationId: disconnectConnection
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Disconnect a connection, revoking and erasing its credentials
+      tags:
+      - Connections
+      security:
+      - bearer: []
+  /connections/{id}/export:
+    servers:
+    - url: https://api.getmembrane.com
+    get:
+      operationId: exportConnection
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: includeSecrets
+        required: true
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionExportDto'
+      summary: Export connection configuration
+      tags:
+      - Connections
+      security:
+      - bearer: []
 components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
+    ConnectionList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+        cursor:
+          type: string
     Connection:
       type: object
       properties:
@@ -180,22 +401,388 @@ components:
           type: string
         credentials:
           type: object
-    ConnectionList:
+    ElementLogsResponseDto:
+      type: array
+      items:
+        type: object
+        properties: {}
+    EnsureConnectionDto:
       type: object
       properties:
-        items:
+        appUrl:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: URL or domain of the app to connect to (e.g. "https://slack.com" or "slack.com"). Will be normalized to a domain.
+        name:
+          type: string
+          description: Custom name for the connection. Only used when a new connection is created; ignored if an existing one is returned.
+      required:
+      - appUrl
+    ConnectionApiResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal database ID of the element. Assigned by the API; unique per element.
+        name:
+          type: string
+        userId:
+          type: string
+        tenantId:
+          type: string
+        type:
+          type: string
+          enum:
+          - connector
+          - mcp
+        key:
+          type: string
+        isTest:
+          type: boolean
+        connected:
+          type: boolean
+        disconnected:
+          description: Use `connected` instead.
+          type: boolean
+          deprecated: true
+        isDefunct:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/Connection'
-        cursor:
+            $ref: '#/components/schemas/ConnectionApiResponseDto__schema0'
+        requestError:
+          $ref: '#/components/schemas/ConnectionApiResponseDto__schema0'
+        error:
+          description: Use `requestError` and `errors` instead.
+          $ref: '#/components/schemas/ConnectionApiResponseDto__schema0'
+          deprecated: true
+        integrationId:
           type: string
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
+        connectorId:
+          type: string
+        externalAppId:
+          type: string
+        connectorVersion:
+          type: string
+        authOptionKey:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        lastActiveAt:
+          type: string
+        nextCredentialsRefreshAt:
+          type: string
+        nextRetryTimestamp:
+          type: string
+        retryAttempts:
+          type: number
+        canTest:
+          type: boolean
+        canRefreshCredentials:
+          type: boolean
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        buildingAgentSessionId:
+          description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
+          type: string
+        clientAction:
+          description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - connect
+              - provide-input
+            description:
+              type: string
+            uiUrl:
+              type: string
+            agentInstructions:
+              type: string
+            handoffAgentInstructions:
+              type: string
+          required:
+          - type
+          - description
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            internalId:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            credentials:
+              type: object
+            lastActiveAt:
+              type: string
+            isTest:
+              type: boolean
+            isBillable:
+              type: boolean
+            isActive:
+              type: boolean
+            aiCreditsRolling30DayLimit:
+              type:
+              - number
+              - 'null'
+              minimum: 0
+            createdAt:
+              type: string
+            archivedAt:
+              type: string
+          required:
+          - id
+          - name
+          - internalId
+        integration:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/ConnectionApiResponseDto__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            logoUri:
+              type: string
+            connectorId:
+              type: string
+            connectorVersion:
+              type: string
+            oAuthCallbackUri:
+              type: string
+            parameters:
+              type: object
+            hasMissingParameters:
+              type: boolean
+            hasDocumentation:
+              type: boolean
+            hasOperations:
+              type: boolean
+            operationsCount:
+              type: number
+            hasData:
+              type: boolean
+            dataCollectionsCount:
+              type: number
+            hasEvents:
+              type: boolean
+            eventsCount:
+              type: number
+            hasGlobalWebhooks:
+              type: boolean
+            hasUdm:
+              type: boolean
+            isTest:
+              type: boolean
+            externalAppId:
+              type: string
+            authType:
+              type: string
+              enum:
+              - integration-app-token
+              - membrane-token
+              - oauth2
+              - oauth1
+              - client-credentials
+              - proxy
+            optionsConfig:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  disabled:
+                    type: boolean
+                  parameters:
+                    type: object
+                    additionalProperties:
+                      type: object
+          required:
+          - id
+          - name
+          - logoUri
+        connectorParameters:
+          type: object
+        input:
+          type: object
+      required:
+      - id
+      - name
+      - userId
+      - createdAt
+      - updatedAt
+    ConnectionExportDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - connector
+          - mcp
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        authOptionKey:
+          type: string
+        key:
+          type:
+          - string
+          - 'null'
+          minLength: 1
+          maxLength: 100
+        integrationUuid:
+          type: string
+        connectorUuid:
+          type: string
+        externalAppUuid:
+          type: string
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
+    ConnectionApiResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/ConnectionApiResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http
@@ -208,3 +795,10 @@ components:
         administrative operations.
 
         '
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+x-refined-from:
+- integration-app-openapi.yml
+- integration-app-connections-api-openapi.yml

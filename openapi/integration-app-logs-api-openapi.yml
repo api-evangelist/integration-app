@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Membrane (formerly Integration.app) Platform Actions Logs API
+  title: Membrane (formerly Integration.app) Platform Logs API
   description: 'The Membrane platform (rebranded from Integration.app) provides a unified
 
     API for building embedded and agentic integrations across 100,000+ apps.
@@ -11,9 +11,7 @@ info:
 
     subscriptions, MCP-style agent sessions, and observability logs. Most
 
-    selectable resources accept either an id or a key as `{selector}`.
-
-    '
+    selectable resources accept either an id or a key as `{selector}`.'
   version: '1.0'
   contact:
     name: Membrane Documentation

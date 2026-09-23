@@ -1,0 +1,1443 @@
+openapi: 3.2.0
+info:
+  title: Membrane Action Run Logs API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: ActionRunLogs
+paths:
+  /action-run-logs:
+    get:
+      operationId: listActionRunLogs
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: actionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: universalActionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationActionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionActionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: tenantId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: userId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: status
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - success
+          - error
+      - name: externalAppId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: from
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: to
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto'
+      summary: List action run logs
+      tags:
+      - ActionRunLogs
+  /action-run-logs/{id}:
+    get:
+      operationId: getActionRunLog
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto'
+      summary: Get action run log
+      tags:
+      - ActionRunLogs
+  /action-run-logs/{id}/details:
+    get:
+      operationId: getActionRunLogDetails
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionRunLogRecordInDb'
+      summary: Get action run log details
+      tags:
+      - ActionRunLogs
+components:
+  schemas:
+    ActionRunLogRecordsPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    ActionRunLogRecordApiResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    ActionRunLogRecordApiResponseDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        tenantId:
+          type: string
+        id:
+          type: string
+        integrationId:
+          type: string
+        connectionId:
+          type: string
+          description: 'Deprecated: Read from action.connectionId or action.connectionKey instead'
+          deprecated: true
+        externalAppId:
+          type: string
+        name:
+          type: string
+        universalActionId:
+          type: string
+        integrationActionId:
+          type: string
+        connectionActionId:
+          type: string
+        input:
+          description: 'Deprecated: Read from action.input instead'
+          deprecated: true
+          type: object
+        output:
+          type: object
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        createdAt:
+          type: string
+        completedAt:
+          type: string
+        error:
+          $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema0'
+        duration:
+          type: number
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        action:
+          description: Complete /act-body snapshot of what ran — sufficient to replay the run by POSTing back to /act.
+          type: object
+          properties:
+            id:
+              type: string
+            integrationKey:
+              type: string
+            key:
+              type: string
+            connectionKey:
+              type: string
+            connectionId:
+              type: string
+            type:
+              type: string
+            api:
+              type: object
+              properties:
+                method:
+                  type: string
+                  enum:
+                  - GET
+                  - POST
+                  - PATCH
+                  - PUT
+                  - DELETE
+                path:
+                  type: string
+                url:
+                  type: string
+                body:
+                  type: object
+                headers:
+                  type: object
+                  additionalProperties:
+                    type: string
+                query:
+                  type: object
+                  additionalProperties:
+                    anyOf:
+                    - type: string
+                    - type: number
+                    - type: boolean
+              required:
+              - method
+            code:
+              type: string
+            input:
+              type: object
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+          required:
+          - type
+        actionInstance:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+              type: string
+            isDeactivated:
+              description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            integrationId:
+              description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+              type: string
+            integrationUuid:
+              description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+              type: string
+            integrationKey:
+              description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+              type: string
+            parentId:
+              description: Internal ID of the parent workspace element. Used for hierarchy (e.g. integration-level under universal). Child key uniqueness is scoped by parent and integration.
+              type: string
+            parentUuid:
+              description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+              type: string
+            parentKey:
+              description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+              type: string
+            connectionId:
+              description: Connection ID for filtering or for connection-level instances. Same semantics as base integration-level property.
+              type: string
+            instanceKey:
+              description: Key for the connection-level instance when multiple exist per connection. Same semantics as base integration-level property.
+              type: string
+            isUniversal:
+              description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+              type: boolean
+            externalAppId:
+              description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+              type: string
+            externalAppUuid:
+              description: UUID of the external app when this action is published in a package that has an external app. Populated in API responses for published actions.
+              type: string
+            externalAppKey:
+              description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+              type: string
+            inputSchema:
+              description: JSON Schema for the action input. Used by the action engine for template output schema, run-time variables, and output mapping.
+              $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema1'
+            type:
+              description: Action type (e.g. ConnectorOperation, RunJavascript). Determines which handler runs and which config schema is used for validation.
+              type: string
+              enum:
+              - list-data-records
+              - find-data-record-by-id
+              - match-data-record
+              - create-data-record
+              - find-or-create-data-record
+              - update-data-record
+              - delete-data-record
+              - search-data-record
+              - connector-operation
+              - api-request-to-external-app
+              - api-request-to-your-app
+              - http-request
+              - run-javascript
+              - api-request
+            config:
+              description: Type-specific configuration object. Validated by the handler's config schema; passed to handler setup/run and getTemplateOutputSchema.
+              type: object
+              properties: {}
+              additionalProperties:
+                type: object
+            outputMapping:
+              description: Mapping expression to transform the action's raw output. Evaluated with access to input, output, and user; used to compute transformed output schema and at run time.
+            customOutputSchema:
+              description: Explicit output schema for the action. Takes precedence over the transformed or default output schema when resolving outputSchema.
+              $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema1'
+            isCustomized:
+              type: boolean
+            userId:
+              type: string
+            tenantId:
+              type: string
+            universalParentId:
+              description: 'For connection-level instances: ID of the universal (root) action in the hierarchy. Set automatically when creating an instance; used in list/selector queries to filter by universal parent.'
+              type: string
+            outputSchema:
+              description: Resolved output schema (cached after setup). Derived from customOutputSchema, transformed schema from outputMapping, default output schema, or parent custom output schema. Read-only.
+            isPublic:
+              description: When true, the element is publicly listed (e.g. in universe). Used for published packages; publish/unpublish updates this on published elements.
+              type: boolean
+          required:
+          - id
+          - name
+        integration:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            logoUri:
+              type: string
+            connectorId:
+              type: string
+            connectorVersion:
+              type: string
+            oAuthCallbackUri:
+              type: string
+            parameters:
+              type: object
+            hasMissingParameters:
+              type: boolean
+            hasDocumentation:
+              type: boolean
+            hasOperations:
+              type: boolean
+            operationsCount:
+              type: number
+            hasData:
+              type: boolean
+            dataCollectionsCount:
+              type: number
+            hasEvents:
+              type: boolean
+            eventsCount:
+              type: number
+            hasGlobalWebhooks:
+              type: boolean
+            hasUdm:
+              type: boolean
+            isTest:
+              type: boolean
+            externalAppId:
+              type: string
+            authType:
+              type: string
+              enum:
+              - integration-app-token
+              - membrane-token
+              - oauth2
+              - oauth1
+              - client-credentials
+              - proxy
+            optionsConfig:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  disabled:
+                    type: boolean
+                  parameters:
+                    type: object
+                    additionalProperties:
+                      type: object
+          required:
+          - id
+          - name
+          - logoUri
+        connection:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+            userId:
+              type: string
+            tenantId:
+              type: string
+            type:
+              type: string
+              enum:
+              - connector
+              - mcp
+            key:
+              type: string
+            isTest:
+              type: boolean
+            connected:
+              type: boolean
+            disconnected:
+              description: Use `connected` instead.
+              type: boolean
+              deprecated: true
+            isDefunct:
+              type: boolean
+            state:
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema0'
+            requestError:
+              $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema0'
+            error:
+              description: Use `requestError` and `errors` instead.
+              $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema0'
+              deprecated: true
+            integrationId:
+              type: string
+            connectorId:
+              type: string
+            externalAppId:
+              type: string
+            connectorVersion:
+              type: string
+            authOptionKey:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+            lastActiveAt:
+              type: string
+            nextCredentialsRefreshAt:
+              type: string
+            nextRetryTimestamp:
+              type: string
+            retryAttempts:
+              type: number
+            canTest:
+              type: boolean
+            canRefreshCredentials:
+              type: boolean
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            buildingAgentSessionId:
+              description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
+              type: string
+            clientAction:
+              description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - connect
+                  - provide-input
+                description:
+                  type: string
+                uiUrl:
+                  type: string
+                agentInstructions:
+                  type: string
+                handoffAgentInstructions:
+                  type: string
+              required:
+              - type
+              - description
+          required:
+          - id
+          - name
+          - userId
+          - createdAt
+          - updatedAt
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            internalId:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            credentials:
+              type: object
+            lastActiveAt:
+              type: string
+            isTest:
+              type: boolean
+            isBillable:
+              type: boolean
+            isActive:
+              type: boolean
+            aiCreditsRolling30DayLimit:
+              type:
+              - number
+              - 'null'
+              minimum: 0
+            createdAt:
+              type: string
+            archivedAt:
+              type: string
+          required:
+          - id
+          - name
+          - internalId
+      required:
+      - userId
+      - id
+      - integrationId
+      - connectionId
+      - name
+      - integrationActionId
+      - status
+      - createdAt
+    ActionRunLogRecordsPaginatedResponseDto__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema1'
+        items:
+          $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    ActionRunLogRecordInDb:
+      type: object
+      properties: {}
+    ActionRunLogRecordsPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+              tenantId:
+                type: string
+              id:
+                type: string
+              integrationId:
+                type: string
+              connectionId:
+                type: string
+                description: 'Deprecated: Read from action.connectionId or action.connectionKey instead'
+                deprecated: true
+              externalAppId:
+                type: string
+              name:
+                type: string
+              universalActionId:
+                type: string
+              integrationActionId:
+                type: string
+              connectionActionId:
+                type: string
+              input:
+                description: 'Deprecated: Read from action.input instead'
+                deprecated: true
+                type: object
+              output:
+                type: object
+              status:
+                type: string
+                enum:
+                - success
+                - error
+              createdAt:
+                type: string
+              completedAt:
+                type: string
+              error:
+                $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema0'
+              duration:
+                type: number
+              meta:
+                type: object
+                additionalProperties:
+                  type: object
+              action:
+                description: Complete /act-body snapshot of what ran — sufficient to replay the run by POSTing back to /act.
+                type: object
+                properties:
+                  id:
+                    type: string
+                  integrationKey:
+                    type: string
+                  key:
+                    type: string
+                  connectionKey:
+                    type: string
+                  connectionId:
+                    type: string
+                  type:
+                    type: string
+                  api:
+                    type: object
+                    properties:
+                      method:
+                        type: string
+                        enum:
+                        - GET
+                        - POST
+                        - PATCH
+                        - PUT
+                        - DELETE
+                      path:
+                        type: string
+                      url:
+                        type: string
+                      body:
+                        type: object
+                      headers:
+                        type: object
+                        additionalProperties:
+                          type: string
+                      query:
+                        type: object
+                        additionalProperties:
+                          anyOf:
+                          - type: string
+                          - type: number
+                          - type: boolean
+                    required:
+                    - method
+                  code:
+                    type: string
+                  input:
+                    type: object
+                  meta:
+                    type: object
+                    additionalProperties:
+                      type: object
+                required:
+                - type
+              actionInstance:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    description: Validation or setup errors when state is not READY.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+                    type: string
+                  isDeactivated:
+                    description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  integrationId:
+                    description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+                    type: string
+                  integrationUuid:
+                    description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+                    type: string
+                  integrationKey:
+                    description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+                    type: string
+                  parentId:
+                    description: Internal ID of the parent workspace element. Used for hierarchy (e.g. integration-level under universal). Child key uniqueness is scoped by parent and integration.
+                    type: string
+                  parentUuid:
+                    description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+                    type: string
+                  parentKey:
+                    description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+                    type: string
+                  connectionId:
+                    description: Connection ID for filtering or for connection-level instances. Same semantics as base integration-level property.
+                    type: string
+                  instanceKey:
+                    description: Key for the connection-level instance when multiple exist per connection. Same semantics as base integration-level property.
+                    type: string
+                  isUniversal:
+                    description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+                    type: boolean
+                  externalAppId:
+                    description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+                    type: string
+                  externalAppUuid:
+                    description: UUID of the external app when this action is published in a package that has an external app. Populated in API responses for published actions.
+                    type: string
+                  externalAppKey:
+                    description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+                    type: string
+                  inputSchema:
+                    description: JSON Schema for the action input. Used by the action engine for template output schema, run-time variables, and output mapping.
+                    $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema1'
+                  type:
+                    description: Action type (e.g. ConnectorOperation, RunJavascript). Determines which handler runs and which config schema is used for validation.
+                    type: string
+                    enum:
+                    - list-data-records
+                    - find-data-record-by-id
+                    - match-data-record
+                    - create-data-record
+                    - find-or-create-data-record
+                    - update-data-record
+                    - delete-data-record
+                    - search-data-record
+                    - connector-operation
+                    - api-request-to-external-app
+                    - api-request-to-your-app
+                    - http-request
+                    - run-javascript
+                    - api-request
+                  config:
+                    description: Type-specific configuration object. Validated by the handler's config schema; passed to handler setup/run and getTemplateOutputSchema.
+                    type: object
+                    properties: {}
+                    additionalProperties:
+                      type: object
+                  outputMapping:
+                    description: Mapping expression to transform the action's raw output. Evaluated with access to input, output, and user; used to compute transformed output schema and at run time.
+                  customOutputSchema:
+                    description: Explicit output schema for the action. Takes precedence over the transformed or default output schema when resolving outputSchema.
+                    $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema1'
+                  isCustomized:
+                    type: boolean
+                  userId:
+                    type: string
+                  tenantId:
+                    type: string
+                  universalParentId:
+                    description: 'For connection-level instances: ID of the universal (root) action in the hierarchy. Set automatically when creating an instance; used in list/selector queries to filter by universal parent.'
+                    type: string
+                  outputSchema:
+                    description: Resolved output schema (cached after setup). Derived from customOutputSchema, transformed schema from outputMapping, default output schema, or parent custom output schema. Read-only.
+                  isPublic:
+                    description: When true, the element is publicly listed (e.g. in universe). Used for published packages; publish/unpublish updates this on published elements.
+                    type: boolean
+                required:
+                - id
+                - name
+              integration:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    description: Validation or setup errors when state is not READY.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  logoUri:
+                    type: string
+                  connectorId:
+                    type: string
+                  connectorVersion:
+                    type: string
+                  oAuthCallbackUri:
+                    type: string
+                  parameters:
+                    type: object
+                  hasMissingParameters:
+                    type: boolean
+                  hasDocumentation:
+                    type: boolean
+                  hasOperations:
+                    type: boolean
+                  operationsCount:
+                    type: number
+                  hasData:
+                    type: boolean
+                  dataCollectionsCount:
+                    type: number
+                  hasEvents:
+                    type: boolean
+                  eventsCount:
+                    type: number
+                  hasGlobalWebhooks:
+                    type: boolean
+                  hasUdm:
+                    type: boolean
+                  isTest:
+                    type: boolean
+                  externalAppId:
+                    type: string
+                  authType:
+                    type: string
+                    enum:
+                    - integration-app-token
+                    - membrane-token
+                    - oauth2
+                    - oauth1
+                    - client-credentials
+                    - proxy
+                  optionsConfig:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        disabled:
+                          type: boolean
+                        parameters:
+                          type: object
+                          additionalProperties:
+                            type: object
+                required:
+                - id
+                - name
+                - logoUri
+              connection:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                  userId:
+                    type: string
+                  tenantId:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                    - connector
+                    - mcp
+                  key:
+                    type: string
+                  isTest:
+                    type: boolean
+                  connected:
+                    type: boolean
+                  disconnected:
+                    description: Use `connected` instead.
+                    type: boolean
+                    deprecated: true
+                  isDefunct:
+                    type: boolean
+                  state:
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema0'
+                  requestError:
+                    $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema0'
+                  error:
+                    description: Use `requestError` and `errors` instead.
+                    $ref: '#/components/schemas/ActionRunLogRecordsPaginatedResponseDto__schema0'
+                    deprecated: true
+                  integrationId:
+                    type: string
+                  connectorId:
+                    type: string
+                  externalAppId:
+                    type: string
+                  connectorVersion:
+                    type: string
+                  authOptionKey:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  lastActiveAt:
+                    type: string
+                  nextCredentialsRefreshAt:
+                    type: string
+                  nextRetryTimestamp:
+                    type: string
+                  retryAttempts:
+                    type: number
+                  canTest:
+                    type: boolean
+                  canRefreshCredentials:
+                    type: boolean
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  meta:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  buildingAgentSessionId:
+                    description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
+                    type: string
+                  clientAction:
+                    description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - connect
+                        - provide-input
+                      description:
+                        type: string
+                      uiUrl:
+                        type: string
+                      agentInstructions:
+                        type: string
+                      handoffAgentInstructions:
+                        type: string
+                    required:
+                    - type
+                    - description
+                required:
+                - id
+                - name
+                - userId
+                - createdAt
+                - updatedAt
+              user:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  meta:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  internalId:
+                    type: string
+                  fields:
+                    type: object
+                    additionalProperties:
+                      type: object
+                  credentials:
+                    type: object
+                  lastActiveAt:
+                    type: string
+                  isTest:
+                    type: boolean
+                  isBillable:
+                    type: boolean
+                  isActive:
+                    type: boolean
+                  aiCreditsRolling30DayLimit:
+                    type:
+                    - number
+                    - 'null'
+                    minimum: 0
+                  createdAt:
+                    type: string
+                  archivedAt:
+                    type: string
+                required:
+                - id
+                - name
+                - internalId
+            required:
+            - userId
+            - id
+            - integrationId
+            - connectionId
+            - name
+            - integrationActionId
+            - status
+            - createdAt
+        cursor:
+          type: string
+      required:
+      - items
+    ActionRunLogRecordApiResponseDto__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema1'
+        items:
+          $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionRunLogRecordApiResponseDto__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

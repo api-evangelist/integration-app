@@ -1,0 +1,652 @@
+openapi: 3.2.0
+info:
+  title: Membrane App Data Schemas API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: AppDataSchemas
+paths:
+  /app-data-schemas:
+    get:
+      operationId: listAppDataSchemas
+      parameters:
+      - name: search
+        required: false
+        in: query
+        description: Text search query to filter results
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: includeArchived
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: isUniversal
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: tenantId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: userId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: appDataSchemaId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDataSchemasPaginatedResponseDto'
+      summary: List app data schemas
+      tags:
+      - AppDataSchemas
+    post:
+      operationId: createAppDataSchema
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppDataSchemaCreateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDataSchemaDto'
+      summary: Create app data schema
+      tags:
+      - AppDataSchemas
+  /app-data-schemas/{elementSelector}/dependencies:
+    get:
+      operationId: getAppDataSchemaDependencies
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+      summary: Get dependencies of a app data schema
+      tags:
+      - AppDataSchemas
+  /app-data-schemas/{elementSelector}/restore:
+    post:
+      operationId: restoreAppDataSchema
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseWorkspaceElementDto'
+      summary: Restore (unarchive) app data schema
+      tags:
+      - AppDataSchemas
+  /app-data-schemas/{idOrKey}:
+    get:
+      operationId: getAppDataSchema
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        description: App data schema ID or key
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Text search query to filter results
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: includeArchived
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: isUniversal
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: tenantId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: userId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: appDataSchemaId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDataSchemaDto'
+      summary: Get app data schema by selector
+      tags:
+      - AppDataSchemas
+    put:
+      operationId: updateAppDataSchema
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        description: App data schema ID or key
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppDataSchemaCreateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDataSchemaDto'
+      summary: Update app data schema by selector
+      tags:
+      - AppDataSchemas
+    patch:
+      operationId: patchAppDataSchema
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        description: App data schema ID or key
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppDataSchemaUpdateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDataSchemaDto'
+      summary: Patch app data schema by selector
+      tags:
+      - AppDataSchemas
+    delete:
+      operationId: archiveAppDataSchema
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        description: App data schema ID or key
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Archive app data schema by selector
+      tags:
+      - AppDataSchemas
+  /app-data-schemas/{idOrKey}/export:
+    get:
+      operationId: exportAppDataSchema
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        description: App data schema ID or key
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDataSchemaExportDto'
+      summary: Export app data schema by selector
+      tags:
+      - AppDataSchemas
+  /app-data-schemas/{idOrKey}/refresh:
+    post:
+      operationId: refreshAppDataSchema
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        description: App data schema ID or key
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDataSchemaDto'
+      summary: Refresh app data schema by selector
+      tags:
+      - AppDataSchemas
+components:
+  schemas:
+    AppDataSchemaCreateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        schema:
+          type: object
+        code:
+          type: string
+        archivedAt:
+          type: string
+      required:
+      - name
+      - key
+    AppDataSchemasPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AppDataSchemasPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    AppDataSchemaDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal database ID of the element. Assigned by the API; unique per element.
+        name:
+          type: string
+          description: Display name. Always present in API responses (filled by API if not set on create).
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        state:
+          description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          description: Validation or setup errors when state is not READY.
+          type: array
+          items:
+            $ref: '#/components/schemas/AppDataSchemaDto__schema0'
+        revision:
+          description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+          type: string
+        createdAt:
+          description: ISO date when the element was created.
+          type: string
+        updatedAt:
+          description: ISO date when the element was last updated.
+          type: string
+        archivedAt:
+          type: string
+        isDeactivated:
+          description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+          type: boolean
+        isReadOnly:
+          description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+          type: boolean
+        instanceKey:
+          type: string
+        appDataSchemaId:
+          type: string
+        schema:
+          type: object
+        code:
+          type: string
+        userId:
+          type: string
+        tenantId:
+          type: string
+        appDataSchemaRevision:
+          type: string
+        isCustomized:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/AppDataSchemaDto__schema0'
+        user:
+          type: object
+        appDataSchema:
+          type: object
+      required:
+      - id
+      - name
+    AppDataSchemaExportDto:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        uuid:
+          type: string
+        schema:
+          type: object
+        code:
+          type: string
+      required:
+      - name
+    AppDataSchemaUpdateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        schema:
+          type: object
+        code:
+          type: string
+        archivedAt:
+          type: string
+    AppDataSchemaDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AppDataSchemaDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
+    AppDataSchemasPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Internal database ID of the element. Assigned by the API; unique per element.
+              name:
+                type: string
+                description: Display name. Always present in API responses (filled by API if not set on create).
+              uuid:
+                description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                type: string
+              key:
+                description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                type: string
+              description:
+                description: Optional human-readable description.
+                type: string
+              meta:
+                description: Optional key-value metadata.
+                type: object
+                additionalProperties:
+                  type: object
+              state:
+                description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                type: string
+                enum:
+                - BUILDING
+                - CLIENT_ACTION_REQUIRED
+                - CONFIGURATION_ERROR
+                - SETUP_FAILED
+                - READY
+                - DISCONNECTING
+              errors:
+                description: Validation or setup errors when state is not READY.
+                type: array
+                items:
+                  $ref: '#/components/schemas/AppDataSchemasPaginatedResponseDto__schema0'
+              revision:
+                description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                type: string
+              createdAt:
+                description: ISO date when the element was created.
+                type: string
+              updatedAt:
+                description: ISO date when the element was last updated.
+                type: string
+              archivedAt:
+                type: string
+              isDeactivated:
+                description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                type: boolean
+              isReadOnly:
+                description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                type: boolean
+              instanceKey:
+                type: string
+              appDataSchemaId:
+                type: string
+              schema:
+                type: object
+              code:
+                type: string
+              userId:
+                type: string
+              tenantId:
+                type: string
+              appDataSchemaRevision:
+                type: string
+              isCustomized:
+                type: boolean
+              error:
+                $ref: '#/components/schemas/AppDataSchemasPaginatedResponseDto__schema0'
+              user:
+                type: object
+              appDataSchema:
+                type: object
+            required:
+            - id
+            - name
+        cursor:
+          type: string
+      required:
+      - items
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

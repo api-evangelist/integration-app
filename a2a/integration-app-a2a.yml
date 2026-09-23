@@ -1,55 +1,39 @@
 generated: '2026-09-13'
 method: probed
 source: https://docs.getmembrane.com/.well-known/agent-card.json
-card: a2a/integration-app-agent-card.json
+card:
+  file: a2a/integration-app-agent-card.json
 discovery:
   path: /.well-known/agent-card.json
   canonical: true
   host: docs.getmembrane.com
-  note: >-
-    Found on the documentation host, not on getmembrane.com or api.getmembrane.com. Both of those
-    were probed: api.getmembrane.com returns a JSON 404 for the path, and getmembrane.com answers
-    200 with its SPA HTML shell for every /.well-known/ path, which is not a document. The legacy
-    /.well-known/agent.json path was probed on all five hosts and returned nothing real.
+  note: 'Found on the documentation host, not on getmembrane.com or api.getmembrane.com. Both of those were probed: api.getmembrane.com returns a JSON 404 for the path, and getmembrane.com answers 200 with its SPA HTML shell for every /.well-known/ path, which is not a document. The legacy /.well-known/agent.json path was probed on all five hosts and returned nothing real.'
 x-evidence:
   fetched: '2026-09-13'
   url: https://docs.getmembrane.com/.well-known/agent-card.json
   http_status: 200
   content_type: application/json
   body_shape: JSON object with name, url, version, protocolVersion, capabilities, skills
-grade: conformant
-grade_basis: >-
-  Graded against A2A 1.0.0. All three hard checks pass: capabilities is an OBJECT, protocolVersion is
-  present, and skills is an ARRAY. The optional fields that most published cards omit are all
-  present too - preferredTransport, defaultInputModes and defaultOutputModes are declared.
+grade_basis: 'Graded against A2A 1.0.0. All three hard checks pass: capabilities is an OBJECT, protocolVersion is present, and skills is an ARRAY. The optional fields that most published cards omit are all present too - preferredTransport, defaultInputModes and defaultOutputModes are declared.'
 deviations:
 - field: protocolVersion
   observed: '0.3'
-  note: >-
-    The card declares the 0.3 protocol rather than 1.0.0, and uses the 0.3-era supportedInterfaces[]
-    array rather than 1.0's additionalInterfaces. Not a hard failure, but the card is a version
-    behind the spec it is graded against.
+  note: The card declares the 0.3 protocol rather than 1.0.0, and uses the 0.3-era supportedInterfaces[] array rather than 1.0's additionalInterfaces. Not a hard failure, but the card is a version behind the spec it is graded against.
 - field: description
   observed: absent
-  note: >-
-    A2A expects a top-level human-readable description of the agent. This card carries one only
-    inside skills[0].description.
+  note: A2A expects a top-level human-readable description of the agent. This card carries one only inside skills[0].description.
 - field: skills[0].tags
   observed: []
   note: Declared but empty, so the skill is not discoverable by tag.
 - field: capabilities
   observed: '{streaming: false, pushNotifications: false}'
-  note: >-
-    Both transport capabilities are declared false, so this card advertises a request/response
-    documentation agent rather than a streaming task agent.
+  note: Both transport capabilities are declared false, so this card advertises a request/response documentation agent rather than a streaming task agent.
 subject:
   name: Membrane Docs
   organization: Membrane Docs
   url: https://docs.getmembrane.com/
   is_provider: true
-  note: >-
-    provider.organization and the card url are both the provider's own documentation host, so the
-    card describes Membrane rather than a hosting platform's default agent.
+  note: provider.organization and the card url are both the provider's own documentation host, so the card describes Membrane rather than a hosting platform's default agent.
 skills:
 - id: membrane
   name: Membrane
@@ -57,12 +41,9 @@ skills:
   fetched: true
   http_status: 200
   saved_as: skills/integration-app-membrane.md
-  note: >-
-    The card points at a real Agent Skill markdown file, which was fetched (HTTP 200, text/markdown,
-    9,252 bytes) and saved verbatim under skills/. This is the rarer half of an agent card - a card
-    whose advertised skill actually resolves.
+  note: The card points at a real Agent Skill markdown file, which was fetched (HTTP 200, text/markdown, 9,252 bytes) and saved verbatim under skills/. This is the rarer half of an agent card - a card whose advertised skill actually resolves.
 related:
   mcp: mcp/integration-app-mcp.yml
-  note: >-
-    The card does not name an MCP endpoint, but the provider runs one at
-    https://api.getmembrane.com/mcp/integrate-anything; see mcp/.
+  note: The card does not name an MCP endpoint, but the provider runs one at https://api.getmembrane.com/mcp/integrate-anything; see mcp/.
+conformance:
+  grade: conformant

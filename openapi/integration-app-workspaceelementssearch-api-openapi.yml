@@ -1,0 +1,250 @@
+openapi: 3.2.0
+info:
+  title: Membrane Workspace Elements Search API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: WorkspaceElementsSearch
+paths:
+  /search:
+    get:
+      operationId: searchWorkspaceElements
+      parameters:
+      - name: q
+        required: true
+        in: query
+        schema:
+          minLength: 1
+          maxLength: 200
+          type: string
+      - name: elementType
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - customer
+          - app
+          - connector
+          - integration
+          - flow
+          - flow-instance
+          - flow-run
+          - action
+          - package
+          - action-instance
+          - connection
+          - field-mapping
+          - field-mapping-instance
+          - data-source
+          - data-source-instance
+          - data-link-table
+          - data-link-table-instance
+          - app-event-type
+          - app-event-subscription
+          - app-event-log-record
+          - app-data-schema
+          - app-data-schema-instance
+          - external-event-subscription
+          - external-event-log-record
+          - external-event-pull
+          - external-event-type
+          - screen
+          - action-run-log-record
+          - external-api-log-record
+          - incoming-webhook-log-record
+          - connected-product
+      - name: limit
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          maximum: 100
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponseDto'
+      summary: Search workspace elements by keyword
+      tags:
+      - WorkspaceElementsSearch
+  /semantic-search:
+    get:
+      operationId: semanticSearchWorkspaceElements
+      parameters:
+      - name: q
+        required: true
+        in: query
+        schema:
+          minLength: 1
+          maxLength: 200
+          type: string
+      - name: elementType
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - customer
+          - app
+          - connector
+          - integration
+          - flow
+          - flow-instance
+          - flow-run
+          - action
+          - package
+          - action-instance
+          - connection
+          - field-mapping
+          - field-mapping-instance
+          - data-source
+          - data-source-instance
+          - data-link-table
+          - data-link-table-instance
+          - app-event-type
+          - app-event-subscription
+          - app-event-log-record
+          - app-data-schema
+          - app-data-schema-instance
+          - external-event-subscription
+          - external-event-log-record
+          - external-event-pull
+          - external-event-type
+          - screen
+          - action-run-log-record
+          - external-api-log-record
+          - incoming-webhook-log-record
+          - connected-product
+      - name: limit
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          maximum: 100
+          type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemanticSearchResponseDto'
+      summary: Search workspace elements using semantic similarity
+      tags:
+      - WorkspaceElementsSearch
+components:
+  schemas:
+    SearchResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              elementType:
+                type: string
+                enum:
+                - customer
+                - app
+                - connector
+                - integration
+                - flow
+                - flow-instance
+                - flow-run
+                - action
+                - package
+                - action-instance
+                - connection
+                - field-mapping
+                - field-mapping-instance
+                - data-source
+                - data-source-instance
+                - data-link-table
+                - data-link-table-instance
+                - app-event-type
+                - app-event-subscription
+                - app-event-log-record
+                - app-data-schema
+                - app-data-schema-instance
+                - external-event-subscription
+                - external-event-log-record
+                - external-event-pull
+                - external-event-type
+                - screen
+                - action-run-log-record
+                - external-api-log-record
+                - incoming-webhook-log-record
+                - connected-product
+              element:
+                type: object
+            required:
+            - elementType
+            - element
+        cursor:
+          type: string
+      required:
+      - items
+    SemanticSearchResponseDto:
+      type: array
+      items:
+        type: object
+        properties:
+          elementType:
+            type: string
+            enum:
+            - customer
+            - app
+            - connector
+            - integration
+            - flow
+            - flow-instance
+            - flow-run
+            - action
+            - package
+            - action-instance
+            - connection
+            - field-mapping
+            - field-mapping-instance
+            - data-source
+            - data-source-instance
+            - data-link-table
+            - data-link-table-instance
+            - app-event-type
+            - app-event-subscription
+            - app-event-log-record
+            - app-data-schema
+            - app-data-schema-instance
+            - external-event-subscription
+            - external-event-log-record
+            - external-event-pull
+            - external-event-type
+            - screen
+            - action-run-log-record
+            - external-api-log-record
+            - incoming-webhook-log-record
+            - connected-product
+          element:
+            type: object
+        required:
+        - elementType
+        - element
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

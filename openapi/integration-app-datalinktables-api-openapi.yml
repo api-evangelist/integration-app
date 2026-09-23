@@ -1,0 +1,1037 @@
+openapi: 3.2.0
+info:
+  title: Membrane Data Link Tables API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: DataLinkTables
+paths:
+  /data-link-tables:
+    get:
+      operationId: listDataLinkTables
+      parameters:
+      - name: search
+        required: false
+        in: query
+        description: Text search query to filter results
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: includeArchived
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - connection
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: tenantId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: userId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: dataLinkTableId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLinkTablesPaginatedResponseDto'
+      summary: List data link tables
+      tags:
+      - DataLinkTables
+    post:
+      operationId: createDataLinkTable
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDataLinkTableDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLinkTableApiResponseDto'
+      summary: Create data link table
+      tags:
+      - DataLinkTables
+  /data-link-tables/{elementSelector}/dependencies:
+    get:
+      operationId: getDataLinkTableDependencies
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+      summary: Get dependencies of a data link table
+      tags:
+      - DataLinkTables
+  /data-link-tables/{elementSelector}/refresh:
+    post:
+      operationId: refreshDataLinkTable
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseWorkspaceElementDto'
+      summary: Refresh data link table
+      tags:
+      - DataLinkTables
+  /data-link-tables/{elementSelector}/restore:
+    post:
+      operationId: restoreDataLinkTable
+      parameters:
+      - name: elementSelector
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseWorkspaceElementDto'
+      summary: Restore (unarchive) data link table
+      tags:
+      - DataLinkTables
+  /data-link-tables/{idOrKey}:
+    get:
+      operationId: getDataLinkTable
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Text search query to filter results
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: includeArchived
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - connection
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: tenantId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: userId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: dataLinkTableId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLinkTableApiResponseDto'
+      summary: Get data link table
+      tags:
+      - DataLinkTables
+    put:
+      operationId: updateDataLinkTable
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDataLinkTableDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLinkTableApiResponseDto'
+      summary: Update data link table
+      tags:
+      - DataLinkTables
+    patch:
+      operationId: patchDataLinkTable
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDataLinkTableDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLinkTableApiResponseDto'
+      summary: Patch data link table
+      tags:
+      - DataLinkTables
+    delete:
+      operationId: deleteDataLinkTable
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Archive data link table
+      tags:
+      - DataLinkTables
+  /data-link-tables/{idOrKey}/export:
+    get:
+      operationId: exportDataLinkTable
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLinkTableExportDto'
+      summary: Export data link table
+      tags:
+      - DataLinkTables
+  /data-link-tables/{idOrKey}/links:
+    get:
+      operationId: getDataLinkTableLinks
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: dataLinkTableId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: dataLinkTableKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: autoCreate
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: direction
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+      - name: appRecordId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: externalRecordId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLinksPaginatedResponseDto'
+      summary: Get data links for a data link table instance
+      tags:
+      - DataLinkTables
+    post:
+      operationId: createDataLinkTableLink
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: dataLinkTableId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: dataLinkTableKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: autoCreate
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: direction
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+      - name: appRecordId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: externalRecordId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDataLinkDto'
+      responses:
+        '204':
+          description: Data link created successfully
+      summary: Create a data link
+      tags:
+      - DataLinkTables
+    delete:
+      operationId: deleteDataLinkTableLink
+      parameters:
+      - name: idOrKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: dataLinkTableId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: dataLinkTableKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: autoCreate
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: direction
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+      - name: appRecordId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: externalRecordId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteDataLinkDto'
+      responses:
+        '200':
+          description: ''
+      summary: Delete a data link
+      tags:
+      - DataLinkTables
+components:
+  schemas:
+    CreateDataLinkDto:
+      type: object
+      properties:
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        appRecordId:
+          type: string
+        externalRecordId:
+          type: string
+      required:
+      - direction
+      - appRecordId
+      - externalRecordId
+    DataLinkTableApiResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/DataLinkTableApiResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    DataLinkTableExportDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+        key:
+          type: string
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+        name:
+          type: string
+          description: Display name. Optional on create; used to generate key when key is omitted.
+        description:
+          type: string
+          description: Optional human-readable description.
+        meta:
+          type: object
+          description: Optional key-value metadata.
+          additionalProperties:
+            type: object
+        instanceKey:
+          type: string
+      required:
+      - uuid
+      - key
+    CreateDataLinkTableDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        archivedAt:
+          type: string
+      required:
+      - name
+      - key
+    DataLinkTableApiResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal database ID of the element. Assigned by the API; unique per element.
+        name:
+          type: string
+          description: Display name. Always present in API responses (filled by API if not set on create).
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        state:
+          description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          description: Validation or setup errors when state is not READY.
+          type: array
+          items:
+            $ref: '#/components/schemas/DataLinkTableApiResponseDto__schema0'
+        revision:
+          description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+          type: string
+        createdAt:
+          description: ISO date when the element was created.
+          type: string
+        updatedAt:
+          description: ISO date when the element was last updated.
+          type: string
+        archivedAt:
+          type: string
+        isDeactivated:
+          description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+          type: boolean
+        isReadOnly:
+          description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+          type: boolean
+        connectionId:
+          type: string
+        instanceKey:
+          type: string
+        dataLinkTableId:
+          type: string
+        userId:
+          type: string
+        tenantId:
+          type: string
+        integrationId:
+          type: string
+        isCustomized:
+          type: boolean
+        user:
+          type: object
+        connection:
+          type: object
+        integration:
+          type: object
+        dataLinkTable:
+          type: object
+      required:
+      - id
+      - name
+    DeleteDataLinkDto:
+      type: object
+      properties:
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        appRecordId:
+          type: string
+        externalRecordId:
+          type: string
+      required:
+      - direction
+      - appRecordId
+      - externalRecordId
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
+    UpdateDataLinkTableDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        archivedAt:
+          type: string
+    DataLinksPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              dataLinkTableInstanceId:
+                type: string
+              externalRecordId:
+                type: string
+              appRecordId:
+                type: string
+              direction:
+                type: string
+                enum:
+                - import
+                - export
+                - both
+            required:
+            - id
+            - dataLinkTableInstanceId
+            - externalRecordId
+            - appRecordId
+            - direction
+        cursor:
+          type: string
+      required:
+      - items
+    DataLinkTablesPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/DataLinkTablesPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    DataLinkTablesPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Internal database ID of the element. Assigned by the API; unique per element.
+              name:
+                type: string
+                description: Display name. Always present in API responses (filled by API if not set on create).
+              uuid:
+                description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                type: string
+              key:
+                description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                type: string
+              description:
+                description: Optional human-readable description.
+                type: string
+              meta:
+                description: Optional key-value metadata.
+                type: object
+                additionalProperties:
+                  type: object
+              state:
+                description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                type: string
+                enum:
+                - BUILDING
+                - CLIENT_ACTION_REQUIRED
+                - CONFIGURATION_ERROR
+                - SETUP_FAILED
+                - READY
+                - DISCONNECTING
+              errors:
+                description: Validation or setup errors when state is not READY.
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataLinkTablesPaginatedResponseDto__schema0'
+              revision:
+                description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                type: string
+              createdAt:
+                description: ISO date when the element was created.
+                type: string
+              updatedAt:
+                description: ISO date when the element was last updated.
+                type: string
+              archivedAt:
+                type: string
+              isDeactivated:
+                description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                type: boolean
+              isReadOnly:
+                description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                type: boolean
+              connectionId:
+                type: string
+              instanceKey:
+                type: string
+              dataLinkTableId:
+                type: string
+              userId:
+                type: string
+              tenantId:
+                type: string
+              integrationId:
+                type: string
+              isCustomized:
+                type: boolean
+              user:
+                type: object
+              connection:
+                type: object
+              integration:
+                type: object
+              dataLinkTable:
+                type: object
+            required:
+            - id
+            - name
+        cursor:
+          type: string
+      required:
+      - items
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

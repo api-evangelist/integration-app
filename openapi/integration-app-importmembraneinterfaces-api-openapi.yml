@@ -1,0 +1,84 @@
+openapi: 3.2.0
+info:
+  title: Import Membrane Interfaces API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: ImportMembraneInterfaces
+paths:
+  /import:
+    post:
+      operationId: importWorkspace
+      parameters:
+      - name: dryRun
+        required: true
+        in: query
+        schema:
+          type: boolean
+      - name: partial
+        required: true
+        in: query
+        schema:
+          type: boolean
+      - name: diff
+        required: true
+        in: query
+        schema:
+          type: boolean
+      - name: force
+        required: true
+        in: query
+        schema:
+          type: boolean
+      - name: simplified
+        required: false
+        in: query
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Membrane workspace zip file
+                dryRun:
+                  type: boolean
+                  description: Dry run import to see what changes would be made
+                  default: false
+      responses:
+        '200':
+          description: The job id and access key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncRequestTriggerResponseDto'
+      summary: Import workspace elements from membrane zip file
+      tags:
+      - ImportMembraneInterfaces
+components:
+  schemas:
+    AsyncRequestTriggerResponseDto:
+      type: object
+      properties:
+        jobId:
+          type: string
+        accessKey:
+          type: string
+      required:
+      - jobId
+      - accessKey
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

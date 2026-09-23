@@ -1,0 +1,346 @@
+openapi: 3.2.0
+info:
+  title: Membrane External Apps API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: External Apps
+paths:
+  /external-apps:
+    get:
+      description: Returns workspace apps first, then public apps.
+      operationId: listApps
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: includeArchived
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: category
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: isConnected
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAppsPaginatedResponseDto'
+      summary: List apps
+      tags:
+      - External Apps
+    post:
+      operationId: createApp
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExternalAppDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAppDto'
+      summary: Create a new app
+      tags:
+      - External Apps
+  /external-apps/{idOrKeyOrUuid}:
+    get:
+      description: Returns a public app by its ID, key, or UUID with OpenAPI specs.
+      operationId: getApp
+      parameters:
+      - name: idOrKeyOrUuid
+        required: true
+        in: path
+        description: App ID, key, or UUID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAppDto'
+      summary: Get a single app
+      tags:
+      - External Apps
+    patch:
+      operationId: updateApp
+      parameters:
+      - name: idOrKeyOrUuid
+        required: true
+        in: path
+        description: App ID, key, or UUID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateExternalAppDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAppDto'
+      summary: Update an app
+      tags:
+      - External Apps
+    delete:
+      operationId: deleteApp
+      parameters:
+      - name: idOrKeyOrUuid
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Delete an app
+      tags:
+      - External Apps
+components:
+  schemas:
+    ExternalAppsPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              key:
+                type: string
+              isReadOnly:
+                type: boolean
+              isPublic:
+                type: boolean
+              isConnected:
+                type: boolean
+              uuid:
+                type: string
+              name:
+                type: string
+              appUri:
+                type: string
+                format: uri
+              logoUri:
+                type: string
+                format: uri
+              defaultConnectorId:
+                type: string
+              basePackageId:
+                type: string
+              categories:
+                type: array
+                items:
+                  type: string
+              popularity:
+                type: number
+              readmeSlug:
+                type: string
+              hasAuth:
+                type: boolean
+              hasData:
+                type: boolean
+              hasFreeTestAccount:
+                type:
+                - boolean
+                - 'null'
+              freeTestAccountGuide:
+                type: string
+              freeTestAccountGuideVerifiedAt:
+                type:
+                - string
+                - 'null'
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              openapiSpecs:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    sourceUri:
+                      type: string
+              tenantId:
+                type: string
+            required:
+            - id
+            - key
+            - isReadOnly
+            - uuid
+            - name
+            - appUri
+            - logoUri
+            - defaultConnectorId
+            - categories
+            - popularity
+        cursor:
+          type: string
+      required:
+      - items
+    UpdateExternalAppDto:
+      type: object
+      properties:
+        key:
+          type: string
+          minLength: 1
+          description: Machine key (e.g., "attio"). Unique per workspace.
+        name:
+          type: string
+          minLength: 1
+          description: Human-readable app name (e.g., "Attio").
+        appUri:
+          type: string
+          description: App's main URL (e.g., "https://attio.com").
+          format: uri
+        logoUri:
+          type: string
+          format: uri
+        tenantId:
+          type: string
+    ExternalAppDto:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        isReadOnly:
+          type: boolean
+        isPublic:
+          type: boolean
+        isConnected:
+          type: boolean
+        uuid:
+          type: string
+        name:
+          type: string
+        appUri:
+          type: string
+          format: uri
+        logoUri:
+          type: string
+          format: uri
+        defaultConnectorId:
+          type: string
+        basePackageId:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        popularity:
+          type: number
+        readmeSlug:
+          type: string
+        hasAuth:
+          type: boolean
+        hasData:
+          type: boolean
+        hasFreeTestAccount:
+          type:
+          - boolean
+          - 'null'
+        freeTestAccountGuide:
+          type: string
+        freeTestAccountGuideVerifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        openapiSpecs:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              sourceUri:
+                type: string
+        tenantId:
+          type: string
+      required:
+      - id
+      - key
+      - isReadOnly
+      - uuid
+      - name
+      - appUri
+      - logoUri
+      - defaultConnectorId
+      - categories
+      - popularity
+    CreateExternalAppDto:
+      type: object
+      properties:
+        key:
+          type: string
+          minLength: 1
+          description: Machine key (e.g., "attio"). Unique per workspace.
+        name:
+          type: string
+          minLength: 1
+          description: Human-readable app name (e.g., "Attio").
+        appUri:
+          type: string
+          description: App's main URL (e.g., "https://attio.com").
+          format: uri
+        logoUri:
+          type: string
+          format: uri
+        tenantId:
+          type: string
+      required:
+      - key
+      - name
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

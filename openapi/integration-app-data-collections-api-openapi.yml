@@ -1,23 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Membrane (formerly Integration.app) Platform Actions Data Collections API
-  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
-
-    API for building embedded and agentic integrations across 100,000+ apps.
-
-    The REST API surfaces resources for connections, connectors, integrations,
-
-    flows, actions, data collections, customers, packages, app event
-
-    subscriptions, MCP-style agent sessions, and observability logs. Most
-
-    selectable resources accept either an id or a key as `{selector}`.
-
-    '
+  title: Integration App Data Collections API
   version: '1.0'
   contact:
     name: Membrane Documentation
     url: https://docs.getmembrane.com
+  description: 'Operations tagged Data Collections across 2 of this provider''s published API definitions: integration-app-openapi.yml, integration-app-data-collections-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.getmembrane.com
   description: Production API
@@ -60,6 +48,9 @@ paths:
       responses:
         '201':
           description: Record created
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /data-collections/{connectionId}/{collectionName}/records/{id}:
     parameters:
     - name: connectionId
@@ -103,6 +94,408 @@ paths:
       responses:
         '204':
           description: Deleted
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data:
+    get:
+      operationId: listConnectionDataCollections
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+      summary: List connection data collections
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data/{dataCollectionKey}:
+    get:
+      operationId: getConnectionDataCollection
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: dataCollectionKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: collectionParams
+        required: false
+        in: query
+        description: Data Collection parameters
+        style: form
+        explode: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataCollectionSpecDto'
+      summary: Get data collection specification
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data/{dataCollectionKey}/create:
+    post:
+      operationId: createDataCollectionRecord
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: dataCollectionKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: collectionParams
+        required: false
+        in: query
+        description: Data Collection parameters
+        style: form
+        explode: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataCollectionCreateRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataCollectionCreateResponseDto'
+      summary: Create record in data collection
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data/{dataCollectionKey}/delete:
+    post:
+      operationId: deleteDataCollectionRecord
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: dataCollectionKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: collectionParams
+        required: false
+        in: query
+        description: Data Collection parameters
+        style: form
+        explode: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataCollectionDeleteRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataCollectionDeleteResponseDto'
+      summary: Delete record in data collection
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data/{dataCollectionKey}/find-by-id:
+    post:
+      operationId: findDataCollectionRecordById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: dataCollectionKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: collectionParams
+        required: false
+        in: query
+        description: Data Collection parameters
+        style: form
+        explode: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataCollectionFindByIdRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataCollectionFindByIdResponseDto'
+      summary: Find record by ID in data collection
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data/{dataCollectionKey}/list:
+    post:
+      operationId: listDataCollectionRecords
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: dataCollectionKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: collectionParams
+        required: false
+        in: query
+        description: Data Collection parameters
+        style: form
+        explode: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataCollectionListRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataCollectionListResponseDto'
+      summary: List records in data collection
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data/{dataCollectionKey}/match:
+    post:
+      operationId: matchDataCollectionRecord
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: dataCollectionKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: collectionParams
+        required: false
+        in: query
+        description: Data Collection parameters
+        style: form
+        explode: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataCollectionMatchRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataCollectionMatchResponseDto'
+      summary: Find a matching record in a data collection
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data/{dataCollectionKey}/refresh:
+    post:
+      operationId: refreshConnectionDataCollection
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: dataCollectionKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: collectionParams
+        required: false
+        in: query
+        description: Data Collection parameters
+        style: form
+        explode: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataCollectionSpecDto'
+      summary: Refresh data collection specification
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data/{dataCollectionKey}/search:
+    post:
+      operationId: searchDataCollectionRecords
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: dataCollectionKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: collectionParams
+        required: false
+        in: query
+        description: Data Collection parameters
+        style: form
+        explode: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataCollectionSearchRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataCollectionSearchResponseDto'
+      summary: Search records in a data collection
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /connections/{id}/data/{dataCollectionKey}/update:
+    post:
+      operationId: updateDataCollectionRecord
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: dataCollectionKey
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: collectionParams
+        required: false
+        in: query
+        description: Data Collection parameters
+        style: form
+        explode: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataCollectionUpdateRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataCollectionUpdateResponseDto'
+      summary: Update record in data collection
+      tags:
+      - Data Collections
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
 components:
   parameters:
     Id:
@@ -111,6 +504,653 @@ components:
       required: true
       schema:
         type: string
+  schemas:
+    DataCollectionDeleteResponseDto:
+      type: object
+      properties: {}
+    DataCollectionCreateResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    DataCollectionMatchRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        query:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - query
+    DataCollectionSpecDto__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        items:
+          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    DataCollectionDeleteRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        id:
+          type: string
+      required:
+      - id
+    DataCollectionFindByIdResponseDto:
+      type: object
+      properties:
+        record:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            uri:
+              type: string
+            iconUri:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            udm:
+              type: string
+            unifiedFields:
+              type: object
+              additionalProperties:
+                type: object
+            rawFields:
+              type: object
+              additionalProperties:
+                type: object
+            createdTime:
+              type: string
+            updatedTime:
+              type: string
+            deletedTime:
+              type: string
+            createdById:
+              type: string
+            updatedById:
+              type: string
+          required:
+          - id
+      required:
+      - record
+    DataCollectionListRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        filter:
+          type: object
+        unifiedFilter:
+          type: object
+        cursor:
+          type: string
+    DataCollectionCreateRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        fields:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - fields
+    DataCollectionMatchResponseDto:
+      type: object
+      properties:
+        record:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            uri:
+              type: string
+            iconUri:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            udm:
+              type: string
+            unifiedFields:
+              type: object
+              additionalProperties:
+                type: object
+            rawFields:
+              type: object
+              additionalProperties:
+                type: object
+            createdTime:
+              type: string
+            updatedTime:
+              type: string
+            deletedTime:
+              type: string
+            createdById:
+              type: string
+            updatedById:
+              type: string
+          required:
+          - id
+    DataCollectionUpdateResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    DataCollectionUpdateRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        id:
+          type: string
+        fields:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - id
+      - fields
+    DataCollectionListResponseDto:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              uri:
+                type: string
+              iconUri:
+                type: string
+              fields:
+                type: object
+                additionalProperties:
+                  type: object
+              udm:
+                type: string
+              unifiedFields:
+                type: object
+                additionalProperties:
+                  type: object
+              rawFields:
+                type: object
+                additionalProperties:
+                  type: object
+              createdTime:
+                type: string
+              updatedTime:
+                type: string
+              deletedTime:
+                type: string
+              createdById:
+                type: string
+              updatedById:
+                type: string
+            required:
+            - id
+        drilldowns:
+          type: array
+          items:
+            type: object
+            properties:
+              parameters:
+                type: object
+                additionalProperties:
+                  type: object
+              filter:
+                type: object
+                additionalProperties:
+                  type: object
+        cursor:
+          type: string
+      required:
+      - records
+    DataCollectionSpecDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - collection
+        key:
+          type: string
+        name:
+          type: string
+        parametersSchema:
+          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        fieldsSchema:
+          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        list:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            filterFields:
+              type: array
+              items:
+                type: string
+        search:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+        match:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            fields:
+              type: array
+              items:
+                type: string
+        findById:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+        create:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            fields:
+              type: array
+              items:
+                type: string
+            requiredFields:
+              type: array
+              items:
+                type: string
+            excludedFields:
+              type: array
+              items:
+                type: string
+        update:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            fields:
+              type: array
+              items:
+                type: string
+            excludedFields:
+              type: array
+              items:
+                type: string
+        delete:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+        events:
+          type: object
+          properties:
+            created:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - push
+                  - pull
+                isFullScan:
+                  type: boolean
+                isIdOnly:
+                  type: boolean
+              required:
+              - type
+            updated:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - push
+                  - pull
+                isFullScan:
+                  type: boolean
+                isIdOnly:
+                  type: boolean
+              required:
+              - type
+            deleted:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - push
+                  - pull
+                isFullScan:
+                  type: boolean
+                isIdOnly:
+                  type: boolean
+              required:
+              - type
+            all:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - push
+                  - pull
+                isFullScan:
+                  type: boolean
+                isIdOnly:
+                  type: boolean
+              required:
+              - type
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                - push
+                - pull
+              isFullScan:
+                type: boolean
+              isIdOnly:
+                type: boolean
+            required:
+            - type
+        customFields:
+          type: boolean
+        udm:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              fields:
+                type: array
+                items:
+                  type: string
+              extract:
+                type: object
+                additionalProperties:
+                  type: object
+              parse:
+                type: object
+                additionalProperties:
+                  type: object
+        find:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            queryFields:
+              type: array
+              items:
+                type: string
+      required:
+      - type
+      - name
+    DataCollectionFindByIdRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        id:
+          type: string
+        udm:
+          type: string
+      required:
+      - id
+    DataCollectionSearchRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        query:
+          type: string
+        cursor:
+          type: string
+      required:
+      - query
+    DataCollectionSearchResponseDto:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              uri:
+                type: string
+              iconUri:
+                type: string
+              fields:
+                type: object
+                additionalProperties:
+                  type: object
+              udm:
+                type: string
+              unifiedFields:
+                type: object
+                additionalProperties:
+                  type: object
+              rawFields:
+                type: object
+                additionalProperties:
+                  type: object
+              createdTime:
+                type: string
+              updatedTime:
+                type: string
+              deletedTime:
+                type: string
+              createdById:
+                type: string
+              updatedById:
+                type: string
+            required:
+            - id
+        cursor:
+          type: string
+      required:
+      - records
   securitySchemes:
     bearerAuth:
       type: http
@@ -123,3 +1163,10 @@ components:
         administrative operations.
 
         '
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+x-refined-from:
+- integration-app-openapi.yml
+- integration-app-data-collections-api-openapi.yml

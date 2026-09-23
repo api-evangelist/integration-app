@@ -1,0 +1,97 @@
+openapi: 3.2.0
+info:
+  title: Membrane Tools API
+  description: API documentation for Membrane Engine
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://api.getmembrane.com
+security:
+- bearer: []
+tags:
+- name: Tools
+paths:
+  /agent/tools/search-apps:
+    post:
+      operationId: searchApps
+      parameters:
+      - name: x-membrane-session-id
+        in: header
+        description: Agent Session ID
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebSearchRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchAppsResponseDto'
+      summary: Find apps, SaaS tools, services or APIs that match a query, using web search
+      tags:
+      - Tools
+  /agent/tools/websearch:
+    post:
+      operationId: websearch
+      parameters:
+      - name: x-membrane-session-id
+        in: header
+        description: Agent Session ID
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebSearchRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      summary: Run a search query to search the internet for results
+      tags:
+      - Tools
+components:
+  schemas:
+    WebSearchRequestDto:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+      required:
+      - query
+    SearchAppsResponseDto:
+      type: object
+      properties:
+        apps:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              url:
+                type: string
+            required:
+            - name
+            - url
+      required:
+      - apps
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http

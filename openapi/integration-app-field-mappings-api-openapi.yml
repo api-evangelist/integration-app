@@ -1,23 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Membrane (formerly Integration.app) Platform Actions Field Mappings API
-  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
-
-    API for building embedded and agentic integrations across 100,000+ apps.
-
-    The REST API surfaces resources for connections, connectors, integrations,
-
-    flows, actions, data collections, customers, packages, app event
-
-    subscriptions, MCP-style agent sessions, and observability logs. Most
-
-    selectable resources accept either an id or a key as `{selector}`.
-
-    '
+  title: Integration App Field Mappings API
   version: '1.0'
   contact:
     name: Membrane Documentation
     url: https://docs.getmembrane.com
+  description: 'Operations tagged Field Mappings across 2 of this provider''s published API definitions: integration-app-openapi.yml, integration-app-field-mappings-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.getmembrane.com
   description: Production API
@@ -49,6 +37,9 @@ paths:
       responses:
         '201':
           description: Created
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /field-mappings/{selector}:
     parameters:
     - $ref: '#/components/parameters/Selector'
@@ -64,7 +55,639 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FieldMapping'
+    patch:
+      operationId: patchFieldMapping
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFieldMapping'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMappingApiResponse'
+      summary: Update field mapping partially
+      tags:
+      - Field Mappings
+    put:
+      operationId: replaceFieldMapping
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFieldMapping'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMappingApiResponse'
+      summary: Replace field mapping completely
+      tags:
+      - Field Mappings
+    delete:
+      operationId: archiveFieldMapping
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Archive field mapping
+      tags:
+      - Field Mappings
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /field-mappings/{selector}/app-schema:
+    get:
+      operationId: getFieldMappingAppSchema
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMappingAppSchemaResponseDto'
+      summary: Get field mapping app schema
+      tags:
+      - Field Mappings
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /field-mappings/{selector}/clone:
+    post:
+      operationId: cloneFieldMapping
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMappingApiResponse'
+      summary: Clone field mapping
+      tags:
+      - Field Mappings
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /field-mappings/{selector}/dependencies:
+    get:
+      operationId: getFieldMappingDependencies
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+      summary: Get dependencies of field mapping (flat interface)
+      tags:
+      - Field Mappings
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /field-mappings/{selector}/export:
+    get:
+      operationId: exportFieldMapping
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMappingExportProperties'
+      summary: Export field mapping (flat interface)
+      tags:
+      - Field Mappings
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /field-mappings/{selector}/refresh:
+    post:
+      operationId: refreshFieldMapping
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMappingApiResponse'
+      summary: Refresh field mapping
+      tags:
+      - Field Mappings
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /field-mappings/{selector}/reset:
+    post:
+      description: Refreshes all the dependencies, then resets the element to the default state (from parent)
+      operationId: resetFieldMapping
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMappingApiResponse'
+      summary: Reset field mapping
+      tags:
+      - Field Mappings
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /field-mappings/{selector}/restore:
+    post:
+      operationId: restoreFieldMapping
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMappingApiResponse'
+      summary: Restore field mapping (flat interface)
+      tags:
+      - Field Mappings
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /field-mappings/{selector}/run:
+    post:
+      operationId: runFieldMapping
+      parameters:
+      - name: selector
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: layer
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - universal
+          - integration
+          - connection
+      - name: integrationKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: integrationId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: connectionKey
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: instanceKey
+        required: false
+        in: query
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunFieldMappingRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunFieldMappingResponseDto'
+      summary: Run a field mapping
+      tags:
+      - Field Mappings
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
 components:
+  parameters:
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
   schemas:
     FieldMapping:
       type: object
@@ -81,14 +704,1448 @@ components:
           type: array
           items:
             type: object
-  parameters:
-    Selector:
-      name: selector
-      in: path
-      required: true
-      description: Resource id or unique key.
-      schema:
-        type: string
+    RunFieldMappingResponseDto:
+      type: object
+      properties:
+        output:
+          type: object
+    CreateFieldMapping__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CreateFieldMapping__schema0'
+        items:
+          $ref: '#/components/schemas/CreateFieldMapping__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/CreateFieldMapping__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateFieldMapping__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    FieldMappingExportProperties:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationUuid:
+          type: string
+        parentUuid:
+          type: string
+        externalAppUuid:
+          type: string
+        isCustomized:
+          type: boolean
+        isUniversal:
+          type: boolean
+        instanceKey:
+          type: string
+        dataSourceUuid:
+          type: string
+        appSchema:
+          $ref: '#/components/schemas/FieldMappingExportProperties__schema0'
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        defaultImportValue:
+          type: object
+        defaultExportValue:
+          type: object
+        importValue:
+          type: object
+        exportValue:
+          type: object
+        unifiedImportValue:
+          type: object
+        unifiedExportValue:
+          type: object
+        frozenImportFields:
+          type: object
+        frozenExportFields:
+          type: object
+        frozenUnifiedExportFields:
+          type: object
+      required:
+      - uuid
+      - key
+    FieldMappingExportProperties__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMappingExportProperties__schema0'
+        items:
+          $ref: '#/components/schemas/FieldMappingExportProperties__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/FieldMappingExportProperties__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldMappingExportProperties__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    FieldMappingApiResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Internal database ID of the element. Assigned by the API; unique per element.
+        name:
+          type: string
+          description: Display name. Always present in API responses (filled by API if not set on create).
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          description: Validation or setup errors when state is not READY.
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+        revision:
+          description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+          type: string
+        createdAt:
+          description: ISO date when the element was created.
+          type: string
+        updatedAt:
+          description: ISO date when the element was last updated.
+          type: string
+        archivedAt:
+          description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+          type: string
+        isDeactivated:
+          description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+          type: boolean
+        isReadOnly:
+          description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+          type: boolean
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          type: string
+        instanceKey:
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        fieldMappingId:
+          type: string
+        universalFieldMappingId:
+          type: string
+        dataSourceId:
+          type: string
+        dataSourceUuid:
+          type: string
+        appSchema:
+          $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        defaultImportValue:
+          type: object
+        defaultExportValue:
+          type: object
+        importValue:
+          type: object
+        exportValue:
+          type: object
+        unifiedImportValue:
+          type: object
+        unifiedExportValue:
+          type: object
+        frozenImportFields:
+          type: object
+        frozenExportFields:
+          type: object
+        frozenUnifiedExportFields:
+          type: object
+        isCustomized:
+          type: boolean
+        userId:
+          type: string
+        tenantId:
+          type: string
+        fieldMappingRevision:
+          type: string
+        universalFieldMappingRevision:
+          type: string
+        dataSourceInstanceId:
+          type: string
+        dataSourceSchema:
+          $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+        error:
+          $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+        integration:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            logoUri:
+              type: string
+            connectorId:
+              type: string
+            connectorVersion:
+              type: string
+            oAuthCallbackUri:
+              type: string
+            parameters:
+              type: object
+            hasMissingParameters:
+              type: boolean
+            hasDocumentation:
+              type: boolean
+            hasOperations:
+              type: boolean
+            operationsCount:
+              type: number
+            hasData:
+              type: boolean
+            dataCollectionsCount:
+              type: number
+            hasEvents:
+              type: boolean
+            eventsCount:
+              type: number
+            hasGlobalWebhooks:
+              type: boolean
+            hasUdm:
+              type: boolean
+            isTest:
+              type: boolean
+            externalAppId:
+              type: string
+            authType:
+              type: string
+              enum:
+              - integration-app-token
+              - membrane-token
+              - oauth2
+              - oauth1
+              - client-credentials
+              - proxy
+            optionsConfig:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  disabled:
+                    type: boolean
+                  parameters:
+                    type: object
+                    additionalProperties:
+                      type: object
+          required:
+          - id
+          - name
+          - logoUri
+        appliedToIntegrations:
+          type: array
+          items:
+            type: object
+            properties:
+              element:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    description: Validation or setup errors when state is not READY.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+                    type: string
+                  isDeactivated:
+                    description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  integrationId:
+                    description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+                    type: string
+                  integrationUuid:
+                    description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+                    type: string
+                  integrationKey:
+                    description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+                    type: string
+                  parentUuid:
+                    description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+                    type: string
+                  parentKey:
+                    description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+                    type: string
+                  connectionId:
+                    type: string
+                  instanceKey:
+                    type: string
+                  isUniversal:
+                    description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+                    type: boolean
+                  externalAppId:
+                    description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+                    type: string
+                  externalAppUuid:
+                    description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+                    type: string
+                  externalAppKey:
+                    description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+                    type: string
+                  fieldMappingId:
+                    type: string
+                  universalFieldMappingId:
+                    type: string
+                  dataSourceId:
+                    type: string
+                  dataSourceUuid:
+                    type: string
+                  appSchema:
+                    $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+                  direction:
+                    type: string
+                    enum:
+                    - import
+                    - export
+                    - both
+                  defaultImportValue:
+                    type: object
+                  defaultExportValue:
+                    type: object
+                  importValue:
+                    type: object
+                  exportValue:
+                    type: object
+                  unifiedImportValue:
+                    type: object
+                  unifiedExportValue:
+                    type: object
+                  frozenImportFields:
+                    type: object
+                  frozenExportFields:
+                    type: object
+                  frozenUnifiedExportFields:
+                    type: object
+                  isCustomized:
+                    type: boolean
+                  userId:
+                    type: string
+                  tenantId:
+                    type: string
+                  fieldMappingRevision:
+                    type: string
+                  universalFieldMappingRevision:
+                    type: string
+                  dataSourceInstanceId:
+                    type: string
+                  dataSourceSchema:
+                    $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+                  error:
+                    $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+                required:
+                - id
+                - name
+              integration:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Internal database ID of the element. Assigned by the API; unique per element.
+                  name:
+                    type: string
+                    description: Display name. Always present in API responses (filled by API if not set on create).
+                  uuid:
+                    description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                    type: string
+                  key:
+                    description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                    type: string
+                  description:
+                    description: Optional human-readable description.
+                    type: string
+                  meta:
+                    description: Optional key-value metadata.
+                    type: object
+                    additionalProperties:
+                      type: object
+                  state:
+                    description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                    type: string
+                    enum:
+                    - BUILDING
+                    - CLIENT_ACTION_REQUIRED
+                    - CONFIGURATION_ERROR
+                    - SETUP_FAILED
+                    - READY
+                    - DISCONNECTING
+                  errors:
+                    description: Validation or setup errors when state is not READY.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+                  revision:
+                    description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                    type: string
+                  createdAt:
+                    description: ISO date when the element was created.
+                    type: string
+                  updatedAt:
+                    description: ISO date when the element was last updated.
+                    type: string
+                  archivedAt:
+                    type: string
+                  isDeactivated:
+                    type: boolean
+                  isReadOnly:
+                    description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                    type: boolean
+                  logoUri:
+                    type: string
+                  connectorId:
+                    type: string
+                  connectorVersion:
+                    type: string
+                  oAuthCallbackUri:
+                    type: string
+                  parameters:
+                    type: object
+                  hasMissingParameters:
+                    type: boolean
+                  hasDocumentation:
+                    type: boolean
+                  hasOperations:
+                    type: boolean
+                  operationsCount:
+                    type: number
+                  hasData:
+                    type: boolean
+                  dataCollectionsCount:
+                    type: number
+                  hasEvents:
+                    type: boolean
+                  eventsCount:
+                    type: number
+                  hasGlobalWebhooks:
+                    type: boolean
+                  hasUdm:
+                    type: boolean
+                  isTest:
+                    type: boolean
+                  externalAppId:
+                    type: string
+                  authType:
+                    type: string
+                    enum:
+                    - integration-app-token
+                    - membrane-token
+                    - oauth2
+                    - oauth1
+                    - client-credentials
+                    - proxy
+                  optionsConfig:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        disabled:
+                          type: boolean
+                        parameters:
+                          type: object
+                          additionalProperties:
+                            type: object
+                required:
+                - id
+                - name
+                - logoUri
+            required:
+            - element
+            - integration
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            internalId:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            credentials:
+              type: object
+            lastActiveAt:
+              type: string
+            isTest:
+              type: boolean
+            isBillable:
+              type: boolean
+            isActive:
+              type: boolean
+            aiCreditsRolling30DayLimit:
+              type:
+              - number
+              - 'null'
+              minimum: 0
+            createdAt:
+              type: string
+            archivedAt:
+              type: string
+          required:
+          - id
+          - name
+          - internalId
+        connection:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+            userId:
+              type: string
+            tenantId:
+              type: string
+            type:
+              type: string
+              enum:
+              - connector
+              - mcp
+            key:
+              type: string
+            isTest:
+              type: boolean
+            connected:
+              type: boolean
+            disconnected:
+              description: Use `connected` instead.
+              type: boolean
+              deprecated: true
+            isDefunct:
+              type: boolean
+            state:
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+            requestError:
+              $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+            error:
+              description: Use `requestError` and `errors` instead.
+              $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+              deprecated: true
+            integrationId:
+              type: string
+            connectorId:
+              type: string
+            externalAppId:
+              type: string
+            connectorVersion:
+              type: string
+            authOptionKey:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+            lastActiveAt:
+              type: string
+            nextCredentialsRefreshAt:
+              type: string
+            nextRetryTimestamp:
+              type: string
+            retryAttempts:
+              type: number
+            canTest:
+              type: boolean
+            canRefreshCredentials:
+              type: boolean
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            buildingAgentSessionId:
+              description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
+              type: string
+            clientAction:
+              description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - connect
+                  - provide-input
+                description:
+                  type: string
+                uiUrl:
+                  type: string
+                agentInstructions:
+                  type: string
+                handoffAgentInstructions:
+                  type: string
+              required:
+              - type
+              - description
+          required:
+          - id
+          - name
+          - userId
+          - createdAt
+          - updatedAt
+        fieldMapping:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              description: When set, the element is archived (soft-deleted). Archived elements cannot be patched.
+              type: string
+            isDeactivated:
+              description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            integrationId:
+              description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+              type: string
+            integrationUuid:
+              description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+              type: string
+            integrationKey:
+              description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+              type: string
+            parentUuid:
+              description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+              type: string
+            parentKey:
+              description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+              type: string
+            connectionId:
+              type: string
+            instanceKey:
+              type: string
+            isUniversal:
+              description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+              type: boolean
+            externalAppId:
+              description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+              type: string
+            externalAppUuid:
+              description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+              type: string
+            externalAppKey:
+              description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+              type: string
+            fieldMappingId:
+              type: string
+            universalFieldMappingId:
+              type: string
+            dataSourceId:
+              type: string
+            dataSourceUuid:
+              type: string
+            appSchema:
+              $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+            direction:
+              type: string
+              enum:
+              - import
+              - export
+              - both
+            defaultImportValue:
+              type: object
+            defaultExportValue:
+              type: object
+            importValue:
+              type: object
+            exportValue:
+              type: object
+            unifiedImportValue:
+              type: object
+            unifiedExportValue:
+              type: object
+            frozenImportFields:
+              type: object
+            frozenExportFields:
+              type: object
+            frozenUnifiedExportFields:
+              type: object
+            isCustomized:
+              type: boolean
+            userId:
+              type: string
+            tenantId:
+              type: string
+            fieldMappingRevision:
+              type: string
+            universalFieldMappingRevision:
+              type: string
+            dataSourceInstanceId:
+              type: string
+            dataSourceSchema:
+              $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+            error:
+              $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+          required:
+          - id
+          - name
+      required:
+      - id
+      - name
+    FieldMappingAppSchemaResponseDto:
+      type: object
+      properties: {}
+    UpdateFieldMapping:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          type: string
+        instanceKey:
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        fieldMappingId:
+          type: string
+        universalFieldMappingId:
+          type: string
+        dataSourceId:
+          type: string
+        dataSourceUuid:
+          type: string
+        appSchema:
+          $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        defaultImportValue:
+          type: object
+        defaultExportValue:
+          type: object
+        importValue:
+          type: object
+        exportValue:
+          type: object
+        unifiedImportValue:
+          type: object
+        unifiedExportValue:
+          type: object
+        frozenImportFields:
+          type: object
+        frozenExportFields:
+          type: object
+        frozenUnifiedExportFields:
+          type: object
+    UpdateFieldMapping__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        items:
+          $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    RunFieldMappingRequestDto:
+      type: object
+      properties:
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        input:
+          type: object
+        connectionId:
+          type: string
+    CreateFieldMapping:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          type: string
+        instanceKey:
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        fieldMappingId:
+          type: string
+        universalFieldMappingId:
+          type: string
+        dataSourceId:
+          type: string
+        dataSourceUuid:
+          type: string
+        appSchema:
+          $ref: '#/components/schemas/CreateFieldMapping__schema0'
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        defaultImportValue:
+          type: object
+        defaultExportValue:
+          type: object
+        importValue:
+          type: object
+        exportValue:
+          type: object
+        unifiedImportValue:
+          type: object
+        unifiedExportValue:
+          type: object
+        frozenImportFields:
+          type: object
+        frozenExportFields:
+          type: object
+        frozenUnifiedExportFields:
+          type: object
+    FieldMappingApiResponse__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    FieldMappingApiResponse__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+        items:
+          $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldMappingApiResponse__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
   securitySchemes:
     bearerAuth:
       type: http
@@ -101,3 +2158,10 @@ components:
         administrative operations.
 
         '
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+x-refined-from:
+- integration-app-openapi.yml
+- integration-app-field-mappings-api-openapi.yml

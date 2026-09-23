@@ -1,28 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Membrane (formerly Integration.app) Platform Actions Sessions API
-  description: 'The Membrane platform (rebranded from Integration.app) provides a unified
-
-    API for building embedded and agentic integrations across 100,000+ apps.
-
-    The REST API surfaces resources for connections, connectors, integrations,
-
-    flows, actions, data collections, customers, packages, app event
-
-    subscriptions, MCP-style agent sessions, and observability logs. Most
-
-    selectable resources accept either an id or a key as `{selector}`.
-
-    '
+  title: Integration App Sessions API
   version: '1.0'
-  contact:
-    name: Membrane Documentation
-    url: https://docs.getmembrane.com
+  description: 'Operations tagged Sessions across 2 of this provider''s published API definitions: integration-app-openapi.yml, integration-app-sessions-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.getmembrane.com
   description: Production API
-security:
-- bearerAuth: []
 tags:
 - name: Sessions
 paths:
@@ -35,6 +18,8 @@ paths:
       responses:
         '200':
           description: Session list
+      security:
+      - bearerAuth: []
     post:
       tags:
       - Sessions
@@ -49,6 +34,11 @@ paths:
       responses:
         '201':
           description: Session created
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /sessions/{id}:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -60,6 +50,11 @@ paths:
       responses:
         '200':
           description: Session
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /sessions/{id}/message:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -80,6 +75,11 @@ paths:
       responses:
         '200':
           description: Message accepted
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
   /sessions/{id}/stop:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -91,6 +91,279 @@ paths:
       responses:
         '200':
           description: Stopped
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
+  /agent/sessions:
+    servers:
+    - url: https://api.getmembrane.com
+    get:
+      operationId: listAgentSessions
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of items to return (1-1000)
+        schema:
+          minimum: 1
+          maximum: 1000
+          type: integer
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor from a previous response
+        schema:
+          type: string
+      - name: workspaceElementType
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - customer
+          - app
+          - connector
+          - integration
+          - flow
+          - flow-instance
+          - flow-run
+          - action
+          - package
+          - action-instance
+          - connection
+          - field-mapping
+          - field-mapping-instance
+          - data-source
+          - data-source-instance
+          - data-link-table
+          - data-link-table-instance
+          - app-event-type
+          - app-event-subscription
+          - app-event-log-record
+          - app-data-schema
+          - app-data-schema-instance
+          - external-event-subscription
+          - external-event-log-record
+          - external-event-pull
+          - external-event-type
+          - screen
+          - action-run-log-record
+          - external-api-log-record
+          - incoming-webhook-log-record
+          - connected-product
+      - name: workspaceElementId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: agentHarnessId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: startDatetime
+        required: false
+        in: query
+        schema:
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          type: string
+      - name: endDatetime
+        required: false
+        in: query
+        schema:
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          type: string
+      - name: status
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - queued
+          - starting
+          - running
+          - completed
+          - failed
+          - cancelled
+      - name: isExternal
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSessionsPaginatedResponseDto'
+      summary: List agent sessions
+      tags:
+      - Sessions
+      security:
+      - bearer: []
+    post:
+      operationId: createAgentSession
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAgentSessionDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSessionDto'
+      summary: Create a new agent session
+      tags:
+      - Sessions
+      security:
+      - bearer: []
+  /agent/sessions/{id}:
+    servers:
+    - url: https://api.getmembrane.com
+    get:
+      operationId: getAgentSession
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: wait
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: timeout
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          maximum: 60
+          default: 30
+          type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSessionDto'
+      summary: Get an agent session
+      tags:
+      - Sessions
+      security:
+      - bearer: []
+    patch:
+      operationId: patchAgentSession
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchAgentSessionDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSessionDto'
+      summary: Update an agent session
+      tags:
+      - Sessions
+      security:
+      - bearer: []
+  /agent/sessions/{id}/interrupt:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      operationId: interruptAgentSession
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSessionInterruptResponseDto'
+      summary: Interrupt a running agent session
+      tags:
+      - Sessions
+      security:
+      - bearer: []
+  /agent/sessions/{id}/message:
+    servers:
+    - url: https://api.getmembrane.com
+    post:
+      operationId: sendAgentSessionMessage
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentSessionInputDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSessionDto'
+      summary: Send a message to a session (resumes if stopped, sends input if running)
+      tags:
+      - Sessions
+      security:
+      - bearer: []
+  /agent/sessions/{id}/stop:
+    servers:
+    - url: https://api.getmembrane.com
+    patch:
+      operationId: stopAgentSession
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSessionDto'
+      summary: Stop an agent session
+      tags:
+      - Sessions
+      security:
+      - bearer: []
 components:
   parameters:
     Id:
@@ -99,6 +372,510 @@ components:
       required: true
       schema:
         type: string
+  schemas:
+    AgentSessionsPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AgentSessionsPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    PatchAgentSessionDto:
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - busy
+          - idle
+        lastActivityAt:
+          type: string
+          description: Last meaningful session progress timestamp used for inactivity timeout checks.
+        title:
+          type: string
+        summary:
+          type: string
+        error:
+          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
+        opencodeSessionUuid:
+          type: string
+        output:
+          type: object
+          additionalProperties:
+            type: object
+        status:
+          type: string
+          enum:
+          - queued
+          - starting
+          - running
+          - completed
+          - failed
+          - cancelled
+    AgentSessionsPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+              tenantId:
+                type: string
+              id:
+                type: string
+              workspaceId:
+                type: string
+              orgWorkspaceId:
+                type: string
+              workspaceElementType:
+                type: string
+                enum:
+                - customer
+                - app
+                - connector
+                - integration
+                - flow
+                - flow-instance
+                - flow-run
+                - action
+                - package
+                - action-instance
+                - connection
+                - field-mapping
+                - field-mapping-instance
+                - data-source
+                - data-source-instance
+                - data-link-table
+                - data-link-table-instance
+                - app-event-type
+                - app-event-subscription
+                - app-event-log-record
+                - app-data-schema
+                - app-data-schema-instance
+                - external-event-subscription
+                - external-event-log-record
+                - external-event-pull
+                - external-event-type
+                - screen
+                - action-run-log-record
+                - external-api-log-record
+                - incoming-webhook-log-record
+                - connected-product
+              workspaceElementId:
+                type: string
+              type:
+                type: string
+              status:
+                type: string
+                enum:
+                - queued
+                - starting
+                - running
+                - completed
+                - failed
+                - cancelled
+              prompt:
+                type: string
+              error:
+                $ref: '#/components/schemas/AgentSessionsPaginatedResponseDto__schema0'
+              lastActivityAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                description: Last meaningful session progress timestamp used for inactivity timeout checks.
+              title:
+                type: string
+              summary:
+                type: string
+              cost:
+                type: number
+              state:
+                default: busy
+                type: string
+                enum:
+                - busy
+                - idle
+              hasWorker:
+                type: boolean
+              isExternal:
+                type: boolean
+              agentName:
+                type: string
+                enum:
+                - membrane
+                - membrane-core
+                - self-integrating
+                - connection-building
+                - action-building
+                - universe
+              agentHarnessId:
+                type: string
+              agentHarnessSnapshotId:
+                type: string
+              output:
+                type: object
+                additionalProperties:
+                  type: object
+              createdAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              updatedAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+            required:
+            - id
+            - workspaceId
+            - type
+            - status
+            - prompt
+            - lastActivityAt
+            - hasWorker
+            - createdAt
+            - updatedAt
+        cursor:
+          type: string
+      required:
+      - items
+    AgentSessionDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        tenantId:
+          type: string
+        id:
+          type: string
+        workspaceId:
+          type: string
+        orgWorkspaceId:
+          type: string
+        workspaceElementType:
+          type: string
+          enum:
+          - customer
+          - app
+          - connector
+          - integration
+          - flow
+          - flow-instance
+          - flow-run
+          - action
+          - package
+          - action-instance
+          - connection
+          - field-mapping
+          - field-mapping-instance
+          - data-source
+          - data-source-instance
+          - data-link-table
+          - data-link-table-instance
+          - app-event-type
+          - app-event-subscription
+          - app-event-log-record
+          - app-data-schema
+          - app-data-schema-instance
+          - external-event-subscription
+          - external-event-log-record
+          - external-event-pull
+          - external-event-type
+          - screen
+          - action-run-log-record
+          - external-api-log-record
+          - incoming-webhook-log-record
+          - connected-product
+        workspaceElementId:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+          - starting
+          - running
+          - completed
+          - failed
+          - cancelled
+        prompt:
+          type: string
+        error:
+          $ref: '#/components/schemas/AgentSessionDto__schema0'
+        lastActivityAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: Last meaningful session progress timestamp used for inactivity timeout checks.
+        title:
+          type: string
+        summary:
+          type: string
+        cost:
+          type: number
+        state:
+          default: busy
+          type: string
+          enum:
+          - busy
+          - idle
+        hasWorker:
+          type: boolean
+        isExternal:
+          type: boolean
+        agentName:
+          type: string
+          enum:
+          - membrane
+          - membrane-core
+          - self-integrating
+          - connection-building
+          - action-building
+          - universe
+        agentHarnessId:
+          type: string
+        agentHarnessSnapshotId:
+          type: string
+        output:
+          type: object
+          additionalProperties:
+            type: object
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - workspaceId
+      - type
+      - status
+      - prompt
+      - lastActivityAt
+      - hasWorker
+      - createdAt
+      - updatedAt
+    AgentSessionInterruptResponseDto:
+      type: object
+      properties:
+        interrupted:
+          type: boolean
+      required:
+      - interrupted
+    AgentSessionDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AgentSessionDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    AgentSessionInputDto:
+      type: object
+      properties:
+        input:
+          type: string
+          minLength: 1
+        synthetic:
+          type: boolean
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              data:
+                type: object
+            required:
+            - title
+            - data
+      required:
+      - input
+    PatchAgentSessionDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    CreateAgentSessionDto:
+      type: object
+      properties:
+        workspaceElementType:
+          type: string
+          enum:
+          - customer
+          - app
+          - connector
+          - integration
+          - flow
+          - flow-instance
+          - flow-run
+          - action
+          - package
+          - action-instance
+          - connection
+          - field-mapping
+          - field-mapping-instance
+          - data-source
+          - data-source-instance
+          - data-link-table
+          - data-link-table-instance
+          - app-event-type
+          - app-event-subscription
+          - app-event-log-record
+          - app-data-schema
+          - app-data-schema-instance
+          - external-event-subscription
+          - external-event-log-record
+          - external-event-pull
+          - external-event-type
+          - screen
+          - action-run-log-record
+          - external-api-log-record
+          - incoming-webhook-log-record
+          - connected-product
+        workspaceElementId:
+          type: string
+          minLength: 1
+        prompt:
+          type: string
+          minLength: 1
+        testCustomerId:
+          type: string
+        isExternal:
+          type: boolean
+        modelId:
+          type: string
+          enum:
+          - anthropic/claude-sonnet-4.6
+          - anthropic/claude-opus-4.6
+          - anthropic/claude-sonnet-4.5
+          - anthropic/claude-opus-4.5
+          - anthropic/claude-haiku-4.5
+          - openai/gpt-5.2
+          - openai/gpt-5-nano
+          - google/gemini-3-pro-preview
+          - moonshotai/kimi-k2.5
+        agentName:
+          type: string
+          enum:
+          - membrane
+          - membrane-core
+          - self-integrating
+          - connection-building
+          - action-building
+          - universe
+        agentHarnessId:
+          type: string
+          minLength: 1
+        promptAttachments:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              data:
+                type: object
+            required:
+            - title
+            - data
+      required:
+      - prompt
   securitySchemes:
     bearerAuth:
       type: http
@@ -111,3 +888,10 @@ components:
         administrative operations.
 
         '
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+x-refined-from:
+- integration-app-openapi.yml
+- integration-app-sessions-api-openapi.yml
