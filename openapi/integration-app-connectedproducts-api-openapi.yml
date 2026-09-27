@@ -187,54 +187,6 @@ paths:
       - ConnectedProducts
 components:
   schemas:
-    ConnectedProductsPaginatedResponseDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              key:
-                type: string
-              type:
-                type: string
-                enum:
-                - ai-agent
-                - app
-              audience:
-                type: string
-                enum:
-                - personal
-                - customers
-              parameters:
-                type: object
-                properties:
-                  agentType:
-                    type: string
-                additionalProperties:
-                  type: object
-              isConnected:
-                type: boolean
-              lastApiRequestDate:
-                type: string
-              createdAt:
-                type: string
-              archivedAt:
-                type: string
-            required:
-            - id
-            - name
-            - key
-            - type
-        cursor:
-          type: string
-      required:
-      - items
     UpdateConnectedProductRequestDto:
       type: object
       properties:
@@ -259,33 +211,6 @@ components:
               type: string
           additionalProperties:
             type: object
-    CreateConnectedProductRequestDto:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        type:
-          type: string
-          enum:
-          - ai-agent
-          - app
-        audience:
-          type: string
-          enum:
-          - personal
-          - customers
-        parameters:
-          type: object
-          properties:
-            agentType:
-              type: string
-          additionalProperties:
-            type: object
-      required:
-      - name
-      - type
     ConnectedProductApiResponseDto:
       type: object
       properties:
@@ -358,6 +283,81 @@ components:
       required:
       - id
       - name
+    CreateConnectedProductRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+          - ai-agent
+          - app
+        audience:
+          type: string
+          enum:
+          - personal
+          - customers
+        parameters:
+          type: object
+          properties:
+            agentType:
+              type: string
+          additionalProperties:
+            type: object
+      required:
+      - name
+      - type
+    ConnectedProductsPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              key:
+                type: string
+              type:
+                type: string
+                enum:
+                - ai-agent
+                - app
+              audience:
+                type: string
+                enum:
+                - personal
+                - customers
+              parameters:
+                type: object
+                properties:
+                  agentType:
+                    type: string
+                additionalProperties:
+                  type: object
+              isConnected:
+                type: boolean
+              lastApiRequestDate:
+                type: string
+              createdAt:
+                type: string
+              archivedAt:
+                type: string
+            required:
+            - id
+            - name
+            - key
+            - type
+        cursor:
+          type: string
+      required:
+      - items
   securitySchemes:
     bearer:
       scheme: bearer

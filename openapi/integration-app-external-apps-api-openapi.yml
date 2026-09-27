@@ -141,6 +141,99 @@ paths:
       - External Apps
 components:
   schemas:
+    ExternalAppDto:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        isReadOnly:
+          type: boolean
+        isPublic:
+          type: boolean
+        isConnected:
+          type: boolean
+        uuid:
+          type: string
+        name:
+          type: string
+        appUri:
+          type: string
+          format: uri
+        logoUri:
+          type: string
+          format: uri
+        defaultConnectorId:
+          type: string
+        basePackageId:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        popularity:
+          type: number
+        readmeSlug:
+          type: string
+        hasAuth:
+          type: boolean
+        hasData:
+          type: boolean
+        hasFreeTestAccount:
+          type:
+          - boolean
+          - 'null'
+        freeTestAccountGuide:
+          type: string
+        freeTestAccountGuideVerifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        openapiSpecs:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              sourceUri:
+                type: string
+        tenantId:
+          type: string
+      required:
+      - id
+      - key
+      - isReadOnly
+      - uuid
+      - name
+      - appUri
+      - logoUri
+      - defaultConnectorId
+      - categories
+      - popularity
+    UpdateExternalAppDto:
+      type: object
+      properties:
+        key:
+          type: string
+          minLength: 1
+          description: Machine key (e.g., "attio"). Unique per workspace.
+        name:
+          type: string
+          minLength: 1
+          description: Human-readable app name (e.g., "Attio").
+        appUri:
+          type: string
+          description: App's main URL (e.g., "https://attio.com").
+          format: uri
+        logoUri:
+          type: string
+          format: uri
+        tenantId:
+          type: string
     ExternalAppsPaginatedResponseDto:
       type: object
       properties:
@@ -223,99 +316,6 @@ components:
           type: string
       required:
       - items
-    UpdateExternalAppDto:
-      type: object
-      properties:
-        key:
-          type: string
-          minLength: 1
-          description: Machine key (e.g., "attio"). Unique per workspace.
-        name:
-          type: string
-          minLength: 1
-          description: Human-readable app name (e.g., "Attio").
-        appUri:
-          type: string
-          description: App's main URL (e.g., "https://attio.com").
-          format: uri
-        logoUri:
-          type: string
-          format: uri
-        tenantId:
-          type: string
-    ExternalAppDto:
-      type: object
-      properties:
-        id:
-          type: string
-        key:
-          type: string
-        isReadOnly:
-          type: boolean
-        isPublic:
-          type: boolean
-        isConnected:
-          type: boolean
-        uuid:
-          type: string
-        name:
-          type: string
-        appUri:
-          type: string
-          format: uri
-        logoUri:
-          type: string
-          format: uri
-        defaultConnectorId:
-          type: string
-        basePackageId:
-          type: string
-        categories:
-          type: array
-          items:
-            type: string
-        popularity:
-          type: number
-        readmeSlug:
-          type: string
-        hasAuth:
-          type: boolean
-        hasData:
-          type: boolean
-        hasFreeTestAccount:
-          type:
-          - boolean
-          - 'null'
-        freeTestAccountGuide:
-          type: string
-        freeTestAccountGuideVerifiedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        openapiSpecs:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              sourceUri:
-                type: string
-        tenantId:
-          type: string
-      required:
-      - id
-      - key
-      - isReadOnly
-      - uuid
-      - name
-      - appUri
-      - logoUri
-      - defaultConnectorId
-      - categories
-      - popularity
     CreateExternalAppDto:
       type: object
       properties:

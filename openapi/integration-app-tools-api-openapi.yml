@@ -65,14 +65,6 @@ paths:
       - Tools
 components:
   schemas:
-    WebSearchRequestDto:
-      type: object
-      properties:
-        query:
-          type: string
-          minLength: 1
-      required:
-      - query
     SearchAppsResponseDto:
       type: object
       properties:
@@ -90,6 +82,14 @@ components:
             - url
       required:
       - apps
+    WebSearchRequestDto:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+      required:
+      - query
   securitySchemes:
     bearer:
       scheme: bearer

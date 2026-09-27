@@ -98,6 +98,9 @@ paths:
     - url: https://api.getmembrane.com
       description: Production API
   /connections/{id}/data:
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
     get:
       operationId: listConnectionDataCollections
       parameters:
@@ -118,10 +121,10 @@ paths:
       summary: List connection data collections
       tags:
       - Data Collections
+  /connections/{id}/data/{dataCollectionKey}:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /connections/{id}/data/{dataCollectionKey}:
     get:
       operationId: getConnectionDataCollection
       parameters:
@@ -155,12 +158,12 @@ paths:
       summary: Get data collection specification
       tags:
       - Data Collections
+  /connections/{id}/data/{dataCollectionKey}/create:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /connections/{id}/data/{dataCollectionKey}/create:
     post:
-      operationId: createDataCollectionRecord
+      operationId: postConnectionsByIdDataByDataCollectionKeyCreate
       parameters:
       - name: id
         required: true
@@ -198,12 +201,14 @@ paths:
       summary: Create record in data collection
       tags:
       - Data Collections
+      x-operation-id-source: normalized
+      x-operation-id-original: createDataCollectionRecord
+  /connections/{id}/data/{dataCollectionKey}/delete:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /connections/{id}/data/{dataCollectionKey}/delete:
     post:
-      operationId: deleteDataCollectionRecord
+      operationId: postConnectionsByIdDataByDataCollectionKeyDelete
       parameters:
       - name: id
         required: true
@@ -241,10 +246,12 @@ paths:
       summary: Delete record in data collection
       tags:
       - Data Collections
+      x-operation-id-source: normalized
+      x-operation-id-original: deleteDataCollectionRecord
+  /connections/{id}/data/{dataCollectionKey}/find-by-id:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /connections/{id}/data/{dataCollectionKey}/find-by-id:
     post:
       operationId: findDataCollectionRecordById
       parameters:
@@ -284,12 +291,12 @@ paths:
       summary: Find record by ID in data collection
       tags:
       - Data Collections
+  /connections/{id}/data/{dataCollectionKey}/list:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /connections/{id}/data/{dataCollectionKey}/list:
     post:
-      operationId: listDataCollectionRecords
+      operationId: postConnectionsByIdDataByDataCollectionKeyList
       parameters:
       - name: id
         required: true
@@ -327,10 +334,12 @@ paths:
       summary: List records in data collection
       tags:
       - Data Collections
+      x-operation-id-source: normalized
+      x-operation-id-original: listDataCollectionRecords
+  /connections/{id}/data/{dataCollectionKey}/match:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /connections/{id}/data/{dataCollectionKey}/match:
     post:
       operationId: matchDataCollectionRecord
       parameters:
@@ -370,10 +379,10 @@ paths:
       summary: Find a matching record in a data collection
       tags:
       - Data Collections
+  /connections/{id}/data/{dataCollectionKey}/refresh:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /connections/{id}/data/{dataCollectionKey}/refresh:
     post:
       operationId: refreshConnectionDataCollection
       parameters:
@@ -407,10 +416,10 @@ paths:
       summary: Refresh data collection specification
       tags:
       - Data Collections
+  /connections/{id}/data/{dataCollectionKey}/search:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /connections/{id}/data/{dataCollectionKey}/search:
     post:
       operationId: searchDataCollectionRecords
       parameters:
@@ -450,12 +459,12 @@ paths:
       summary: Search records in a data collection
       tags:
       - Data Collections
+  /connections/{id}/data/{dataCollectionKey}/update:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /connections/{id}/data/{dataCollectionKey}/update:
     post:
-      operationId: updateDataCollectionRecord
+      operationId: postConnectionsByIdDataByDataCollectionKeyUpdate
       parameters:
       - name: id
         required: true
@@ -493,9 +502,8 @@ paths:
       summary: Update record in data collection
       tags:
       - Data Collections
-    servers:
-    - url: https://api.getmembrane.com
-      description: Production API
+      x-operation-id-source: normalized
+      x-operation-id-original: updateDataCollectionRecord
 components:
   parameters:
     Id:
@@ -505,17 +513,7 @@ components:
       schema:
         type: string
   schemas:
-    DataCollectionDeleteResponseDto:
-      type: object
-      properties: {}
-    DataCollectionCreateResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-      required:
-      - id
-    DataCollectionMatchRequestDto:
+    DataCollectionSearchRequestDto:
       type: object
       properties:
         parameters:
@@ -523,241 +521,11 @@ components:
           additionalProperties:
             type: object
         query:
-          type: object
-          additionalProperties:
-            type: object
-      required:
-      - query
-    DataCollectionSpecDto__schema0:
-      type: object
-      properties:
-        title:
           type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        items:
-          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
-    DataCollectionDeleteRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        id:
-          type: string
-      required:
-      - id
-    DataCollectionFindByIdResponseDto:
-      type: object
-      properties:
-        record:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            uri:
-              type: string
-            iconUri:
-              type: string
-            fields:
-              type: object
-              additionalProperties:
-                type: object
-            udm:
-              type: string
-            unifiedFields:
-              type: object
-              additionalProperties:
-                type: object
-            rawFields:
-              type: object
-              additionalProperties:
-                type: object
-            createdTime:
-              type: string
-            updatedTime:
-              type: string
-            deletedTime:
-              type: string
-            createdById:
-              type: string
-            updatedById:
-              type: string
-          required:
-          - id
-      required:
-      - record
-    DataCollectionListRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        filter:
-          type: object
-        unifiedFilter:
-          type: object
         cursor:
           type: string
-    DataCollectionCreateRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        fields:
-          type: object
-          additionalProperties:
-            type: object
       required:
-      - fields
-    DataCollectionMatchResponseDto:
-      type: object
-      properties:
-        record:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            uri:
-              type: string
-            iconUri:
-              type: string
-            fields:
-              type: object
-              additionalProperties:
-                type: object
-            udm:
-              type: string
-            unifiedFields:
-              type: object
-              additionalProperties:
-                type: object
-            rawFields:
-              type: object
-              additionalProperties:
-                type: object
-            createdTime:
-              type: string
-            updatedTime:
-              type: string
-            deletedTime:
-              type: string
-            createdById:
-              type: string
-            updatedById:
-              type: string
-          required:
-          - id
-    DataCollectionUpdateResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-      required:
-      - id
-    DataCollectionUpdateRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        id:
-          type: string
-        fields:
-          type: object
-          additionalProperties:
-            type: object
-      required:
-      - id
-      - fields
+      - query
     DataCollectionListResponseDto:
       type: object
       properties:
@@ -817,6 +585,19 @@ components:
           type: string
       required:
       - records
+    DataCollectionListRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        filter:
+          type: object
+        unifiedFilter:
+          type: object
+        cursor:
+          type: string
     DataCollectionSpecDto:
       type: object
       properties:
@@ -1092,7 +873,156 @@ components:
           type: string
       required:
       - id
-    DataCollectionSearchRequestDto:
+    DataCollectionDeleteRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        id:
+          type: string
+      required:
+      - id
+    DataCollectionSpecDto__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        items:
+          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    DataCollectionUpdateResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    DataCollectionMatchResponseDto:
+      type: object
+      properties:
+        record:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            uri:
+              type: string
+            iconUri:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            udm:
+              type: string
+            unifiedFields:
+              type: object
+              additionalProperties:
+                type: object
+            rawFields:
+              type: object
+              additionalProperties:
+                type: object
+            createdTime:
+              type: string
+            updatedTime:
+              type: string
+            deletedTime:
+              type: string
+            createdById:
+              type: string
+            updatedById:
+              type: string
+          required:
+          - id
+    DataCollectionDeleteResponseDto:
+      type: object
+      properties: {}
+    DataCollectionMatchRequestDto:
       type: object
       properties:
         parameters:
@@ -1100,11 +1030,89 @@ components:
           additionalProperties:
             type: object
         query:
-          type: string
-        cursor:
-          type: string
+          type: object
+          additionalProperties:
+            type: object
       required:
       - query
+    DataCollectionCreateRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        fields:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - fields
+    DataCollectionFindByIdResponseDto:
+      type: object
+      properties:
+        record:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            uri:
+              type: string
+            iconUri:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            udm:
+              type: string
+            unifiedFields:
+              type: object
+              additionalProperties:
+                type: object
+            rawFields:
+              type: object
+              additionalProperties:
+                type: object
+            createdTime:
+              type: string
+            updatedTime:
+              type: string
+            deletedTime:
+              type: string
+            createdById:
+              type: string
+            updatedById:
+              type: string
+          required:
+          - id
+      required:
+      - record
+    DataCollectionCreateResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    DataCollectionUpdateRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        id:
+          type: string
+        fields:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - id
+      - fields
     DataCollectionSearchResponseDto:
       type: object
       properties:

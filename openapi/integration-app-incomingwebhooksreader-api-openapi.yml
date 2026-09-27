@@ -122,7 +122,7 @@ paths:
       - IncomingWebhooksReader
 components:
   schemas:
-    IncomingWebhooksPaginatedResponseDto__schema0:
+    IncomingWebhookDto__schema0:
       type: object
       properties:
         type:
@@ -151,66 +151,13 @@ components:
         stack:
           type: object
         causedByError:
-          $ref: '#/components/schemas/IncomingWebhooksPaginatedResponseDto__schema0'
+          $ref: '#/components/schemas/IncomingWebhookDto__schema0'
         logs:
           type: array
           items:
             type: object
       required:
       - message
-    IncomingWebhookDetailsResponseDto:
-      type: object
-      properties:
-        request:
-          type: object
-          properties:
-            headers:
-              type: object
-              additionalProperties:
-                type: object
-            body:
-              type: object
-              additionalProperties:
-                type: object
-            query:
-              type: object
-              additionalProperties:
-                type: object
-          required:
-          - headers
-          - body
-          - query
-        response:
-          type: object
-          properties:
-            status:
-              type: number
-            headers:
-              type: object
-              additionalProperties:
-                type: object
-            data:
-              type: object
-              additionalProperties:
-                type: object
-          required:
-          - status
-          - headers
-          - data
-        events:
-          type: array
-          items:
-            type: object
-            additionalProperties:
-              type: object
-        error:
-          type: object
-          additionalProperties:
-            type: object
-      required:
-      - request
-      - response
-      - events
     IncomingWebhookDto:
       type: object
       properties:
@@ -768,7 +715,60 @@ components:
       - status
       - collectedEventIds
       - createdAt
-    IncomingWebhookDto__schema0:
+    IncomingWebhookDetailsResponseDto:
+      type: object
+      properties:
+        request:
+          type: object
+          properties:
+            headers:
+              type: object
+              additionalProperties:
+                type: object
+            body:
+              type: object
+              additionalProperties:
+                type: object
+            query:
+              type: object
+              additionalProperties:
+                type: object
+          required:
+          - headers
+          - body
+          - query
+        response:
+          type: object
+          properties:
+            status:
+              type: number
+            headers:
+              type: object
+              additionalProperties:
+                type: object
+            data:
+              type: object
+              additionalProperties:
+                type: object
+          required:
+          - status
+          - headers
+          - data
+        events:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        error:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - request
+      - response
+      - events
+    IncomingWebhooksPaginatedResponseDto__schema0:
       type: object
       properties:
         type:
@@ -797,7 +797,7 @@ components:
         stack:
           type: object
         causedByError:
-          $ref: '#/components/schemas/IncomingWebhookDto__schema0'
+          $ref: '#/components/schemas/IncomingWebhooksPaginatedResponseDto__schema0'
         logs:
           type: array
           items:

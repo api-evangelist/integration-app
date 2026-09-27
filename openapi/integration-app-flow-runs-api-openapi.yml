@@ -98,6 +98,9 @@ paths:
     - url: https://api.getmembrane.com
       description: Production API
   /flow-runs/{id}/nodes/{nodeKey}/outputs:
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
     get:
       operationId: getNodeRunOutputs
       parameters:
@@ -126,10 +129,10 @@ paths:
       summary: Get node run outputs
       tags:
       - Flow Runs
+  /flow-runs/{id}/nodes/{nodeKey}/outputs/{outputId}:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /flow-runs/{id}/nodes/{nodeKey}/outputs/{outputId}:
     get:
       operationId: getNodeRunOutput
       parameters:
@@ -158,10 +161,10 @@ paths:
       summary: Get specific node run output
       tags:
       - Flow Runs
+  /flow-runs/{id}/nodes/{nodeKey}/runs:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /flow-runs/{id}/nodes/{nodeKey}/runs:
     get:
       operationId: getNodeRuns
       parameters:
@@ -190,10 +193,10 @@ paths:
       summary: Get node runs for flow run
       tags:
       - Flow Runs
+  /flow-runs/{id}/nodes/{nodeKey}/runs/{nodeRunId}:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /flow-runs/{id}/nodes/{nodeKey}/runs/{nodeRunId}:
     get:
       operationId: getNodeRun
       parameters:
@@ -222,10 +225,10 @@ paths:
       summary: Get specific node run
       tags:
       - Flow Runs
+  /flow-runs/{id}/output/{nodeKey}:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /flow-runs/{id}/output/{nodeKey}:
     get:
       operationId: getNodeOutput
       parameters:
@@ -254,10 +257,21 @@ paths:
       summary: Get flow run output for specific node
       tags:
       - Flow Runs
-    servers:
-    - url: https://api.getmembrane.com
-      description: Production API
 components:
+  parameters:
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
     FlowRun:
       type: object
@@ -279,72 +293,129 @@ components:
         finishedAt:
           type: string
           format: date-time
-    FlowNodeRunRecordWithoutOutputsDataDto:
+    FlowNodeRunsDto__schema0:
       type: object
       properties:
-        id:
-          type: string
-        upstreamRuns:
-          type: array
-          items:
-            type: object
-            properties:
-              nodeKey:
-                type: string
-              runId:
-                type: string
-              outputId:
-                type: string
-            required:
-            - nodeKey
-            - runId
-            - outputId
-        input:
-          type: object
-        status:
+        type:
           type: string
           enum:
-          - completed
-          - failed
-          - skipped
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/FlowNodeRunsDto__schema0'
         logs:
           type: array
           items:
             type: object
-        outputs:
+      required:
+      - message
+    FlowNodeRunOutputResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        nodeKey:
+          type: string
+        outputId:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: object
+        metadata:
+          type: object
+          properties:
+            timestamp:
+              type: string
+            size:
+              type: number
+          required:
+          - timestamp
+          - size
+      required:
+      - id
+      - nodeKey
+      - outputId
+      - data
+      - metadata
+    FlowRunOutputDto:
+      type: object
+      properties:
+        items:
           type: array
           items:
             type: object
-            properties:
-              id:
-                type: string
-              downstreamRuns:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    runId:
-                      type: string
-                    nodeKey:
-                      type: string
-                  required:
-                  - runId
-                  - nodeKey
-            required:
-            - id
-            - downstreamRuns
-        errors:
+        cursor:
+          type: string
+      required:
+      - items
+    FlowNodeRunRecordWithoutOutputsDataDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/FlowNodeRunRecordWithoutOutputsDataDto__schema0'
+        logs:
           type: array
           items:
-            $ref: '#/components/schemas/FlowNodeRunRecordWithoutOutputsDataDto__schema0'
+            type: object
       required:
-      - id
-      - upstreamRuns
-      - input
-      - status
-      - logs
-      - outputs
-      - errors
+      - message
+    FlowNodeRunOutputDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+        cursor:
+          type: string
+      required:
+      - items
     FlowNodeRunsDto:
       type: object
       properties:
@@ -420,143 +491,72 @@ components:
           type: string
       required:
       - items
-    FlowRunOutputDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-        cursor:
-          type: string
-      required:
-      - items
-    FlowNodeRunRecordWithoutOutputsDataDto__schema0:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/FlowNodeRunRecordWithoutOutputsDataDto__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
-    FlowNodeRunOutputResponseDto:
+    FlowNodeRunRecordWithoutOutputsDataDto:
       type: object
       properties:
         id:
           type: string
-        nodeKey:
-          type: string
-        outputId:
-          type: string
-        data:
-          type: object
-          additionalProperties:
+        upstreamRuns:
+          type: array
+          items:
             type: object
-        metadata:
+            properties:
+              nodeKey:
+                type: string
+              runId:
+                type: string
+              outputId:
+                type: string
+            required:
+            - nodeKey
+            - runId
+            - outputId
+        input:
           type: object
-          properties:
-            timestamp:
-              type: string
-            size:
-              type: number
-          required:
-          - timestamp
-          - size
-      required:
-      - id
-      - nodeKey
-      - outputId
-      - data
-      - metadata
-    FlowNodeRunsDto__schema0:
-      type: object
-      properties:
-        type:
+        status:
           type: string
           enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/FlowNodeRunsDto__schema0'
+          - completed
+          - failed
+          - skipped
         logs:
           type: array
           items:
             type: object
-      required:
-      - message
-    FlowNodeRunOutputDto:
-      type: object
-      properties:
-        items:
+        outputs:
           type: array
           items:
             type: object
-        cursor:
-          type: string
+            properties:
+              id:
+                type: string
+              downstreamRuns:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    runId:
+                      type: string
+                    nodeKey:
+                      type: string
+                  required:
+                  - runId
+                  - nodeKey
+            required:
+            - id
+            - downstreamRuns
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowNodeRunRecordWithoutOutputsDataDto__schema0'
       required:
-      - items
-  parameters:
-    Selector:
-      name: selector
-      in: path
-      required: true
-      description: Resource id or unique key.
-      schema:
-        type: string
-    Id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
+      - id
+      - upstreamRuns
+      - input
+      - status
+      - logs
+      - outputs
+      - errors
   securitySchemes:
     bearerAuth:
       type: http

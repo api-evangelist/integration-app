@@ -311,6 +311,42 @@ paths:
       - AppDataSchemas
 components:
   schemas:
+    AppDataSchemaUpdateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        schema:
+          type: object
+        code:
+          type: string
+        archivedAt:
+          type: string
+    AppDataSchemaExportDto:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        uuid:
+          type: string
+        schema:
+          type: object
+        code:
+          type: string
+      required:
+      - name
     AppDataSchemaCreateDto:
       type: object
       properties:
@@ -335,42 +371,39 @@ components:
       required:
       - name
       - key
-    AppDataSchemasPaginatedResponseDto__schema0:
+    BaseWorkspaceElementDto:
       type: object
       properties:
-        type:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
           type: string
           enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/AppDataSchemasPaginatedResponseDto__schema0'
-        logs:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
           type: array
           items:
             type: object
       required:
-      - message
+      - id
+      - name
     AppDataSchemaDto:
       type: object
       properties:
@@ -451,42 +484,6 @@ components:
       required:
       - id
       - name
-    AppDataSchemaExportDto:
-      type: object
-      properties:
-        key:
-          type: string
-        name:
-          type: string
-        uuid:
-          type: string
-        schema:
-          type: object
-        code:
-          type: string
-      required:
-      - name
-    AppDataSchemaUpdateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        key:
-          type: string
-        uuid:
-          type: string
-        description:
-          type: string
-        schema:
-          type: object
-        code:
-          type: string
-        archivedAt:
-          type: string
     AppDataSchemaDto__schema0:
       type: object
       properties:
@@ -523,39 +520,6 @@ components:
             type: object
       required:
       - message
-    BaseWorkspaceElementDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        archivedAt:
-          type: string
-        isDeactivated:
-          type: boolean
-        isReadOnly:
-          type: boolean
-        state:
-          type: string
-          enum:
-          - BUILDING
-          - CLIENT_ACTION_REQUIRED
-          - CONFIGURATION_ERROR
-          - SETUP_FAILED
-          - READY
-          - DISCONNECTING
-        errors:
-          type: array
-          items:
-            type: object
-      required:
-      - id
-      - name
     AppDataSchemasPaginatedResponseDto:
       type: object
       properties:
@@ -645,6 +609,42 @@ components:
           type: string
       required:
       - items
+    AppDataSchemasPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AppDataSchemasPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
   securitySchemes:
     bearer:
       scheme: bearer

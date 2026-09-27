@@ -96,6 +96,166 @@ paths:
       - AppEventLogRecords
 components:
   schemas:
+    AppEventLogRecordsPaginatedResponseDto__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema1'
+        items:
+          $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    AppEventLogRecordApiResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    AppEventLogRecordsPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
     AppEventLogRecordsPaginatedResponseDto:
       type: object
       properties:
@@ -363,166 +523,6 @@ components:
           type: string
       required:
       - items
-    AppEventLogRecordApiResponseDto__schema1:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema1'
-        items:
-          $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema1'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema1'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema1'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
-    AppEventLogRecordsPaginatedResponseDto__schema0:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
-    AppEventLogRecordApiResponseDto__schema0:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
     AppEventLogRecordApiResponseDto:
       type: object
       properties:
@@ -781,7 +781,7 @@ components:
       - event
       - datetime
       - launchedFlowRunIds
-    AppEventLogRecordsPaginatedResponseDto__schema1:
+    AppEventLogRecordApiResponseDto__schema1:
       type: object
       properties:
         title:
@@ -799,13 +799,13 @@ components:
         properties:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema1'
+            $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema1'
         items:
-          $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema1'
+          $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema1'
         additionalProperties:
           anyOf:
           - type: boolean
-          - $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema1'
+          - $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema1'
         enum:
           type: array
           items:
@@ -858,7 +858,7 @@ components:
         anyOf:
           type: array
           items:
-            $ref: '#/components/schemas/AppEventLogRecordsPaginatedResponseDto__schema1'
+            $ref: '#/components/schemas/AppEventLogRecordApiResponseDto__schema1'
         isImplied:
           type: boolean
         isSensitive:

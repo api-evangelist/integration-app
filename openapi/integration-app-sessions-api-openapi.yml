@@ -373,74 +373,6 @@ components:
       schema:
         type: string
   schemas:
-    AgentSessionsPaginatedResponseDto__schema0:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/AgentSessionsPaginatedResponseDto__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
-    PatchAgentSessionDto:
-      type: object
-      properties:
-        state:
-          type: string
-          enum:
-          - busy
-          - idle
-        lastActivityAt:
-          type: string
-          description: Last meaningful session progress timestamp used for inactivity timeout checks.
-        title:
-          type: string
-        summary:
-          type: string
-        error:
-          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
-        opencodeSessionUuid:
-          type: string
-        output:
-          type: object
-          additionalProperties:
-            type: object
-        status:
-          type: string
-          enum:
-          - queued
-          - starting
-          - running
-          - completed
-          - failed
-          - cancelled
     AgentSessionsPaginatedResponseDto:
       type: object
       properties:
@@ -570,6 +502,64 @@ components:
           type: string
       required:
       - items
+    AgentSessionInputDto:
+      type: object
+      properties:
+        input:
+          type: string
+          minLength: 1
+        synthetic:
+          type: boolean
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              data:
+                type: object
+            required:
+            - title
+            - data
+      required:
+      - input
+    PatchAgentSessionDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
     AgentSessionDto:
       type: object
       properties:
@@ -733,64 +723,6 @@ components:
             type: object
       required:
       - message
-    AgentSessionInputDto:
-      type: object
-      properties:
-        input:
-          type: string
-          minLength: 1
-        synthetic:
-          type: boolean
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              title:
-                type: string
-              data:
-                type: object
-            required:
-            - title
-            - data
-      required:
-      - input
-    PatchAgentSessionDto__schema0:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
     CreateAgentSessionDto:
       type: object
       properties:
@@ -876,6 +808,74 @@ components:
             - data
       required:
       - prompt
+    AgentSessionsPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AgentSessionsPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    PatchAgentSessionDto:
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - busy
+          - idle
+        lastActivityAt:
+          type: string
+          description: Last meaningful session progress timestamp used for inactivity timeout checks.
+        title:
+          type: string
+        summary:
+          type: string
+        error:
+          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
+        opencodeSessionUuid:
+          type: string
+        output:
+          type: object
+          additionalProperties:
+            type: object
+        status:
+          type: string
+          enum:
+          - queued
+          - starting
+          - running
+          - completed
+          - failed
+          - cancelled
   securitySchemes:
     bearerAuth:
       type: http

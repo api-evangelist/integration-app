@@ -96,27 +96,6 @@ paths:
       - Checkpoints
 components:
   schemas:
-    CheckpointDiffResponseDto:
-      type: array
-      items:
-        type: object
-        properties:
-          op:
-            type: string
-            enum:
-            - add
-            - remove
-            - replace
-          path:
-            type: string
-            description: Dot/bracket path, e.g. name, nodes[0].id
-          value:
-            type: object
-          oldValue:
-            type: object
-        required:
-        - op
-        - path
     CheckpointApiResponseDto:
       type: object
       properties:
@@ -212,6 +191,27 @@ components:
       required:
       - id
       - name
+    CheckpointDiffResponseDto:
+      type: array
+      items:
+        type: object
+        properties:
+          op:
+            type: string
+            enum:
+            - add
+            - remove
+            - replace
+          path:
+            type: string
+            description: Dot/bracket path, e.g. name, nodes[0].id
+          value:
+            type: object
+          oldValue:
+            type: object
+        required:
+        - op
+        - path
   securitySchemes:
     bearer:
       scheme: bearer

@@ -43,6 +43,9 @@ paths:
     - url: https://api.getmembrane.com
       description: Production API
   /external-event-subscriptions:
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
     get:
       operationId: listExternalEventSubscriptions
       parameters:
@@ -133,10 +136,10 @@ paths:
       summary: Create external event subscription
       tags:
       - External Event Subscriptions
+  /external-event-subscriptions/{elementSelector}/dependencies:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /external-event-subscriptions/{elementSelector}/dependencies:
     get:
       operationId: getExternalEventSubscriptionDependencies
       parameters:
@@ -157,10 +160,10 @@ paths:
       summary: Get dependencies of a external event subscription
       tags:
       - External Event Subscriptions
+  /external-event-subscriptions/{elementSelector}/refresh:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /external-event-subscriptions/{elementSelector}/refresh:
     post:
       operationId: refreshExternalEventSubscription
       parameters:
@@ -179,10 +182,10 @@ paths:
       summary: Refresh external event subscription
       tags:
       - External Event Subscriptions
+  /external-event-subscriptions/{elementSelector}/restore:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /external-event-subscriptions/{elementSelector}/restore:
     post:
       operationId: restoreExternalEventSubscription
       parameters:
@@ -201,10 +204,10 @@ paths:
       summary: Restore (unarchive) external event subscription
       tags:
       - External Event Subscriptions
+  /external-event-subscriptions/{id}:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /external-event-subscriptions/{id}:
     get:
       operationId: getExternalEventSubscription
       parameters:
@@ -261,10 +264,10 @@ paths:
       summary: Delete external event subscription
       tags:
       - External Event Subscriptions
+  /external-event-subscriptions/{id}/download-full-sync-snapshot:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /external-event-subscriptions/{id}/download-full-sync-snapshot:
     post:
       operationId: downloadExternalEventSubscriptionFullSyncSnapshot
       parameters:
@@ -282,10 +285,10 @@ paths:
       summary: Download full sync snapshot for external event subscription
       tags:
       - External Event Subscriptions
+  /external-event-subscriptions/{id}/pull-events:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /external-event-subscriptions/{id}/pull-events:
     post:
       operationId: pullExternalEventSubscriptionEvents
       parameters:
@@ -304,10 +307,10 @@ paths:
       summary: Triggers pull events for external event subscription
       tags:
       - External Event Subscriptions
+  /external-event-subscriptions/{id}/refresh-webhook:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /external-event-subscriptions/{id}/refresh-webhook:
     post:
       operationId: refreshExternalEventSubscriptionWebhook
       parameters:
@@ -326,10 +329,10 @@ paths:
       summary: Refresh webhook for external event subscription
       tags:
       - External Event Subscriptions
+  /external-event-subscriptions/{id}/resubscribe:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /external-event-subscriptions/{id}/resubscribe:
     post:
       operationId: resubscribeToExternalEventSubscription
       parameters:
@@ -348,10 +351,10 @@ paths:
       summary: Resubscribe to external event subscription
       tags:
       - External Event Subscriptions
+  /external-event-subscriptions/{id}/setup:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /external-event-subscriptions/{id}/setup:
     post:
       operationId: setupExternalEventSubscription
       parameters:
@@ -370,9 +373,6 @@ paths:
       summary: Setup external event subscription
       tags:
       - External Event Subscriptions
-    servers:
-    - url: https://api.getmembrane.com
-      description: Production API
 components:
   parameters:
     Id:
@@ -382,42 +382,6 @@ components:
       schema:
         type: string
   schemas:
-    ExternalEventSubscriptionsPaginatedResponseDto__schema0:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/ExternalEventSubscriptionsPaginatedResponseDto__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
     ExternalEventSubscriptionsPaginatedResponseDto:
       type: object
       properties:
@@ -785,374 +749,6 @@ components:
           type: string
       required:
       - items
-    ExternalEventSubscriptionApiResponseDto:
-      type: object
-      properties:
-        userId:
-          type: string
-        tenantId:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        connectionId:
-          type: string
-        integrationId:
-          type: string
-        externalEventTypeId:
-          type: string
-        config:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - data-record-created
-              - data-record-updated
-              - data-record-deleted
-              - connector-event
-            dataSource:
-              type: object
-              properties:
-                key:
-                  type: object
-                collectionKey:
-                  type: object
-                collectionParameters:
-                  type: object
-                udm:
-                  type: object
-                pullUpdatesIntervalSeconds:
-                  type: number
-                fullSyncIntervalSeconds:
-                  type: number
-                path:
-                  type: object
-                defaultPath:
-                  type: object
-            eventKey:
-              type: string
-            eventParameters:
-              type: object
-          required:
-          - type
-        status:
-          type: string
-          enum:
-          - subscribed
-          - unsubscribed
-          - error
-        error:
-          $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
-        isRealTime:
-          type: boolean
-        requiresPull:
-          type: boolean
-        requiresFullSync:
-          type: boolean
-        createdAt:
-          type: string
-        archivedAt:
-          type: string
-        isDeactivated:
-          type: boolean
-        stateData:
-          type: object
-        nextPullEventsTimestamp:
-          type: number
-        pullUpdatesIntervalSeconds:
-          type: number
-        fullSyncIntervalSeconds:
-          type: number
-        nextRefreshTimestamp:
-          type: number
-        globalWebhookKey:
-          type: string
-        globalWebhookEventSelector:
-          type: string
-        incomingWebhookUri:
-          type: string
-        webhookUri:
-          type: string
-        user:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            meta:
-              type: object
-              additionalProperties:
-                type: object
-            internalId:
-              type: string
-            fields:
-              type: object
-              additionalProperties:
-                type: object
-            credentials:
-              type: object
-            lastActiveAt:
-              type: string
-            isTest:
-              type: boolean
-            isBillable:
-              type: boolean
-            isActive:
-              type: boolean
-            aiCreditsRolling30DayLimit:
-              type:
-              - number
-              - 'null'
-              minimum: 0
-            createdAt:
-              type: string
-            archivedAt:
-              type: string
-          required:
-          - id
-          - name
-          - internalId
-        connection:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Internal database ID of the element. Assigned by the API; unique per element.
-            name:
-              type: string
-            userId:
-              type: string
-            tenantId:
-              type: string
-            type:
-              type: string
-              enum:
-              - connector
-              - mcp
-            key:
-              type: string
-            isTest:
-              type: boolean
-            connected:
-              type: boolean
-            disconnected:
-              description: Use `connected` instead.
-              type: boolean
-              deprecated: true
-            isDefunct:
-              type: boolean
-            state:
-              type: string
-              enum:
-              - BUILDING
-              - CLIENT_ACTION_REQUIRED
-              - CONFIGURATION_ERROR
-              - SETUP_FAILED
-              - READY
-              - DISCONNECTING
-            errors:
-              type: array
-              items:
-                $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
-            requestError:
-              $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
-            error:
-              description: Use `requestError` and `errors` instead.
-              $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
-              deprecated: true
-            integrationId:
-              type: string
-            connectorId:
-              type: string
-            externalAppId:
-              type: string
-            connectorVersion:
-              type: string
-            authOptionKey:
-              type: string
-            createdAt:
-              type: string
-            updatedAt:
-              type: string
-            lastActiveAt:
-              type: string
-            nextCredentialsRefreshAt:
-              type: string
-            nextRetryTimestamp:
-              type: string
-            retryAttempts:
-              type: number
-            canTest:
-              type: boolean
-            canRefreshCredentials:
-              type: boolean
-            archivedAt:
-              type: string
-            isDeactivated:
-              type: boolean
-            meta:
-              type: object
-              additionalProperties:
-                type: object
-            buildingAgentSessionId:
-              description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
-              type: string
-            clientAction:
-              description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                  - connect
-                  - provide-input
-                description:
-                  type: string
-                uiUrl:
-                  type: string
-                agentInstructions:
-                  type: string
-                handoffAgentInstructions:
-                  type: string
-              required:
-              - type
-              - description
-          required:
-          - id
-          - name
-          - userId
-          - createdAt
-          - updatedAt
-        integration:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Internal database ID of the element. Assigned by the API; unique per element.
-            name:
-              type: string
-              description: Display name. Always present in API responses (filled by API if not set on create).
-            uuid:
-              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
-              type: string
-            key:
-              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
-              type: string
-            description:
-              description: Optional human-readable description.
-              type: string
-            meta:
-              description: Optional key-value metadata.
-              type: object
-              additionalProperties:
-                type: object
-            state:
-              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
-              type: string
-              enum:
-              - BUILDING
-              - CLIENT_ACTION_REQUIRED
-              - CONFIGURATION_ERROR
-              - SETUP_FAILED
-              - READY
-              - DISCONNECTING
-            errors:
-              description: Validation or setup errors when state is not READY.
-              type: array
-              items:
-                $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
-            revision:
-              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
-              type: string
-            createdAt:
-              description: ISO date when the element was created.
-              type: string
-            updatedAt:
-              description: ISO date when the element was last updated.
-              type: string
-            archivedAt:
-              type: string
-            isDeactivated:
-              type: boolean
-            isReadOnly:
-              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
-              type: boolean
-            logoUri:
-              type: string
-            connectorId:
-              type: string
-            connectorVersion:
-              type: string
-            oAuthCallbackUri:
-              type: string
-            parameters:
-              type: object
-            hasMissingParameters:
-              type: boolean
-            hasDocumentation:
-              type: boolean
-            hasOperations:
-              type: boolean
-            operationsCount:
-              type: number
-            hasData:
-              type: boolean
-            dataCollectionsCount:
-              type: number
-            hasEvents:
-              type: boolean
-            eventsCount:
-              type: number
-            hasGlobalWebhooks:
-              type: boolean
-            hasUdm:
-              type: boolean
-            isTest:
-              type: boolean
-            externalAppId:
-              type: string
-            authType:
-              type: string
-              enum:
-              - integration-app-token
-              - membrane-token
-              - oauth2
-              - oauth1
-              - client-credentials
-              - proxy
-            optionsConfig:
-              type: object
-              additionalProperties:
-                type: object
-                properties:
-                  disabled:
-                    type: boolean
-                  parameters:
-                    type: object
-                    additionalProperties:
-                      type: object
-          required:
-          - id
-          - name
-          - logoUri
-      required:
-      - userId
-      - id
-      - connectionId
-      - integrationId
-    PatchExternalEventSubscriptionRequestDto:
-      type: object
-      properties:
-        webhookUri:
-          anyOf:
-          - type: string
-            format: uri
-          - type: string
-            enum:
-            - ''
     ExternalEventPullApiResponseDto:
       type: object
       properties:
@@ -1562,16 +1158,364 @@ components:
       - endDatetime
       - status
       - collectedEventIds
-    CreateExternalEventSubscriptionRequestDto:
+    ExternalEventSubscriptionApiResponseDto:
       type: object
       properties:
+        userId:
+          type: string
+        tenantId:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
         connectionId:
+          type: string
+        integrationId:
           type: string
         externalEventTypeId:
           type: string
+        config:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - data-record-created
+              - data-record-updated
+              - data-record-deleted
+              - connector-event
+            dataSource:
+              type: object
+              properties:
+                key:
+                  type: object
+                collectionKey:
+                  type: object
+                collectionParameters:
+                  type: object
+                udm:
+                  type: object
+                pullUpdatesIntervalSeconds:
+                  type: number
+                fullSyncIntervalSeconds:
+                  type: number
+                path:
+                  type: object
+                defaultPath:
+                  type: object
+            eventKey:
+              type: string
+            eventParameters:
+              type: object
+          required:
+          - type
+        status:
+          type: string
+          enum:
+          - subscribed
+          - unsubscribed
+          - error
+        error:
+          $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
+        isRealTime:
+          type: boolean
+        requiresPull:
+          type: boolean
+        requiresFullSync:
+          type: boolean
+        createdAt:
+          type: string
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        stateData:
+          type: object
+        nextPullEventsTimestamp:
+          type: number
+        pullUpdatesIntervalSeconds:
+          type: number
+        fullSyncIntervalSeconds:
+          type: number
+        nextRefreshTimestamp:
+          type: number
+        globalWebhookKey:
+          type: string
+        globalWebhookEventSelector:
+          type: string
+        incomingWebhookUri:
+          type: string
+        webhookUri:
+          type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            internalId:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            credentials:
+              type: object
+            lastActiveAt:
+              type: string
+            isTest:
+              type: boolean
+            isBillable:
+              type: boolean
+            isActive:
+              type: boolean
+            aiCreditsRolling30DayLimit:
+              type:
+              - number
+              - 'null'
+              minimum: 0
+            createdAt:
+              type: string
+            archivedAt:
+              type: string
+          required:
+          - id
+          - name
+          - internalId
+        connection:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+            userId:
+              type: string
+            tenantId:
+              type: string
+            type:
+              type: string
+              enum:
+              - connector
+              - mcp
+            key:
+              type: string
+            isTest:
+              type: boolean
+            connected:
+              type: boolean
+            disconnected:
+              description: Use `connected` instead.
+              type: boolean
+              deprecated: true
+            isDefunct:
+              type: boolean
+            state:
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
+            requestError:
+              $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
+            error:
+              description: Use `requestError` and `errors` instead.
+              $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
+              deprecated: true
+            integrationId:
+              type: string
+            connectorId:
+              type: string
+            externalAppId:
+              type: string
+            connectorVersion:
+              type: string
+            authOptionKey:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+            lastActiveAt:
+              type: string
+            nextCredentialsRefreshAt:
+              type: string
+            nextRetryTimestamp:
+              type: string
+            retryAttempts:
+              type: number
+            canTest:
+              type: boolean
+            canRefreshCredentials:
+              type: boolean
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            meta:
+              type: object
+              additionalProperties:
+                type: object
+            buildingAgentSessionId:
+              description: Session ID for building the element via intent-based endpoints (create/update with intent). Present when state is BUILDING.
+              type: string
+            clientAction:
+              description: Action the client must perform to advance this connection. Present if and only if state is CLIENT_ACTION_REQUIRED.
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - connect
+                  - provide-input
+                description:
+                  type: string
+                uiUrl:
+                  type: string
+                agentInstructions:
+                  type: string
+                handoffAgentInstructions:
+                  type: string
+              required:
+              - type
+              - description
+          required:
+          - id
+          - name
+          - userId
+          - createdAt
+          - updatedAt
+        integration:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Internal database ID of the element. Assigned by the API; unique per element.
+            name:
+              type: string
+              description: Display name. Always present in API responses (filled by API if not set on create).
+            uuid:
+              description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+              type: string
+            key:
+              description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+              type: string
+            description:
+              description: Optional human-readable description.
+              type: string
+            meta:
+              description: Optional key-value metadata.
+              type: object
+              additionalProperties:
+                type: object
+            state:
+              description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+              type: string
+              enum:
+              - BUILDING
+              - CLIENT_ACTION_REQUIRED
+              - CONFIGURATION_ERROR
+              - SETUP_FAILED
+              - READY
+              - DISCONNECTING
+            errors:
+              description: Validation or setup errors when state is not READY.
+              type: array
+              items:
+                $ref: '#/components/schemas/ExternalEventSubscriptionApiResponseDto__schema0'
+            revision:
+              description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+              type: string
+            createdAt:
+              description: ISO date when the element was created.
+              type: string
+            updatedAt:
+              description: ISO date when the element was last updated.
+              type: string
+            archivedAt:
+              type: string
+            isDeactivated:
+              type: boolean
+            isReadOnly:
+              description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+              type: boolean
+            logoUri:
+              type: string
+            connectorId:
+              type: string
+            connectorVersion:
+              type: string
+            oAuthCallbackUri:
+              type: string
+            parameters:
+              type: object
+            hasMissingParameters:
+              type: boolean
+            hasDocumentation:
+              type: boolean
+            hasOperations:
+              type: boolean
+            operationsCount:
+              type: number
+            hasData:
+              type: boolean
+            dataCollectionsCount:
+              type: number
+            hasEvents:
+              type: boolean
+            eventsCount:
+              type: number
+            hasGlobalWebhooks:
+              type: boolean
+            hasUdm:
+              type: boolean
+            isTest:
+              type: boolean
+            externalAppId:
+              type: string
+            authType:
+              type: string
+              enum:
+              - integration-app-token
+              - membrane-token
+              - oauth2
+              - oauth1
+              - client-credentials
+              - proxy
+            optionsConfig:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  disabled:
+                    type: boolean
+                  parameters:
+                    type: object
+                    additionalProperties:
+                      type: object
+          required:
+          - id
+          - name
+          - logoUri
       required:
+      - userId
+      - id
       - connectionId
-      - externalEventTypeId
+      - integrationId
     ExternalEventSubscriptionApiResponseDto__schema0:
       type: object
       properties:
@@ -1641,6 +1585,62 @@ components:
       required:
       - id
       - name
+    PatchExternalEventSubscriptionRequestDto:
+      type: object
+      properties:
+        webhookUri:
+          anyOf:
+          - type: string
+            format: uri
+          - type: string
+            enum:
+            - ''
+    CreateExternalEventSubscriptionRequestDto:
+      type: object
+      properties:
+        connectionId:
+          type: string
+        externalEventTypeId:
+          type: string
+      required:
+      - connectionId
+      - externalEventTypeId
+    ExternalEventSubscriptionsPaginatedResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/ExternalEventSubscriptionsPaginatedResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
     ExternalEventPullApiResponseDto__schema0:
       type: object
       properties:

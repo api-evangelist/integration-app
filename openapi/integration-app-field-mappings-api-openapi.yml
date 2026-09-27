@@ -55,6 +55,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FieldMapping'
+    servers:
+    - url: https://api.getmembrane.com
+      description: Production API
     patch:
       operationId: patchFieldMapping
       parameters:
@@ -219,10 +222,10 @@ paths:
       summary: Archive field mapping
       tags:
       - Field Mappings
+  /field-mappings/{selector}/app-schema:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /field-mappings/{selector}/app-schema:
     get:
       operationId: getFieldMappingAppSchema
       parameters:
@@ -275,10 +278,10 @@ paths:
       summary: Get field mapping app schema
       tags:
       - Field Mappings
+  /field-mappings/{selector}/clone:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /field-mappings/{selector}/clone:
     post:
       operationId: cloneFieldMapping
       parameters:
@@ -331,10 +334,10 @@ paths:
       summary: Clone field mapping
       tags:
       - Field Mappings
+  /field-mappings/{selector}/dependencies:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /field-mappings/{selector}/dependencies:
     get:
       operationId: getFieldMappingDependencies
       parameters:
@@ -389,10 +392,10 @@ paths:
       summary: Get dependencies of field mapping (flat interface)
       tags:
       - Field Mappings
+  /field-mappings/{selector}/export:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /field-mappings/{selector}/export:
     get:
       operationId: exportFieldMapping
       parameters:
@@ -445,10 +448,10 @@ paths:
       summary: Export field mapping (flat interface)
       tags:
       - Field Mappings
+  /field-mappings/{selector}/refresh:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /field-mappings/{selector}/refresh:
     post:
       operationId: refreshFieldMapping
       parameters:
@@ -501,10 +504,10 @@ paths:
       summary: Refresh field mapping
       tags:
       - Field Mappings
+  /field-mappings/{selector}/reset:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /field-mappings/{selector}/reset:
     post:
       description: Refreshes all the dependencies, then resets the element to the default state (from parent)
       operationId: resetFieldMapping
@@ -558,10 +561,10 @@ paths:
       summary: Reset field mapping
       tags:
       - Field Mappings
+  /field-mappings/{selector}/restore:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /field-mappings/{selector}/restore:
     post:
       operationId: restoreFieldMapping
       parameters:
@@ -614,10 +617,10 @@ paths:
       summary: Restore field mapping (flat interface)
       tags:
       - Field Mappings
+  /field-mappings/{selector}/run:
     servers:
     - url: https://api.getmembrane.com
       description: Production API
-  /field-mappings/{selector}/run:
     post:
       operationId: runFieldMapping
       parameters:
@@ -676,9 +679,6 @@ paths:
       summary: Run a field mapping
       tags:
       - Field Mappings
-    servers:
-    - url: https://api.getmembrane.com
-      description: Production API
 components:
   parameters:
     Selector:
@@ -704,11 +704,6 @@ components:
           type: array
           items:
             type: object
-    RunFieldMappingResponseDto:
-      type: object
-      properties:
-        output:
-          type: object
     CreateFieldMapping__schema0:
       type: object
       properties:
@@ -797,69 +792,6 @@ components:
           type: string
       additionalProperties:
         type: object
-    FieldMappingExportProperties:
-      type: object
-      properties:
-        uuid:
-          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
-          type: string
-        key:
-          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
-          type: string
-        name:
-          description: Display name. Optional on create; used to generate key when key is omitted.
-          type: string
-        description:
-          description: Optional human-readable description.
-          type: string
-        meta:
-          description: Optional key-value metadata.
-          type: object
-          additionalProperties:
-            type: object
-        integrationUuid:
-          type: string
-        parentUuid:
-          type: string
-        externalAppUuid:
-          type: string
-        isCustomized:
-          type: boolean
-        isUniversal:
-          type: boolean
-        instanceKey:
-          type: string
-        dataSourceUuid:
-          type: string
-        appSchema:
-          $ref: '#/components/schemas/FieldMappingExportProperties__schema0'
-        direction:
-          type: string
-          enum:
-          - import
-          - export
-          - both
-        defaultImportValue:
-          type: object
-        defaultExportValue:
-          type: object
-        importValue:
-          type: object
-        exportValue:
-          type: object
-        unifiedImportValue:
-          type: object
-        unifiedExportValue:
-          type: object
-        frozenImportFields:
-          type: object
-        frozenExportFields:
-          type: object
-        frozenUnifiedExportFields:
-          type: object
-      required:
-      - uuid
-      - key
     FieldMappingExportProperties__schema0:
       type: object
       properties:
@@ -1748,10 +1680,7 @@ components:
       required:
       - id
       - name
-    FieldMappingAppSchemaResponseDto:
-      type: object
-      properties: {}
-    UpdateFieldMapping:
+    FieldMappingExportProperties:
       type: object
       properties:
         uuid:
@@ -1771,47 +1700,22 @@ components:
           type: object
           additionalProperties:
             type: object
-        integrationId:
-          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
-          type: string
         integrationUuid:
-          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
-          type: string
-        integrationKey:
-          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
           type: string
         parentUuid:
-          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
-          type: string
-        parentKey:
-          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
-          type: string
-        connectionId:
-          type: string
-        instanceKey:
-          type: string
-        isUniversal:
-          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
-          type: boolean
-        externalAppId:
-          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
           type: string
         externalAppUuid:
-          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
           type: string
-        externalAppKey:
-          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
-          type: string
-        fieldMappingId:
-          type: string
-        universalFieldMappingId:
-          type: string
-        dataSourceId:
+        isCustomized:
+          type: boolean
+        isUniversal:
+          type: boolean
+        instanceKey:
           type: string
         dataSourceUuid:
           type: string
         appSchema:
-          $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+          $ref: '#/components/schemas/FieldMappingExportProperties__schema0'
         direction:
           type: string
           enum:
@@ -1836,107 +1740,9 @@ components:
           type: object
         frozenUnifiedExportFields:
           type: object
-    UpdateFieldMapping__schema0:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/UpdateFieldMapping__schema0'
-        items:
-          $ref: '#/components/schemas/UpdateFieldMapping__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/UpdateFieldMapping__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateFieldMapping__schema0'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
-    RunFieldMappingRequestDto:
-      type: object
-      properties:
-        direction:
-          type: string
-          enum:
-          - import
-          - export
-          - both
-        input:
-          type: object
-        connectionId:
-          type: string
+      required:
+      - uuid
+      - key
     CreateFieldMapping:
       type: object
       properties:
@@ -2022,42 +1828,14 @@ components:
           type: object
         frozenUnifiedExportFields:
           type: object
-    FieldMappingApiResponse__schema0:
+    RunFieldMappingResponseDto:
       type: object
       properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
+        output:
           type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
+    FieldMappingAppSchemaResponseDto:
+      type: object
+      properties: {}
     FieldMappingApiResponse__schema1:
       type: object
       properties:
@@ -2146,6 +1924,228 @@ components:
           type: string
       additionalProperties:
         type: object
+    FieldMappingApiResponse__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/FieldMappingApiResponse__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    UpdateFieldMapping__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        items:
+          $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    UpdateFieldMapping:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          type: string
+        instanceKey:
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        fieldMappingId:
+          type: string
+        universalFieldMappingId:
+          type: string
+        dataSourceId:
+          type: string
+        dataSourceUuid:
+          type: string
+        appSchema:
+          $ref: '#/components/schemas/UpdateFieldMapping__schema0'
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        defaultImportValue:
+          type: object
+        defaultExportValue:
+          type: object
+        importValue:
+          type: object
+        exportValue:
+          type: object
+        unifiedImportValue:
+          type: object
+        unifiedExportValue:
+          type: object
+        frozenImportFields:
+          type: object
+        frozenExportFields:
+          type: object
+        frozenUnifiedExportFields:
+          type: object
+    RunFieldMappingRequestDto:
+      type: object
+      properties:
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        input:
+          type: object
+        connectionId:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -48,7 +48,8 @@ tags:
   - Integration Marketplace
   - MCP
   - Self-Hosting
-  - Unified-API
+  - Unified API
+  - A2A
 tags_raw:
   - Agentic Integrations
   - AI Agents
@@ -60,6 +61,8 @@ tags_raw:
   - Model Context Protocol
   - Self-Hosting
   - Unified API
+  - Unified-API
+  - A2A
 created: '2026-03-27'
 modified: '2026-09-13'
 url: https://raw.githubusercontent.com/api-evangelist/integration-app/refs/heads/main/apis.yml
@@ -1753,3 +1756,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 25
   pass: local-v3
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.getmembrane.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404
