@@ -513,19 +513,6 @@ components:
       schema:
         type: string
   schemas:
-    DataCollectionSearchRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        query:
-          type: string
-        cursor:
-          type: string
-      required:
-      - query
     DataCollectionListResponseDto:
       type: object
       properties:
@@ -585,6 +572,60 @@ components:
           type: string
       required:
       - records
+    DataCollectionUpdateResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    DataCollectionCreateResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    DataCollectionMatchResponseDto:
+      type: object
+      properties:
+        record:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            uri:
+              type: string
+            iconUri:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            udm:
+              type: string
+            unifiedFields:
+              type: object
+              additionalProperties:
+                type: object
+            rawFields:
+              type: object
+              additionalProperties:
+                type: object
+            createdTime:
+              type: string
+            updatedTime:
+              type: string
+            deletedTime:
+              type: string
+            createdById:
+              type: string
+            updatedById:
+              type: string
+          required:
+          - id
     DataCollectionListRequestDto:
       type: object
       properties:
@@ -598,6 +639,74 @@ components:
           type: object
         cursor:
           type: string
+    DataCollectionSearchRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        query:
+          type: string
+        cursor:
+          type: string
+      required:
+      - query
+    DataCollectionMatchRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        query:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - query
+    DataCollectionFindByIdResponseDto:
+      type: object
+      properties:
+        record:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            uri:
+              type: string
+            iconUri:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: object
+            udm:
+              type: string
+            unifiedFields:
+              type: object
+              additionalProperties:
+                type: object
+            rawFields:
+              type: object
+              additionalProperties:
+                type: object
+            createdTime:
+              type: string
+            updatedTime:
+              type: string
+            deletedTime:
+              type: string
+            createdById:
+              type: string
+            updatedById:
+              type: string
+          required:
+          - id
+      required:
+      - record
     DataCollectionSpecDto:
       type: object
       properties:
@@ -860,6 +969,35 @@ components:
       required:
       - type
       - name
+    DataCollectionUpdateRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        id:
+          type: string
+        fields:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - id
+      - fields
+    DataCollectionCreateRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        fields:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - fields
     DataCollectionFindByIdRequestDto:
       type: object
       properties:
@@ -884,6 +1022,9 @@ components:
           type: string
       required:
       - id
+    DataCollectionDeleteResponseDto:
+      type: object
+      properties: {}
     DataCollectionSpecDto__schema0:
       type: object
       properties:
@@ -972,147 +1113,6 @@ components:
           type: string
       additionalProperties:
         type: object
-    DataCollectionUpdateResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-      required:
-      - id
-    DataCollectionMatchResponseDto:
-      type: object
-      properties:
-        record:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            uri:
-              type: string
-            iconUri:
-              type: string
-            fields:
-              type: object
-              additionalProperties:
-                type: object
-            udm:
-              type: string
-            unifiedFields:
-              type: object
-              additionalProperties:
-                type: object
-            rawFields:
-              type: object
-              additionalProperties:
-                type: object
-            createdTime:
-              type: string
-            updatedTime:
-              type: string
-            deletedTime:
-              type: string
-            createdById:
-              type: string
-            updatedById:
-              type: string
-          required:
-          - id
-    DataCollectionDeleteResponseDto:
-      type: object
-      properties: {}
-    DataCollectionMatchRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        query:
-          type: object
-          additionalProperties:
-            type: object
-      required:
-      - query
-    DataCollectionCreateRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        fields:
-          type: object
-          additionalProperties:
-            type: object
-      required:
-      - fields
-    DataCollectionFindByIdResponseDto:
-      type: object
-      properties:
-        record:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            uri:
-              type: string
-            iconUri:
-              type: string
-            fields:
-              type: object
-              additionalProperties:
-                type: object
-            udm:
-              type: string
-            unifiedFields:
-              type: object
-              additionalProperties:
-                type: object
-            rawFields:
-              type: object
-              additionalProperties:
-                type: object
-            createdTime:
-              type: string
-            updatedTime:
-              type: string
-            deletedTime:
-              type: string
-            createdById:
-              type: string
-            updatedById:
-              type: string
-          required:
-          - id
-      required:
-      - record
-    DataCollectionCreateResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-      required:
-      - id
-    DataCollectionUpdateRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        id:
-          type: string
-        fields:
-          type: object
-          additionalProperties:
-            type: object
-      required:
-      - id
-      - fields
     DataCollectionSearchResponseDto:
       type: object
       properties:

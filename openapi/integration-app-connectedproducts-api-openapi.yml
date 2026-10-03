@@ -187,69 +187,6 @@ paths:
       - ConnectedProducts
 components:
   schemas:
-    UpdateConnectedProductRequestDto:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        type:
-          type: string
-          enum:
-          - ai-agent
-          - app
-        audience:
-          type: string
-          enum:
-          - personal
-          - customers
-        parameters:
-          type: object
-          properties:
-            agentType:
-              type: string
-          additionalProperties:
-            type: object
-    ConnectedProductApiResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        key:
-          type: string
-        type:
-          type: string
-          enum:
-          - ai-agent
-          - app
-        audience:
-          type: string
-          enum:
-          - personal
-          - customers
-        parameters:
-          type: object
-          properties:
-            agentType:
-              type: string
-          additionalProperties:
-            type: object
-        isConnected:
-          type: boolean
-        lastApiRequestDate:
-          type: string
-        createdAt:
-          type: string
-        archivedAt:
-          type: string
-      required:
-      - id
-      - name
-      - key
-      - type
     BaseWorkspaceElementDto:
       type: object
       properties:
@@ -310,6 +247,30 @@ components:
       required:
       - name
       - type
+    UpdateConnectedProductRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+          - ai-agent
+          - app
+        audience:
+          type: string
+          enum:
+          - personal
+          - customers
+        parameters:
+          type: object
+          properties:
+            agentType:
+              type: string
+          additionalProperties:
+            type: object
     ConnectedProductsPaginatedResponseDto:
       type: object
       properties:
@@ -358,6 +319,45 @@ components:
           type: string
       required:
       - items
+    ConnectedProductApiResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+          - ai-agent
+          - app
+        audience:
+          type: string
+          enum:
+          - personal
+          - customers
+        parameters:
+          type: object
+          properties:
+            agentType:
+              type: string
+          additionalProperties:
+            type: object
+        isConnected:
+          type: boolean
+        lastApiRequestDate:
+          type: string
+        createdAt:
+          type: string
+        archivedAt:
+          type: string
+      required:
+      - id
+      - name
+      - key
+      - type
   securitySchemes:
     bearer:
       scheme: bearer

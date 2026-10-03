@@ -249,6 +249,39 @@ paths:
       - AppEventTypes
 components:
   schemas:
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
     UpdateAppEventTypeDto:
       type: object
       properties:
@@ -287,6 +320,42 @@ components:
               type: object
           required:
           - uri
+    AppEventTypeApiResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/AppEventTypeApiResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
     AppEventTypeApiResponseDto__schema1:
       type: object
       properties:
@@ -375,39 +444,47 @@ components:
           type: string
       additionalProperties:
         type: object
-    BaseWorkspaceElementDto:
+    CreateAppEventTypeDto:
       type: object
       properties:
-        id:
-          type: string
         name:
           type: string
         meta:
           type: object
           additionalProperties:
             type: object
-        archivedAt:
+        key:
           type: string
-        isDeactivated:
-          type: boolean
-        isReadOnly:
-          type: boolean
-        state:
+        uuid:
           type: string
-          enum:
-          - BUILDING
-          - CLIENT_ACTION_REQUIRED
-          - CONFIGURATION_ERROR
-          - SETUP_FAILED
-          - READY
-          - DISCONNECTING
-        errors:
-          type: array
-          items:
-            type: object
+        description:
+          type: string
+        schema:
+          type: object
+        example:
+          type: object
+        tenantIdFormula:
+          type: object
+        userIdFormula:
+          type: object
+        subscribeRequest:
+          type: object
+          properties:
+            method:
+              type: string
+            uri:
+              type: string
+            body:
+              type: object
+            query:
+              type: object
+            headers:
+              type: object
+          required:
+          - uri
       required:
-      - id
       - name
+      - key
     AppEventTypesPaginatedResponseDto:
       type: object
       properties:
@@ -543,133 +620,6 @@ components:
       required:
       - name
       - uuid
-    AppEventTypeApiResponseDto__schema0:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/AppEventTypeApiResponseDto__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
-    AppEventSubscriptionSchemaResponseDto:
-      type: object
-      properties: {}
-    AppEventTypesPaginatedResponseDto__schema1:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
-        items:
-          $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
     AppEventTypesPaginatedResponseDto__schema0:
       type: object
       properties:
@@ -706,47 +656,6 @@ components:
             type: object
       required:
       - message
-    CreateAppEventTypeDto:
-      type: object
-      properties:
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        key:
-          type: string
-        uuid:
-          type: string
-        description:
-          type: string
-        schema:
-          type: object
-        example:
-          type: object
-        tenantIdFormula:
-          type: object
-        userIdFormula:
-          type: object
-        subscribeRequest:
-          type: object
-          properties:
-            method:
-              type: string
-            uri:
-              type: string
-            body:
-              type: object
-            query:
-              type: object
-            headers:
-              type: object
-          required:
-          - uri
-      required:
-      - name
-      - key
     AppEventTypeApiResponseDto:
       type: object
       properties:
@@ -838,6 +747,97 @@ components:
       - revision
       - webhookKey
       - globalWebhookUri
+    AppEventTypesPaginatedResponseDto__schema1:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
+        items:
+          $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppEventTypesPaginatedResponseDto__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    AppEventSubscriptionSchemaResponseDto:
+      type: object
+      properties: {}
   securitySchemes:
     bearer:
       scheme: bearer

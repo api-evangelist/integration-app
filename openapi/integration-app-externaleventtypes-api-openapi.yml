@@ -673,6 +673,343 @@ paths:
       - ExternalEventTypes
 components:
   schemas:
+    UpdateExternalEventType:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentId:
+          description: Internal ID of the parent workspace element. Used for hierarchy (e.g. integration-level under universal). Child key uniqueness is scoped by parent and integration.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          description: Connection ID. Used when filtering by connection in list/selector queries, or when creating or identifying connection-level instances.
+          type: string
+        instanceKey:
+          description: Key identifying a specific connection-level instance when multiple instances exist per (element, connection). Used in selector queries and when creating instances.
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        schema:
+          $ref: '#/components/schemas/UpdateExternalEventType__schema0'
+        parametersSchema:
+          $ref: '#/components/schemas/UpdateExternalEventType__schema0'
+        example:
+          type: object
+        type:
+          type: string
+          enum:
+          - webhook
+        subscribe:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        unsubscribe:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        handle:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        refresh:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+    ExternalEventTypePaginatedResponse__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/ExternalEventTypePaginatedResponse__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    ExternalEventTypeExportProperties:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        integrationUuid:
+          type: string
+        parentUuid:
+          type: string
+        externalAppUuid:
+          type: string
+        isCustomized:
+          type: boolean
+        isUniversal:
+          type: boolean
+        schema:
+          $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
+        parametersSchema:
+          $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
+        example:
+          type: object
+        type:
+          type: string
+          enum:
+          - webhook
+        subscribe:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        unsubscribe:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        handle:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        refresh:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+      required:
+      - uuid
+      - key
+    ExternalEventTypeExportProperties__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
+        items:
+          $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
     ExternalEventTypePaginatedResponse:
       type: object
       properties:
@@ -1120,124 +1457,6 @@ components:
           type: string
       required:
       - items
-    UpdateExternalEventType:
-      type: object
-      properties:
-        uuid:
-          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
-          type: string
-        key:
-          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
-          type: string
-        name:
-          description: Display name. Optional on create; used to generate key when key is omitted.
-          type: string
-        description:
-          description: Optional human-readable description.
-          type: string
-        meta:
-          description: Optional key-value metadata.
-          type: object
-          additionalProperties:
-            type: object
-        integrationId:
-          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
-          type: string
-        integrationUuid:
-          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
-          type: string
-        integrationKey:
-          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
-          type: string
-        parentId:
-          description: Internal ID of the parent workspace element. Used for hierarchy (e.g. integration-level under universal). Child key uniqueness is scoped by parent and integration.
-          type: string
-        parentUuid:
-          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
-          type: string
-        parentKey:
-          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
-          type: string
-        connectionId:
-          description: Connection ID. Used when filtering by connection in list/selector queries, or when creating or identifying connection-level instances.
-          type: string
-        instanceKey:
-          description: Key identifying a specific connection-level instance when multiple instances exist per (element, connection). Used in selector queries and when creating instances.
-          type: string
-        isUniversal:
-          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
-          type: boolean
-        externalAppId:
-          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
-          type: string
-        externalAppUuid:
-          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
-          type: string
-        externalAppKey:
-          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
-          type: string
-        schema:
-          $ref: '#/components/schemas/UpdateExternalEventType__schema0'
-        parametersSchema:
-          $ref: '#/components/schemas/UpdateExternalEventType__schema0'
-        example:
-          type: object
-        type:
-          type: string
-          enum:
-          - webhook
-        subscribe:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        unsubscribe:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        handle:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        refresh:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
     UpdateExternalEventType__schema0:
       type: object
       properties:
@@ -1316,189 +1535,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UpdateExternalEventType__schema0'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
-    ExternalEventTypeExportProperties:
-      type: object
-      properties:
-        uuid:
-          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
-          type: string
-        key:
-          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
-          type: string
-        name:
-          description: Display name. Optional on create; used to generate key when key is omitted.
-          type: string
-        description:
-          description: Optional human-readable description.
-          type: string
-        meta:
-          description: Optional key-value metadata.
-          type: object
-          additionalProperties:
-            type: object
-        integrationUuid:
-          type: string
-        parentUuid:
-          type: string
-        externalAppUuid:
-          type: string
-        isCustomized:
-          type: boolean
-        isUniversal:
-          type: boolean
-        schema:
-          $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
-        parametersSchema:
-          $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
-        example:
-          type: object
-        type:
-          type: string
-          enum:
-          - webhook
-        subscribe:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        unsubscribe:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        handle:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        refresh:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-      required:
-      - uuid
-      - key
-    CreateExternalEventType__schema0:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/CreateExternalEventType__schema0'
-        items:
-          $ref: '#/components/schemas/CreateExternalEventType__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/CreateExternalEventType__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateExternalEventType__schema0'
         isImplied:
           type: boolean
         isSensitive:
@@ -1947,6 +1983,94 @@ components:
       required:
       - id
       - name
+    CreateExternalEventType__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CreateExternalEventType__schema0'
+        items:
+          $ref: '#/components/schemas/CreateExternalEventType__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/CreateExternalEventType__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateExternalEventType__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
     CreateExternalEventType:
       type: object
       properties:
@@ -2065,42 +2189,6 @@ components:
               - javascript
           additionalProperties:
             type: object
-    ExternalEventTypeApiResponse__schema0:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/ExternalEventTypeApiResponse__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
     ExternalEventTypeApiResponse__schema1:
       type: object
       properties:
@@ -2277,7 +2365,7 @@ components:
           type: string
       additionalProperties:
         type: object
-    ExternalEventTypePaginatedResponse__schema0:
+    ExternalEventTypeApiResponse__schema0:
       type: object
       properties:
         type:
@@ -2306,101 +2394,13 @@ components:
         stack:
           type: object
         causedByError:
-          $ref: '#/components/schemas/ExternalEventTypePaginatedResponse__schema0'
+          $ref: '#/components/schemas/ExternalEventTypeApiResponse__schema0'
         logs:
           type: array
           items:
             type: object
       required:
       - message
-    ExternalEventTypeExportProperties__schema0:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
-        items:
-          $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalEventTypeExportProperties__schema0'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
   securitySchemes:
     bearer:
       scheme: bearer

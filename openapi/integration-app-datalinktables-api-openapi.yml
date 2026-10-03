@@ -628,26 +628,39 @@ paths:
       - DataLinkTables
 components:
   schemas:
-    CreateDataLinkTableDto:
+    BaseWorkspaceElementDto:
       type: object
       properties:
+        id:
+          type: string
         name:
           type: string
         meta:
           type: object
           additionalProperties:
             type: object
-        key:
-          type: string
-        uuid:
-          type: string
-        description:
-          type: string
         archivedAt:
           type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
       required:
+      - id
       - name
-      - key
     DataLinksPaginatedResponseDto:
       type: object
       properties:
@@ -680,6 +693,140 @@ components:
           type: string
       required:
       - items
+    DataLinkTableExportDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+        key:
+          type: string
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+        name:
+          type: string
+          description: Display name. Optional on create; used to generate key when key is omitted.
+        description:
+          type: string
+          description: Optional human-readable description.
+        meta:
+          type: object
+          description: Optional key-value metadata.
+          additionalProperties:
+            type: object
+        instanceKey:
+          type: string
+      required:
+      - uuid
+      - key
+    DataLinkTablesPaginatedResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Internal database ID of the element. Assigned by the API; unique per element.
+              name:
+                type: string
+                description: Display name. Always present in API responses (filled by API if not set on create).
+              uuid:
+                description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+                type: string
+              key:
+                description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+                type: string
+              description:
+                description: Optional human-readable description.
+                type: string
+              meta:
+                description: Optional key-value metadata.
+                type: object
+                additionalProperties:
+                  type: object
+              state:
+                description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
+                type: string
+                enum:
+                - BUILDING
+                - CLIENT_ACTION_REQUIRED
+                - CONFIGURATION_ERROR
+                - SETUP_FAILED
+                - READY
+                - DISCONNECTING
+              errors:
+                description: Validation or setup errors when state is not READY.
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataLinkTablesPaginatedResponseDto__schema0'
+              revision:
+                description: Opaque revision token; changes on each update. Used for optimistic concurrency.
+                type: string
+              createdAt:
+                description: ISO date when the element was created.
+                type: string
+              updatedAt:
+                description: ISO date when the element was last updated.
+                type: string
+              archivedAt:
+                type: string
+              isDeactivated:
+                description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
+                type: boolean
+              isReadOnly:
+                description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
+                type: boolean
+              connectionId:
+                type: string
+              instanceKey:
+                type: string
+              dataLinkTableId:
+                type: string
+              userId:
+                type: string
+              tenantId:
+                type: string
+              integrationId:
+                type: string
+              isCustomized:
+                type: boolean
+              user:
+                type: object
+              connection:
+                type: object
+              integration:
+                type: object
+              dataLinkTable:
+                type: object
+            required:
+            - id
+            - name
+        cursor:
+          type: string
+      required:
+      - items
+    CreateDataLinkTableDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        archivedAt:
+          type: string
+      required:
+      - name
+      - key
     DataLinkTableApiResponseDto:
       type: object
       properties:
@@ -796,153 +943,23 @@ components:
             type: object
       required:
       - message
-    DataLinkTableExportDto:
+    CreateDataLinkDto:
       type: object
       properties:
-        uuid:
-          type: string
-          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
-        key:
-          type: string
-          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
-        name:
-          type: string
-          description: Display name. Optional on create; used to generate key when key is omitted.
-        description:
-          type: string
-          description: Optional human-readable description.
-        meta:
-          type: object
-          description: Optional key-value metadata.
-          additionalProperties:
-            type: object
-        instanceKey:
-          type: string
-      required:
-      - uuid
-      - key
-    BaseWorkspaceElementDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        archivedAt:
-          type: string
-        isDeactivated:
-          type: boolean
-        isReadOnly:
-          type: boolean
-        state:
+        direction:
           type: string
           enum:
-          - BUILDING
-          - CLIENT_ACTION_REQUIRED
-          - CONFIGURATION_ERROR
-          - SETUP_FAILED
-          - READY
-          - DISCONNECTING
-        errors:
-          type: array
-          items:
-            type: object
-      required:
-      - id
-      - name
-    DataLinkTablesPaginatedResponseDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Internal database ID of the element. Assigned by the API; unique per element.
-              name:
-                type: string
-                description: Display name. Always present in API responses (filled by API if not set on create).
-              uuid:
-                description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
-                type: string
-              key:
-                description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
-                type: string
-              description:
-                description: Optional human-readable description.
-                type: string
-              meta:
-                description: Optional key-value metadata.
-                type: object
-                additionalProperties:
-                  type: object
-              state:
-                description: Current lifecycle or health state (e.g. READY, SETUP_FAILED, CONFIGURATION_ERROR, BUILDING). Set by the engine during setup and validation.
-                type: string
-                enum:
-                - BUILDING
-                - CLIENT_ACTION_REQUIRED
-                - CONFIGURATION_ERROR
-                - SETUP_FAILED
-                - READY
-                - DISCONNECTING
-              errors:
-                description: Validation or setup errors when state is not READY.
-                type: array
-                items:
-                  $ref: '#/components/schemas/DataLinkTablesPaginatedResponseDto__schema0'
-              revision:
-                description: Opaque revision token; changes on each update. Used for optimistic concurrency.
-                type: string
-              createdAt:
-                description: ISO date when the element was created.
-                type: string
-              updatedAt:
-                description: ISO date when the element was last updated.
-                type: string
-              archivedAt:
-                type: string
-              isDeactivated:
-                description: When true, setup is skipped and the element is treated as inactive (e.g. when dependencies are deactivated or the element is archived).
-                type: boolean
-              isReadOnly:
-                description: When true, the element cannot be modified (e.g. published package elements or elements from another workspace).
-                type: boolean
-              connectionId:
-                type: string
-              instanceKey:
-                type: string
-              dataLinkTableId:
-                type: string
-              userId:
-                type: string
-              tenantId:
-                type: string
-              integrationId:
-                type: string
-              isCustomized:
-                type: boolean
-              user:
-                type: object
-              connection:
-                type: object
-              integration:
-                type: object
-              dataLinkTable:
-                type: object
-            required:
-            - id
-            - name
-        cursor:
+          - import
+          - export
+          - both
+        appRecordId:
+          type: string
+        externalRecordId:
           type: string
       required:
-      - items
+      - direction
+      - appRecordId
+      - externalRecordId
     DataLinkTableApiResponseDto__schema0:
       type: object
       properties:
@@ -979,40 +996,6 @@ components:
             type: object
       required:
       - message
-    DeleteDataLinkDto:
-      type: object
-      properties:
-        direction:
-          type: string
-          enum:
-          - import
-          - export
-          - both
-        appRecordId:
-          type: string
-        externalRecordId:
-          type: string
-      required:
-      - direction
-      - appRecordId
-      - externalRecordId
-    CreateDataLinkDto:
-      type: object
-      properties:
-        direction:
-          type: string
-          enum:
-          - import
-          - export
-          - both
-        appRecordId:
-          type: string
-        externalRecordId:
-          type: string
-      required:
-      - direction
-      - appRecordId
-      - externalRecordId
     UpdateDataLinkTableDto:
       type: object
       properties:
@@ -1030,6 +1013,23 @@ components:
           type: string
         archivedAt:
           type: string
+    DeleteDataLinkDto:
+      type: object
+      properties:
+        direction:
+          type: string
+          enum:
+          - import
+          - export
+          - both
+        appRecordId:
+          type: string
+        externalRecordId:
+          type: string
+      required:
+      - direction
+      - appRecordId
+      - externalRecordId
   securitySchemes:
     bearer:
       scheme: bearer

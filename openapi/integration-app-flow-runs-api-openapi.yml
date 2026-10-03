@@ -258,20 +258,6 @@ paths:
       tags:
       - Flow Runs
 components:
-  parameters:
-    Selector:
-      name: selector
-      in: path
-      required: true
-      description: Resource id or unique key.
-      schema:
-        type: string
-    Id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
   schemas:
     FlowRun:
       type: object
@@ -293,6 +279,35 @@ components:
         finishedAt:
           type: string
           format: date-time
+    FlowNodeRunOutputResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        nodeKey:
+          type: string
+        outputId:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: object
+        metadata:
+          type: object
+          properties:
+            timestamp:
+              type: string
+            size:
+              type: number
+          required:
+          - timestamp
+          - size
+      required:
+      - id
+      - nodeKey
+      - outputId
+      - data
+      - metadata
     FlowNodeRunsDto__schema0:
       type: object
       properties:
@@ -329,46 +344,6 @@ components:
             type: object
       required:
       - message
-    FlowNodeRunOutputResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        nodeKey:
-          type: string
-        outputId:
-          type: string
-        data:
-          type: object
-          additionalProperties:
-            type: object
-        metadata:
-          type: object
-          properties:
-            timestamp:
-              type: string
-            size:
-              type: number
-          required:
-          - timestamp
-          - size
-      required:
-      - id
-      - nodeKey
-      - outputId
-      - data
-      - metadata
-    FlowRunOutputDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-        cursor:
-          type: string
-      required:
-      - items
     FlowNodeRunRecordWithoutOutputsDataDto__schema0:
       type: object
       properties:
@@ -405,17 +380,72 @@ components:
             type: object
       required:
       - message
-    FlowNodeRunOutputDto:
+    FlowNodeRunRecordWithoutOutputsDataDto:
       type: object
       properties:
-        items:
+        id:
+          type: string
+        upstreamRuns:
           type: array
           items:
             type: object
-        cursor:
+            properties:
+              nodeKey:
+                type: string
+              runId:
+                type: string
+              outputId:
+                type: string
+            required:
+            - nodeKey
+            - runId
+            - outputId
+        input:
+          type: object
+        status:
           type: string
+          enum:
+          - completed
+          - failed
+          - skipped
+        logs:
+          type: array
+          items:
+            type: object
+        outputs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              downstreamRuns:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    runId:
+                      type: string
+                    nodeKey:
+                      type: string
+                  required:
+                  - runId
+                  - nodeKey
+            required:
+            - id
+            - downstreamRuns
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowNodeRunRecordWithoutOutputsDataDto__schema0'
       required:
-      - items
+      - id
+      - upstreamRuns
+      - input
+      - status
+      - logs
+      - outputs
+      - errors
     FlowNodeRunsDto:
       type: object
       properties:
@@ -491,72 +521,42 @@ components:
           type: string
       required:
       - items
-    FlowNodeRunRecordWithoutOutputsDataDto:
+    FlowRunOutputDto:
       type: object
       properties:
-        id:
+        items:
+          type: array
+          items:
+            type: object
+        cursor:
           type: string
-        upstreamRuns:
-          type: array
-          items:
-            type: object
-            properties:
-              nodeKey:
-                type: string
-              runId:
-                type: string
-              outputId:
-                type: string
-            required:
-            - nodeKey
-            - runId
-            - outputId
-        input:
-          type: object
-        status:
-          type: string
-          enum:
-          - completed
-          - failed
-          - skipped
-        logs:
-          type: array
-          items:
-            type: object
-        outputs:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              downstreamRuns:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    runId:
-                      type: string
-                    nodeKey:
-                      type: string
-                  required:
-                  - runId
-                  - nodeKey
-            required:
-            - id
-            - downstreamRuns
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/FlowNodeRunRecordWithoutOutputsDataDto__schema0'
       required:
-      - id
-      - upstreamRuns
-      - input
-      - status
-      - logs
-      - outputs
-      - errors
+      - items
+    FlowNodeRunOutputDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+        cursor:
+          type: string
+      required:
+      - items
+  parameters:
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -231,17 +231,6 @@ paths:
       x-experimental: true
 components:
   schemas:
-    PatchUserWorkspaceSettingsDto:
-      type: object
-      properties: {}
-    RotateOrgWorkspaceSecretResponseDto:
-      type: object
-      properties:
-        secret:
-          type: string
-          description: The new workspace secret
-      required:
-      - secret
     OrgWorkspacePatchDto:
       type: object
       properties:
@@ -979,49 +968,9 @@ components:
         isReadOnly:
           type: boolean
           description: Whether the workspace is in read-only mode
-    OrgWorkspaceCreateDto:
+    PatchUserWorkspaceSettingsDto:
       type: object
-      properties:
-        name:
-          type: string
-          description: Name of the workspace
-          minLength: 1
-        logoUri:
-          type: string
-          description: URI for the workspace logo
-        orgId:
-          type: string
-          description: Organization ID to create the workspace in
-      required:
-      - orgId
-    GenerateAccessTokenResponseDto:
-      type: object
-      properties:
-        token:
-          type: string
-          description: The generated access token
-      required:
-      - token
-    GenerateAccessTokenRequestDto:
-      type: object
-      properties:
-        isAdmin:
-          type: boolean
-          description: Whether to generate an admin token
-        tenantId:
-          type: string
-          description: Customer ID to scope the token to
-        tenantKey:
-          type: string
-          description: Customer key to scope the token to (resolved to tenantId)
-        name:
-          type: string
-          description: Name for the generated token
-        fields:
-          type: object
-          description: Custom fields to include in the token
-          additionalProperties:
-            type: object
+      properties: {}
     OrgWorkspaceDto:
       type: object
       properties:
@@ -1777,6 +1726,14 @@ components:
       - key
       - createdAt
       - updatedAt
+    RotateOrgWorkspaceSecretResponseDto:
+      type: object
+      properties:
+        secret:
+          type: string
+          description: The new workspace secret
+      required:
+      - secret
     ListOrgWorkspacesResponseDto:
       type: object
       properties:
@@ -2541,6 +2498,49 @@ components:
           type: string
       required:
       - items
+    GenerateAccessTokenResponseDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The generated access token
+      required:
+      - token
+    GenerateAccessTokenRequestDto:
+      type: object
+      properties:
+        isAdmin:
+          type: boolean
+          description: Whether to generate an admin token
+        tenantId:
+          type: string
+          description: Customer ID to scope the token to
+        tenantKey:
+          type: string
+          description: Customer key to scope the token to (resolved to tenantId)
+        name:
+          type: string
+          description: Name for the generated token
+        fields:
+          type: object
+          description: Custom fields to include in the token
+          additionalProperties:
+            type: object
+    OrgWorkspaceCreateDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the workspace
+          minLength: 1
+        logoUri:
+          type: string
+          description: URI for the workspace logo
+        orgId:
+          type: string
+          description: Organization ID to create the workspace in
+      required:
+      - orgId
   securitySchemes:
     bearer:
       scheme: bearer

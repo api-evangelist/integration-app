@@ -311,66 +311,6 @@ paths:
       - AppDataSchemas
 components:
   schemas:
-    AppDataSchemaUpdateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        key:
-          type: string
-        uuid:
-          type: string
-        description:
-          type: string
-        schema:
-          type: object
-        code:
-          type: string
-        archivedAt:
-          type: string
-    AppDataSchemaExportDto:
-      type: object
-      properties:
-        key:
-          type: string
-        name:
-          type: string
-        uuid:
-          type: string
-        schema:
-          type: object
-        code:
-          type: string
-      required:
-      - name
-    AppDataSchemaCreateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        key:
-          type: string
-        uuid:
-          type: string
-        description:
-          type: string
-        schema:
-          type: object
-        code:
-          type: string
-        archivedAt:
-          type: string
-      required:
-      - name
-      - key
     BaseWorkspaceElementDto:
       type: object
       properties:
@@ -484,7 +424,7 @@ components:
       required:
       - id
       - name
-    AppDataSchemaDto__schema0:
+    AppDataSchemasPaginatedResponseDto__schema0:
       type: object
       properties:
         type:
@@ -513,13 +453,49 @@ components:
         stack:
           type: object
         causedByError:
-          $ref: '#/components/schemas/AppDataSchemaDto__schema0'
+          $ref: '#/components/schemas/AppDataSchemasPaginatedResponseDto__schema0'
         logs:
           type: array
           items:
             type: object
       required:
       - message
+    AppDataSchemaExportDto:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        uuid:
+          type: string
+        schema:
+          type: object
+        code:
+          type: string
+      required:
+      - name
+    AppDataSchemaUpdateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        schema:
+          type: object
+        code:
+          type: string
+        archivedAt:
+          type: string
     AppDataSchemasPaginatedResponseDto:
       type: object
       properties:
@@ -609,7 +585,7 @@ components:
           type: string
       required:
       - items
-    AppDataSchemasPaginatedResponseDto__schema0:
+    AppDataSchemaDto__schema0:
       type: object
       properties:
         type:
@@ -638,13 +614,37 @@ components:
         stack:
           type: object
         causedByError:
-          $ref: '#/components/schemas/AppDataSchemasPaginatedResponseDto__schema0'
+          $ref: '#/components/schemas/AppDataSchemaDto__schema0'
         logs:
           type: array
           items:
             type: object
       required:
       - message
+    AppDataSchemaCreateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        key:
+          type: string
+        uuid:
+          type: string
+        description:
+          type: string
+        schema:
+          type: object
+        code:
+          type: string
+        archivedAt:
+          type: string
+      required:
+      - name
+      - key
   securitySchemes:
     bearer:
       scheme: bearer

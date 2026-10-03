@@ -622,205 +622,6 @@ components:
           type: string
         version:
           type: string
-    UpdateConnectorDto__schema0:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/UpdateConnectorDto__schema0'
-        items:
-          $ref: '#/components/schemas/UpdateConnectorDto__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/UpdateConnectorDto__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateConnectorDto__schema0'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
-    ConnectorDto__schema0:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ConnectorDto__schema0'
-        items:
-          $ref: '#/components/schemas/ConnectorDto__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/ConnectorDto__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectorDto__schema0'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
-    ConnectorDownloadResponseDto:
-      type: object
-      properties:
-        data:
-          type: string
-          description: Binary file content
-      required:
-      - data
-    CloneConnectorDto:
-      type: object
-      properties:
-        version:
-          type: string
-    AsyncRequestTriggerResponseDto:
-      type: object
-      properties:
-        jobId:
-          type: string
-        accessKey:
-          type: string
-      required:
-      - jobId
-      - accessKey
     ConnectorVersionDto__schema0:
       type: object
       properties:
@@ -909,14 +710,94 @@ components:
           type: string
       additionalProperties:
         type: object
-    PutConnectorFileResponseDto:
+    UpdateConnectorDto__schema0:
       type: object
       properties:
-        path:
+        title:
           type: string
-          description: The actual file path where the file was saved
-      required:
-      - path
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UpdateConnectorDto__schema0'
+        items:
+          $ref: '#/components/schemas/UpdateConnectorDto__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/UpdateConnectorDto__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateConnectorDto__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
     ConnectorExportPropertiesDto:
       type: object
       properties:
@@ -1254,366 +1135,6 @@ components:
       required:
       - key
       - uuid
-    ConnectorVersionDto:
-      type: object
-      properties:
-        baseUri:
-          type: string
-        revision:
-          type: string
-        dataCollectionsCount:
-          type: number
-        operationsCount:
-          type: number
-        eventsCount:
-          type: number
-        udms:
-          type: array
-          items:
-            type: string
-        hasTest:
-          type: boolean
-        hasAuthTest:
-          type: boolean
-        hasOperations:
-          type: boolean
-        hasData:
-          type: boolean
-        isReadOnly:
-          type: boolean
-        version:
-          type: string
-        credentialsSchema:
-          $ref: '#/components/schemas/ConnectorVersionDto__schema0'
-        type:
-          description: Authentication protocol used by the connector.
-          type: string
-          enum:
-          - integration-app-token
-          - membrane-token
-          - oauth2
-          - oauth1
-          - client-credentials
-          - proxy
-        customCredentialsSchema:
-          description: Additional JSON Schema for workspace-level overrides of credentials (e.g. BYO-OAuth clientId/clientSecret).
-          $ref: '#/components/schemas/ConnectorVersionDto__schema0'
-        inputSchema:
-          description: JSON Schema for end-user input collected during connection (e.g. an API key or subdomain the user types in).
-          $ref: '#/components/schemas/ConnectorVersionDto__schema0'
-        parametersSchema:
-          $ref: '#/components/schemas/ConnectorVersionDto__schema0'
-        getCredentialsFromConnectionParameters:
-          description: Function that derives auth credentials from connection parameters. Use for static-key auth (api-key, basic-auth) where the user-provided input IS the credential.
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        refreshCredentials:
-          description: Function that refreshes expired credentials. Implement for non-standard OAuth refresh flows or when additional credentials need to be refreshed alongside the OAuth token.
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        makeApiClient:
-          description: Function that configures the HTTP client used by operations, actions and data sources. Typically a `mapping` type with `baseUri` and auth header wiring.
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        getOAuthConfig:
-          description: 'OAuth2: function returning `{ authorizeUri, tokenUri, scopes, noRefreshToken? }` — the authorize/token endpoint URLs and requested scopes.'
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        getTokenData:
-          description: 'OAuth2: function invoked with the raw token response to extract token metadata. Rarely needed.'
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        getCredentialsFromAccessTokenResponse:
-          description: 'OAuth2: function that transforms the token endpoint response into the final credentials object. Required for multi-tenant APIs (Microsoft) or APIs that require post-OAuth bootstrap calls.'
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        getCredentialsFromRefreshTokenResponse:
-          description: 'OAuth2: function that transforms the refresh token endpoint response into the refreshed credentials. Required when refresh responses differ from initial-token responses.'
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        test:
-          description: Function that verifies the connection by making a lightweight authenticated API call (typically a `rest-api-mapping` against a `/me`-style endpoint).
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        disconnect:
-          description: Function that revokes credentials at the provider when the connection is removed. Implement only if the provider exposes a revoke endpoint.
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - mapping
-              - operation-mapping
-              - rest-api-mapping
-              - graphql-api-mapping
-              - javascript
-          additionalProperties:
-            type: object
-        proxyKey:
-          description: 'For `type: "proxy"` — identifies which proxy configuration the workspace should use.'
-          type: string
-        options:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              type:
-                description: Authentication protocol used by the connector.
-                type: string
-                enum:
-                - integration-app-token
-                - membrane-token
-                - oauth2
-                - oauth1
-                - client-credentials
-                - proxy
-              customCredentialsSchema:
-                description: Additional JSON Schema for workspace-level overrides of credentials (e.g. BYO-OAuth clientId/clientSecret).
-                $ref: '#/components/schemas/ConnectorVersionDto__schema0'
-              inputSchema:
-                description: JSON Schema for end-user input collected during connection (e.g. an API key or subdomain the user types in).
-                $ref: '#/components/schemas/ConnectorVersionDto__schema0'
-              parametersSchema:
-                description: JSON Schema for connector-level parameters configured per integration (e.g. region, account ID).
-                $ref: '#/components/schemas/ConnectorVersionDto__schema0'
-              getCredentialsFromConnectionParameters:
-                description: Function that derives auth credentials from connection parameters. Use for static-key auth (api-key, basic-auth) where the user-provided input IS the credential.
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                    - mapping
-                    - operation-mapping
-                    - rest-api-mapping
-                    - graphql-api-mapping
-                    - javascript
-                additionalProperties:
-                  type: object
-              refreshCredentials:
-                description: Function that refreshes expired credentials. Implement for non-standard OAuth refresh flows or when additional credentials need to be refreshed alongside the OAuth token.
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                    - mapping
-                    - operation-mapping
-                    - rest-api-mapping
-                    - graphql-api-mapping
-                    - javascript
-                additionalProperties:
-                  type: object
-              makeApiClient:
-                description: Function that configures the HTTP client used by operations, actions and data sources. Typically a `mapping` type with `baseUri` and auth header wiring.
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                    - mapping
-                    - operation-mapping
-                    - rest-api-mapping
-                    - graphql-api-mapping
-                    - javascript
-                additionalProperties:
-                  type: object
-              getOAuthConfig:
-                description: 'OAuth2: function returning `{ authorizeUri, tokenUri, scopes, noRefreshToken? }` — the authorize/token endpoint URLs and requested scopes.'
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                    - mapping
-                    - operation-mapping
-                    - rest-api-mapping
-                    - graphql-api-mapping
-                    - javascript
-                additionalProperties:
-                  type: object
-              getTokenData:
-                description: 'OAuth2: function invoked with the raw token response to extract token metadata. Rarely needed.'
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                    - mapping
-                    - operation-mapping
-                    - rest-api-mapping
-                    - graphql-api-mapping
-                    - javascript
-                additionalProperties:
-                  type: object
-              getCredentialsFromAccessTokenResponse:
-                description: 'OAuth2: function that transforms the token endpoint response into the final credentials object. Required for multi-tenant APIs (Microsoft) or APIs that require post-OAuth bootstrap calls.'
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                    - mapping
-                    - operation-mapping
-                    - rest-api-mapping
-                    - graphql-api-mapping
-                    - javascript
-                additionalProperties:
-                  type: object
-              getCredentialsFromRefreshTokenResponse:
-                description: 'OAuth2: function that transforms the refresh token endpoint response into the refreshed credentials. Required when refresh responses differ from initial-token responses.'
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                    - mapping
-                    - operation-mapping
-                    - rest-api-mapping
-                    - graphql-api-mapping
-                    - javascript
-                additionalProperties:
-                  type: object
-              test:
-                description: Function that verifies the connection by making a lightweight authenticated API call (typically a `rest-api-mapping` against a `/me`-style endpoint).
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                    - mapping
-                    - operation-mapping
-                    - rest-api-mapping
-                    - graphql-api-mapping
-                    - javascript
-                additionalProperties:
-                  type: object
-              disconnect:
-                description: Function that revokes credentials at the provider when the connection is removed. Implement only if the provider exposes a revoke endpoint.
-                type: object
-                properties:
-                  type:
-                    type: string
-                    enum:
-                    - mapping
-                    - operation-mapping
-                    - rest-api-mapping
-                    - graphql-api-mapping
-                    - javascript
-                additionalProperties:
-                  type: object
-              proxyKey:
-                description: 'For `type: "proxy"` — identifies which proxy configuration the workspace should use.'
-                type: string
-              ui:
-                description: '[INTERNAL] Deprecated: Use inputSchema instead'
-                type: object
-                properties:
-                  schema:
-                    $ref: '#/components/schemas/ConnectorVersionDto__schema0'
-                  description:
-                    type: string
-                  helpUri:
-                    type: string
-              title:
-                type: string
-              description:
-                type: string
-              enabled:
-                type: object
-              credentialsSchema:
-                $ref: '#/components/schemas/ConnectorVersionDto__schema0'
-        id:
-          type: string
-        connectorId:
-          type: string
-        changelog:
-          type: string
-      required:
-      - version
-      - id
-      - connectorId
-      - changelog
     ConnectorDto:
       type: object
       properties:
@@ -1998,6 +1519,14 @@ components:
       - name
       - logoUri
       - version
+    PutConnectorFileResponseDto:
+      type: object
+      properties:
+        path:
+          type: string
+          description: The actual file path where the file was saved
+      required:
+      - path
     ConnectorExportPropertiesDto__schema0:
       type: object
       properties:
@@ -2086,13 +1615,384 @@ components:
           type: string
       additionalProperties:
         type: object
-    ImportConnectorDto:
+    ConnectorVersionDto:
       type: object
       properties:
-        uri:
+        baseUri:
+          type: string
+        revision:
+          type: string
+        dataCollectionsCount:
+          type: number
+        operationsCount:
+          type: number
+        eventsCount:
+          type: number
+        udms:
+          type: array
+          items:
+            type: string
+        hasTest:
+          type: boolean
+        hasAuthTest:
+          type: boolean
+        hasOperations:
+          type: boolean
+        hasData:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        version:
+          type: string
+        credentialsSchema:
+          $ref: '#/components/schemas/ConnectorVersionDto__schema0'
+        type:
+          description: Authentication protocol used by the connector.
+          type: string
+          enum:
+          - integration-app-token
+          - membrane-token
+          - oauth2
+          - oauth1
+          - client-credentials
+          - proxy
+        customCredentialsSchema:
+          description: Additional JSON Schema for workspace-level overrides of credentials (e.g. BYO-OAuth clientId/clientSecret).
+          $ref: '#/components/schemas/ConnectorVersionDto__schema0'
+        inputSchema:
+          description: JSON Schema for end-user input collected during connection (e.g. an API key or subdomain the user types in).
+          $ref: '#/components/schemas/ConnectorVersionDto__schema0'
+        parametersSchema:
+          $ref: '#/components/schemas/ConnectorVersionDto__schema0'
+        getCredentialsFromConnectionParameters:
+          description: Function that derives auth credentials from connection parameters. Use for static-key auth (api-key, basic-auth) where the user-provided input IS the credential.
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        refreshCredentials:
+          description: Function that refreshes expired credentials. Implement for non-standard OAuth refresh flows or when additional credentials need to be refreshed alongside the OAuth token.
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        makeApiClient:
+          description: Function that configures the HTTP client used by operations, actions and data sources. Typically a `mapping` type with `baseUri` and auth header wiring.
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        getOAuthConfig:
+          description: 'OAuth2: function returning `{ authorizeUri, tokenUri, scopes, noRefreshToken? }` — the authorize/token endpoint URLs and requested scopes.'
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        getTokenData:
+          description: 'OAuth2: function invoked with the raw token response to extract token metadata. Rarely needed.'
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        getCredentialsFromAccessTokenResponse:
+          description: 'OAuth2: function that transforms the token endpoint response into the final credentials object. Required for multi-tenant APIs (Microsoft) or APIs that require post-OAuth bootstrap calls.'
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        getCredentialsFromRefreshTokenResponse:
+          description: 'OAuth2: function that transforms the refresh token endpoint response into the refreshed credentials. Required when refresh responses differ from initial-token responses.'
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        test:
+          description: Function that verifies the connection by making a lightweight authenticated API call (typically a `rest-api-mapping` against a `/me`-style endpoint).
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        disconnect:
+          description: Function that revokes credentials at the provider when the connection is removed. Implement only if the provider exposes a revoke endpoint.
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - mapping
+              - operation-mapping
+              - rest-api-mapping
+              - graphql-api-mapping
+              - javascript
+          additionalProperties:
+            type: object
+        proxyKey:
+          description: 'For `type: "proxy"` — identifies which proxy configuration the workspace should use.'
+          type: string
+        options:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                description: Authentication protocol used by the connector.
+                type: string
+                enum:
+                - integration-app-token
+                - membrane-token
+                - oauth2
+                - oauth1
+                - client-credentials
+                - proxy
+              customCredentialsSchema:
+                description: Additional JSON Schema for workspace-level overrides of credentials (e.g. BYO-OAuth clientId/clientSecret).
+                $ref: '#/components/schemas/ConnectorVersionDto__schema0'
+              inputSchema:
+                description: JSON Schema for end-user input collected during connection (e.g. an API key or subdomain the user types in).
+                $ref: '#/components/schemas/ConnectorVersionDto__schema0'
+              parametersSchema:
+                description: JSON Schema for connector-level parameters configured per integration (e.g. region, account ID).
+                $ref: '#/components/schemas/ConnectorVersionDto__schema0'
+              getCredentialsFromConnectionParameters:
+                description: Function that derives auth credentials from connection parameters. Use for static-key auth (api-key, basic-auth) where the user-provided input IS the credential.
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - mapping
+                    - operation-mapping
+                    - rest-api-mapping
+                    - graphql-api-mapping
+                    - javascript
+                additionalProperties:
+                  type: object
+              refreshCredentials:
+                description: Function that refreshes expired credentials. Implement for non-standard OAuth refresh flows or when additional credentials need to be refreshed alongside the OAuth token.
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - mapping
+                    - operation-mapping
+                    - rest-api-mapping
+                    - graphql-api-mapping
+                    - javascript
+                additionalProperties:
+                  type: object
+              makeApiClient:
+                description: Function that configures the HTTP client used by operations, actions and data sources. Typically a `mapping` type with `baseUri` and auth header wiring.
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - mapping
+                    - operation-mapping
+                    - rest-api-mapping
+                    - graphql-api-mapping
+                    - javascript
+                additionalProperties:
+                  type: object
+              getOAuthConfig:
+                description: 'OAuth2: function returning `{ authorizeUri, tokenUri, scopes, noRefreshToken? }` — the authorize/token endpoint URLs and requested scopes.'
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - mapping
+                    - operation-mapping
+                    - rest-api-mapping
+                    - graphql-api-mapping
+                    - javascript
+                additionalProperties:
+                  type: object
+              getTokenData:
+                description: 'OAuth2: function invoked with the raw token response to extract token metadata. Rarely needed.'
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - mapping
+                    - operation-mapping
+                    - rest-api-mapping
+                    - graphql-api-mapping
+                    - javascript
+                additionalProperties:
+                  type: object
+              getCredentialsFromAccessTokenResponse:
+                description: 'OAuth2: function that transforms the token endpoint response into the final credentials object. Required for multi-tenant APIs (Microsoft) or APIs that require post-OAuth bootstrap calls.'
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - mapping
+                    - operation-mapping
+                    - rest-api-mapping
+                    - graphql-api-mapping
+                    - javascript
+                additionalProperties:
+                  type: object
+              getCredentialsFromRefreshTokenResponse:
+                description: 'OAuth2: function that transforms the refresh token endpoint response into the refreshed credentials. Required when refresh responses differ from initial-token responses.'
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - mapping
+                    - operation-mapping
+                    - rest-api-mapping
+                    - graphql-api-mapping
+                    - javascript
+                additionalProperties:
+                  type: object
+              test:
+                description: Function that verifies the connection by making a lightweight authenticated API call (typically a `rest-api-mapping` against a `/me`-style endpoint).
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - mapping
+                    - operation-mapping
+                    - rest-api-mapping
+                    - graphql-api-mapping
+                    - javascript
+                additionalProperties:
+                  type: object
+              disconnect:
+                description: Function that revokes credentials at the provider when the connection is removed. Implement only if the provider exposes a revoke endpoint.
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - mapping
+                    - operation-mapping
+                    - rest-api-mapping
+                    - graphql-api-mapping
+                    - javascript
+                additionalProperties:
+                  type: object
+              proxyKey:
+                description: 'For `type: "proxy"` — identifies which proxy configuration the workspace should use.'
+                type: string
+              ui:
+                description: '[INTERNAL] Deprecated: Use inputSchema instead'
+                type: object
+                properties:
+                  schema:
+                    $ref: '#/components/schemas/ConnectorVersionDto__schema0'
+                  description:
+                    type: string
+                  helpUri:
+                    type: string
+              title:
+                type: string
+              description:
+                type: string
+              enabled:
+                type: object
+              credentialsSchema:
+                $ref: '#/components/schemas/ConnectorVersionDto__schema0'
+        id:
+          type: string
+        connectorId:
+          type: string
+        changelog:
           type: string
       required:
-      - uri
+      - version
+      - id
+      - connectorId
+      - changelog
+    ConnectorDownloadResponseDto:
+      type: object
+      properties:
+        data:
+          type: string
+          description: Binary file content
+      required:
+      - data
+    AsyncRequestTriggerResponseDto:
+      type: object
+      properties:
+        jobId:
+          type: string
+        accessKey:
+          type: string
+      required:
+      - jobId
+      - accessKey
     UpdateConnectorDto:
       type: object
       properties:
@@ -2427,6 +2327,106 @@ components:
                 type: string
               enabled:
                 type: object
+    ConnectorDto__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConnectorDto__schema0'
+        items:
+          $ref: '#/components/schemas/ConnectorDto__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/ConnectorDto__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectorDto__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    ImportConnectorDto:
+      type: object
+      properties:
+        uri:
+          type: string
+      required:
+      - uri
+    CloneConnectorDto:
+      type: object
+      properties:
+        version:
+          type: string
   parameters:
     Id:
       name: id

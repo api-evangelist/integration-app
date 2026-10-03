@@ -33,6 +33,13 @@ paths:
       - Act
 components:
   schemas:
+    ActResponseDto:
+      type: object
+      properties:
+        output:
+          type: object
+        actionRunId:
+          type: string
     ActRequestDto:
       type: object
       properties:
@@ -98,13 +105,6 @@ components:
           additionalProperties:
             type: object
       additionalProperties: false
-    ActResponseDto:
-      type: object
-      properties:
-        output:
-          type: object
-        actionRunId:
-          type: string
   securitySchemes:
     bearer:
       scheme: bearer

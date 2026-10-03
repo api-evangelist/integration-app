@@ -431,14 +431,6 @@ paths:
       security:
       - bearer: []
 components:
-  parameters:
-    Selector:
-      name: selector
-      in: path
-      required: true
-      description: Resource id or unique key.
-      schema:
-        type: string
   schemas:
     Integration:
       type: object
@@ -451,6 +443,39 @@ components:
           type: string
         connectorId:
           type: string
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
     IntegrationApiResponseDto__schema0:
       type: object
       properties:
@@ -749,186 +774,6 @@ components:
       required:
       - type
       - name
-    SetIntegrationParametersDto:
-      type: object
-      properties: {}
-      additionalProperties:
-        type: object
-    DataCollectionSpecDto__schema0:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        items:
-          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
-    BaseWorkspaceElementDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        archivedAt:
-          type: string
-        isDeactivated:
-          type: boolean
-        isReadOnly:
-          type: boolean
-        state:
-          type: string
-          enum:
-          - BUILDING
-          - CLIENT_ACTION_REQUIRED
-          - CONFIGURATION_ERROR
-          - SETUP_FAILED
-          - READY
-          - DISCONNECTING
-        errors:
-          type: array
-          items:
-            type: object
-      required:
-      - id
-      - name
-    IntegrationExportResponseDto:
-      type: object
-      properties:
-        uuid:
-          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
-          type: string
-        key:
-          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
-          type: string
-        name:
-          description: Display name. Optional on create; used to generate key when key is omitted.
-          type: string
-        description:
-          description: Optional human-readable description.
-          type: string
-        meta:
-          description: Optional key-value metadata.
-          type: object
-          additionalProperties:
-            type: object
-        logoUri:
-          type: string
-        externalAppUuid:
-          type: string
-        oAuthCallbackUri:
-          anyOf:
-          - type: string
-            format: uri
-          - type: string
-            enum:
-            - ''
-        logoBase64:
-          type: string
-        connectorVersion:
-          type: string
-        connectorUuid:
-          type: string
-        connectorKey:
-          description: Key of the connector; alternative to connectorId. Resolved to connectorId by the API.
-          type: string
-        optionsConfig:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              disabled:
-                type: boolean
-              parameters:
-                type: object
-                additionalProperties:
-                  type: object
-      required:
-      - uuid
-      - key
     UpdateIntegrationDto:
       type: object
       properties:
@@ -991,6 +836,71 @@ components:
                 type: object
                 additionalProperties:
                   type: object
+    CreateIntegrationDto:
+      type: object
+      properties:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
+          type: string
+        description:
+          description: Optional human-readable description.
+          type: string
+        meta:
+          description: Optional key-value metadata.
+          type: object
+          additionalProperties:
+            type: object
+        logoUri:
+          type: string
+        externalAppId:
+          description: External app id; alternative to connectorId — resolves to the app's default connector.
+          type: string
+        externalAppUuid:
+          type: string
+        oAuthCallbackUri:
+          anyOf:
+          - type: string
+            format: uri
+          - type: string
+            enum:
+            - ''
+        logoBase64:
+          type: string
+        connectorVersion:
+          type: string
+        connectorId:
+          description: ID of the connector this integration uses.
+          type: string
+        connectorUuid:
+          type: string
+        connectorKey:
+          description: Key of the connector; alternative to connectorId. Resolved to connectorId by the API.
+          type: string
+        parameters:
+          description: Connector-specific parameters (e.g. OAuth { clientId, clientSecret, scopes }).
+          type: object
+          additionalProperties:
+            type: object
+        optionsConfig:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              disabled:
+                type: boolean
+              parameters:
+                type: object
+                additionalProperties:
+                  type: object
+        intent:
+          description: '[Experimental] Intent-based instruction for an agent to configure this element.'
+          type: string
     IntegrationApiResponseDto:
       type: object
       properties:
@@ -1217,7 +1127,7 @@ components:
           type: boolean
       required:
       - name
-    CreateIntegrationDto:
+    IntegrationExportResponseDto:
       type: object
       properties:
         uuid:
@@ -1239,9 +1149,6 @@ components:
             type: object
         logoUri:
           type: string
-        externalAppId:
-          description: External app id; alternative to connectorId — resolves to the app's default connector.
-          type: string
         externalAppUuid:
           type: string
         oAuthCallbackUri:
@@ -1255,19 +1162,11 @@ components:
           type: string
         connectorVersion:
           type: string
-        connectorId:
-          description: ID of the connector this integration uses.
-          type: string
         connectorUuid:
           type: string
         connectorKey:
           description: Key of the connector; alternative to connectorId. Resolved to connectorId by the API.
           type: string
-        parameters:
-          description: Connector-specific parameters (e.g. OAuth { clientId, clientSecret, scopes }).
-          type: object
-          additionalProperties:
-            type: object
         optionsConfig:
           type: object
           additionalProperties:
@@ -1279,9 +1178,110 @@ components:
                 type: object
                 additionalProperties:
                   type: object
-        intent:
-          description: '[Experimental] Intent-based instruction for an agent to configure this element.'
+      required:
+      - uuid
+      - key
+    SetIntegrationParametersDto:
+      type: object
+      properties: {}
+      additionalProperties:
+        type: object
+    DataCollectionSpecDto__schema0:
+      type: object
+      properties:
+        title:
           type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        items:
+          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+  parameters:
+    Selector:
+      name: selector
+      in: path
+      required: true
+      description: Resource id or unique key.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
