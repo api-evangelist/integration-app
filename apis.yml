@@ -39,6 +39,10 @@ accessModel:
 position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/integration-app.png
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
+x-docs-hosting: vercel
 tags:
   - Agentic Integrations
   - AI Agents
@@ -1653,6 +1657,9 @@ apis:
   - type: Rules
     url: rules/integration-app-rules.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/integration-app-capability-edges.yml
+    name: Integration.app (Membrane) Business Capability Map
   - type: Website
     url: https://getmembrane.com/
   - type: Packages
