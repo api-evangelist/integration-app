@@ -589,43 +589,95 @@ components:
           type: array
           items:
             type: object
-    UpdateFlow__schema1:
+    FlowApiResponse__schema1:
       type: object
       properties:
+        title:
+          type: string
+        description:
+          type: string
         type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
           type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
+        properties:
           type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/UpdateFlow__schema1'
-        logs:
+          additionalProperties:
+            $ref: '#/components/schemas/FlowApiResponse__schema1'
+        items:
+          $ref: '#/components/schemas/FlowApiResponse__schema1'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/FlowApiResponse__schema1'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
           type: array
           items:
             type: object
-      required:
-      - message
-    CreateFlow:
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowApiResponse__schema1'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    UpdateFlow:
       type: object
       properties:
         uuid:
@@ -681,7 +733,7 @@ components:
         universalFlowId:
           type: string
         parametersSchema:
-          $ref: '#/components/schemas/CreateFlow__schema0'
+          $ref: '#/components/schemas/UpdateFlow__schema0'
         parameters:
           type: object
         enabled:
@@ -737,7 +789,7 @@ components:
               errors:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CreateFlow__schema1'
+                  $ref: '#/components/schemas/UpdateFlow__schema1'
               userConfig:
                 type: object
               testInput:
@@ -748,109 +800,6 @@ components:
                   type: object
         autoCreateInstances:
           type: boolean
-    FlowExportProperties:
-      type: object
-      properties:
-        uuid:
-          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
-          type: string
-        key:
-          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
-          type: string
-        name:
-          description: Display name. Optional on create; used to generate key when key is omitted.
-          type: string
-        description:
-          description: Optional human-readable description.
-          type: string
-        meta:
-          description: Optional key-value metadata.
-          type: object
-          additionalProperties:
-            type: object
-        integrationUuid:
-          type: string
-        parentUuid:
-          type: string
-        externalAppUuid:
-          type: string
-        isCustomized:
-          type: boolean
-        isUniversal:
-          type: boolean
-        instanceKey:
-          type: string
-        parametersSchema:
-          $ref: '#/components/schemas/FlowExportProperties__schema0'
-        parameters:
-          type: object
-        enabled:
-          type: boolean
-        nodes:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              type:
-                type: string
-              version:
-                type: number
-              name:
-                type: string
-              description:
-                type: string
-              config:
-                type: object
-              concurrency:
-                type: number
-              onError:
-                type: string
-                enum:
-                - stop
-                - continue
-              ui:
-                type: object
-              inputSchema:
-                type: object
-              outputSchema:
-                type: object
-              outputExample:
-                type: object
-              links:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    key:
-                      type: string
-                    filter:
-                      type: object
-                    name:
-                      type: string
-              isCustomized:
-                type: boolean
-              state:
-                type: string
-                enum:
-                - SETUP_FAILED
-                - READY
-              errors:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FlowExportProperties__schema1'
-              userConfig:
-                type: object
-              testInput:
-                type: object
-              dependencies:
-                type: array
-                items:
-                  type: object
-        autoCreateInstances:
-          type: boolean
-      required:
-      - uuid
-      - key
     UpdateFlow__schema0:
       type: object
       properties:
@@ -939,7 +888,7 @@ components:
           type: string
       additionalProperties:
         type: object
-    FlowExportProperties__schema1:
+    UpdateFlow__schema1:
       type: object
       properties:
         type:
@@ -968,43 +917,7 @@ components:
         stack:
           type: object
         causedByError:
-          $ref: '#/components/schemas/FlowExportProperties__schema1'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
-    CreateFlow__schema1:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/CreateFlow__schema1'
+          $ref: '#/components/schemas/UpdateFlow__schema1'
         logs:
           type: array
           items:
@@ -1135,7 +1048,7 @@ components:
           type: string
       additionalProperties:
         type: object
-    FlowApiResponse__schema1:
+    CreateFlow__schema0:
       type: object
       properties:
         title:
@@ -1153,13 +1066,13 @@ components:
         properties:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/FlowApiResponse__schema1'
+            $ref: '#/components/schemas/CreateFlow__schema0'
         items:
-          $ref: '#/components/schemas/FlowApiResponse__schema1'
+          $ref: '#/components/schemas/CreateFlow__schema0'
         additionalProperties:
           anyOf:
           - type: boolean
-          - $ref: '#/components/schemas/FlowApiResponse__schema1'
+          - $ref: '#/components/schemas/CreateFlow__schema0'
         enum:
           type: array
           items:
@@ -1212,7 +1125,7 @@ components:
         anyOf:
           type: array
           items:
-            $ref: '#/components/schemas/FlowApiResponse__schema1'
+            $ref: '#/components/schemas/CreateFlow__schema0'
         isImplied:
           type: boolean
         isSensitive:
@@ -2146,7 +2059,79 @@ components:
       required:
       - id
       - name
-    UpdateFlow:
+    FlowExportProperties__schema1:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/FlowExportProperties__schema1'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    CreateFlow__schema1:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/CreateFlow__schema1'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    FlowExportProperties:
       type: object
       properties:
         uuid:
@@ -2166,43 +2151,20 @@ components:
           type: object
           additionalProperties:
             type: object
-        integrationId:
-          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
-          type: string
         integrationUuid:
-          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
-          type: string
-        integrationKey:
-          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
           type: string
         parentUuid:
-          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
-          type: string
-        parentKey:
-          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
-          type: string
-        connectionId:
-          type: string
-        instanceKey:
-          type: string
-        isUniversal:
-          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
-          type: boolean
-        externalAppId:
-          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
           type: string
         externalAppUuid:
-          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
           type: string
-        externalAppKey:
-          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
-          type: string
-        flowId:
-          type: string
-        universalFlowId:
+        isCustomized:
+          type: boolean
+        isUniversal:
+          type: boolean
+        instanceKey:
           type: string
         parametersSchema:
-          $ref: '#/components/schemas/UpdateFlow__schema0'
+          $ref: '#/components/schemas/FlowExportProperties__schema0'
         parameters:
           type: object
         enabled:
@@ -2258,7 +2220,7 @@ components:
               errors:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UpdateFlow__schema1'
+                  $ref: '#/components/schemas/FlowExportProperties__schema1'
               userConfig:
                 type: object
               testInput:
@@ -2269,94 +2231,132 @@ components:
                   type: object
         autoCreateInstances:
           type: boolean
-    CreateFlow__schema0:
+      required:
+      - uuid
+      - key
+    CreateFlow:
       type: object
       properties:
-        title:
+        uuid:
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+          type: string
+        key:
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+          type: string
+        name:
+          description: Display name. Optional on create; used to generate key when key is omitted.
           type: string
         description:
+          description: Optional human-readable description.
           type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
+        meta:
+          description: Optional key-value metadata.
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/CreateFlow__schema0'
-        items:
+            type: object
+        integrationId:
+          description: Internal ID of the integration this element belongs to. Omit for universal elements; set for integration-specific elements. Uniqueness of key is scoped per integration.
+          type: string
+        integrationUuid:
+          description: UUID of the integration; alternative to integrationId when creating from export. Resolved to integrationId by the API.
+          type: string
+        integrationKey:
+          description: Key of the integration; alternative to integrationId. Resolved to integrationId by the API.
+          type: string
+        parentUuid:
+          description: UUID of the parent element; alternative to parentId when creating (e.g. from export). Resolved to parentId by the API.
+          type: string
+        parentKey:
+          description: Key of the parent element; alternative to parentId. Resolved to parentId by the API.
+          type: string
+        connectionId:
+          type: string
+        instanceKey:
+          type: string
+        isUniversal:
+          description: When true, the element is universal (shared across all integrations). Requires universal-element access. Omit or false for integration-specific elements.
+          type: boolean
+        externalAppId:
+          description: Internal ID of the external app this element belongs to. Auto-populated from the integration when integrationId is set and the integration has an externalAppId.
+          type: string
+        externalAppUuid:
+          description: UUID of the external app; alternative to externalAppId when creating from export. Resolved to externalAppId by the API.
+          type: string
+        externalAppKey:
+          description: Key of the external app; alternative to externalAppId. Resolved to externalAppId by the API.
+          type: string
+        flowId:
+          type: string
+        universalFlowId:
+          type: string
+        parametersSchema:
           $ref: '#/components/schemas/CreateFlow__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/CreateFlow__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
+        parameters:
           type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
+        enabled:
+          type: boolean
+        nodes:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              type:
+                type: string
+              version:
+                type: number
+              name:
+                type: string
+              description:
+                type: string
+              config:
                 type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
+              concurrency:
+                type: number
+              onError:
+                type: string
+                enum:
+                - stop
+                - continue
+              ui:
+                type: object
+              inputSchema:
+                type: object
+              outputSchema:
+                type: object
+              outputExample:
+                type: object
+              links:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                    filter:
+                      type: object
+                    name:
+                      type: string
+              isCustomized:
+                type: boolean
+              state:
+                type: string
+                enum:
+                - SETUP_FAILED
+                - READY
+              errors:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreateFlow__schema1'
+              userConfig:
+                type: object
+              testInput:
+                type: object
+              dependencies:
+                type: array
+                items:
+                  type: object
+        autoCreateInstances:
           type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateFlow__schema0'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
   parameters:
     Selector:
       name: selector

@@ -96,60 +96,6 @@ paths:
       - Checkpoints
 components:
   schemas:
-    BaseWorkspaceElementDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        archivedAt:
-          type: string
-        isDeactivated:
-          type: boolean
-        isReadOnly:
-          type: boolean
-        state:
-          type: string
-          enum:
-          - BUILDING
-          - CLIENT_ACTION_REQUIRED
-          - CONFIGURATION_ERROR
-          - SETUP_FAILED
-          - READY
-          - DISCONNECTING
-        errors:
-          type: array
-          items:
-            type: object
-      required:
-      - id
-      - name
-    CheckpointDiffResponseDto:
-      type: array
-      items:
-        type: object
-        properties:
-          op:
-            type: string
-            enum:
-            - add
-            - remove
-            - replace
-          path:
-            type: string
-            description: Dot/bracket path, e.g. name, nodes[0].id
-          value:
-            type: object
-          oldValue:
-            type: object
-        required:
-        - op
-        - path
     CheckpointApiResponseDto:
       type: object
       properties:
@@ -212,6 +158,60 @@ components:
       - checkpointNumber
       - snapshot
       - createdAt
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
+    CheckpointDiffResponseDto:
+      type: array
+      items:
+        type: object
+        properties:
+          op:
+            type: string
+            enum:
+            - add
+            - remove
+            - replace
+          path:
+            type: string
+            description: Dot/bracket path, e.g. name, nodes[0].id
+          value:
+            type: object
+          oldValue:
+            type: object
+        required:
+        - op
+        - path
   securitySchemes:
     bearer:
       scheme: bearer

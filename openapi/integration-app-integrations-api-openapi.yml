@@ -443,399 +443,6 @@ components:
           type: string
         connectorId:
           type: string
-    BaseWorkspaceElementDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        archivedAt:
-          type: string
-        isDeactivated:
-          type: boolean
-        isReadOnly:
-          type: boolean
-        state:
-          type: string
-          enum:
-          - BUILDING
-          - CLIENT_ACTION_REQUIRED
-          - CONFIGURATION_ERROR
-          - SETUP_FAILED
-          - READY
-          - DISCONNECTING
-        errors:
-          type: array
-          items:
-            type: object
-      required:
-      - id
-      - name
-    IntegrationApiResponseDto__schema0:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
-          type: string
-        message:
-          type: string
-        data:
-          type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/IntegrationApiResponseDto__schema0'
-        logs:
-          type: array
-          items:
-            type: object
-      required:
-      - message
-    DataCollectionSpecDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - collection
-        key:
-          type: string
-        name:
-          type: string
-        parametersSchema:
-          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        fieldsSchema:
-          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        list:
-          type: object
-          properties:
-            apiRequests:
-              type: array
-              items:
-                type: object
-                properties:
-                  path:
-                    type: object
-                  method:
-                    type: object
-                required:
-                - path
-                - method
-            filterFields:
-              type: array
-              items:
-                type: string
-        search:
-          type: object
-          properties:
-            apiRequests:
-              type: array
-              items:
-                type: object
-                properties:
-                  path:
-                    type: object
-                  method:
-                    type: object
-                required:
-                - path
-                - method
-        match:
-          type: object
-          properties:
-            apiRequests:
-              type: array
-              items:
-                type: object
-                properties:
-                  path:
-                    type: object
-                  method:
-                    type: object
-                required:
-                - path
-                - method
-            fields:
-              type: array
-              items:
-                type: string
-        findById:
-          type: object
-          properties:
-            apiRequests:
-              type: array
-              items:
-                type: object
-                properties:
-                  path:
-                    type: object
-                  method:
-                    type: object
-                required:
-                - path
-                - method
-        create:
-          type: object
-          properties:
-            apiRequests:
-              type: array
-              items:
-                type: object
-                properties:
-                  path:
-                    type: object
-                  method:
-                    type: object
-                required:
-                - path
-                - method
-            fields:
-              type: array
-              items:
-                type: string
-            requiredFields:
-              type: array
-              items:
-                type: string
-            excludedFields:
-              type: array
-              items:
-                type: string
-        update:
-          type: object
-          properties:
-            apiRequests:
-              type: array
-              items:
-                type: object
-                properties:
-                  path:
-                    type: object
-                  method:
-                    type: object
-                required:
-                - path
-                - method
-            fields:
-              type: array
-              items:
-                type: string
-            excludedFields:
-              type: array
-              items:
-                type: string
-        delete:
-          type: object
-          properties:
-            apiRequests:
-              type: array
-              items:
-                type: object
-                properties:
-                  path:
-                    type: object
-                  method:
-                    type: object
-                required:
-                - path
-                - method
-        events:
-          type: object
-          properties:
-            created:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                  - push
-                  - pull
-                isFullScan:
-                  type: boolean
-                isIdOnly:
-                  type: boolean
-              required:
-              - type
-            updated:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                  - push
-                  - pull
-                isFullScan:
-                  type: boolean
-                isIdOnly:
-                  type: boolean
-              required:
-              - type
-            deleted:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                  - push
-                  - pull
-                isFullScan:
-                  type: boolean
-                isIdOnly:
-                  type: boolean
-              required:
-              - type
-            all:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                  - push
-                  - pull
-                isFullScan:
-                  type: boolean
-                isIdOnly:
-                  type: boolean
-              required:
-              - type
-          additionalProperties:
-            type: object
-            properties:
-              type:
-                type: string
-                enum:
-                - push
-                - pull
-              isFullScan:
-                type: boolean
-              isIdOnly:
-                type: boolean
-            required:
-            - type
-        customFields:
-          type: boolean
-        udm:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              fields:
-                type: array
-                items:
-                  type: string
-              extract:
-                type: object
-                additionalProperties:
-                  type: object
-              parse:
-                type: object
-                additionalProperties:
-                  type: object
-        find:
-          type: object
-          properties:
-            apiRequests:
-              type: array
-              items:
-                type: object
-                properties:
-                  path:
-                    type: object
-                  method:
-                    type: object
-                required:
-                - path
-                - method
-            queryFields:
-              type: array
-              items:
-                type: string
-      required:
-      - type
-      - name
-    UpdateIntegrationDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
-        key:
-          type: string
-          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
-        name:
-          type: string
-          description: Display name. Optional on create; used to generate key when key is omitted.
-        description:
-          type: string
-          description: Optional human-readable description.
-        meta:
-          type: object
-          description: Optional key-value metadata.
-          additionalProperties:
-            type: object
-        logoUri:
-          type: string
-        externalAppId:
-          type: string
-          description: External app id; alternative to connectorId — resolves to the app's default connector.
-        externalAppUuid:
-          type: string
-        oAuthCallbackUri:
-          anyOf:
-          - type: string
-            format: uri
-          - type: string
-            enum:
-            - ''
-        logoBase64:
-          type: string
-        connectorVersion:
-          type: string
-        connectorId:
-          type: string
-          description: ID of the connector this integration uses.
-        connectorUuid:
-          type: string
-        connectorKey:
-          type: string
-          description: Key of the connector; alternative to connectorId. Resolved to connectorId by the API.
-        parameters:
-          type: object
-          description: Connector-specific parameters (e.g. OAuth { clientId, clientSecret, scopes }).
-          additionalProperties:
-            type: object
-        optionsConfig:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              disabled:
-                type: boolean
-              parameters:
-                type: object
-                additionalProperties:
-                  type: object
     CreateIntegrationDto:
       type: object
       properties:
@@ -901,6 +508,230 @@ components:
         intent:
           description: '[Experimental] Intent-based instruction for an agent to configure this element.'
           type: string
+    SetIntegrationParametersDto:
+      type: object
+      properties: {}
+      additionalProperties:
+        type: object
+    IntegrationApiResponseDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/IntegrationApiResponseDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    DataCollectionSpecDto__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        items:
+          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    BaseWorkspaceElementDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        archivedAt:
+          type: string
+        isDeactivated:
+          type: boolean
+        isReadOnly:
+          type: boolean
+        state:
+          type: string
+          enum:
+          - BUILDING
+          - CLIENT_ACTION_REQUIRED
+          - CONFIGURATION_ERROR
+          - SETUP_FAILED
+          - READY
+          - DISCONNECTING
+        errors:
+          type: array
+          items:
+            type: object
+      required:
+      - id
+      - name
+    UpdateIntegrationDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: Stable unique identifier (UUID). Can be provided on create; otherwise generated. Must be unique across elements of this type.
+        key:
+          type: string
+          description: Stable key for referencing the element (e.g. in selectors). Unique per (parent, integration) scope. Generated from name if not provided on create.
+        name:
+          type: string
+          description: Display name. Optional on create; used to generate key when key is omitted.
+        description:
+          type: string
+          description: Optional human-readable description.
+        meta:
+          type: object
+          description: Optional key-value metadata.
+          additionalProperties:
+            type: object
+        logoUri:
+          type: string
+        externalAppId:
+          type: string
+          description: External app id; alternative to connectorId — resolves to the app's default connector.
+        externalAppUuid:
+          type: string
+        oAuthCallbackUri:
+          anyOf:
+          - type: string
+            format: uri
+          - type: string
+            enum:
+            - ''
+        logoBase64:
+          type: string
+        connectorVersion:
+          type: string
+        connectorId:
+          type: string
+          description: ID of the connector this integration uses.
+        connectorUuid:
+          type: string
+        connectorKey:
+          type: string
+          description: Key of the connector; alternative to connectorId. Resolved to connectorId by the API.
+        parameters:
+          type: object
+          description: Connector-specific parameters (e.g. OAuth { clientId, clientSecret, scopes }).
+          additionalProperties:
+            type: object
+        optionsConfig:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              disabled:
+                type: boolean
+              parameters:
+                type: object
+                additionalProperties:
+                  type: object
     IntegrationApiResponseDto:
       type: object
       properties:
@@ -1181,99 +1012,268 @@ components:
       required:
       - uuid
       - key
-    SetIntegrationParametersDto:
-      type: object
-      properties: {}
-      additionalProperties:
-        type: object
-    DataCollectionSpecDto__schema0:
+    DataCollectionSpecDto:
       type: object
       properties:
-        title:
-          type: string
-        description:
-          type: string
         type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
           type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        items:
+          enum:
+          - collection
+        key:
+          type: string
+        name:
+          type: string
+        parametersSchema:
           $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
+        fieldsSchema:
+          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        list:
           type: object
           properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
+            apiRequests:
+              type: array
+              items:
                 type: object
-        referenceUdm:
-          type: string
-        default:
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            filterFields:
+              type: array
+              items:
+                type: string
+        search:
           type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+        match:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            fields:
+              type: array
+              items:
+                type: string
+        findById:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+        create:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            fields:
+              type: array
+              items:
+                type: string
+            requiredFields:
+              type: array
+              items:
+                type: string
+            excludedFields:
+              type: array
+              items:
+                type: string
+        update:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            fields:
+              type: array
+              items:
+                type: string
+            excludedFields:
+              type: array
+              items:
+                type: string
+        delete:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+        events:
+          type: object
+          properties:
+            created:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - push
+                  - pull
+                isFullScan:
+                  type: boolean
+                isIdOnly:
+                  type: boolean
+              required:
+              - type
+            updated:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - push
+                  - pull
+                isFullScan:
+                  type: boolean
+                isIdOnly:
+                  type: boolean
+              required:
+              - type
+            deleted:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - push
+                  - pull
+                isFullScan:
+                  type: boolean
+                isIdOnly:
+                  type: boolean
+              required:
+              - type
+            all:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - push
+                  - pull
+                isFullScan:
+                  type: boolean
+                isIdOnly:
+                  type: boolean
+              required:
+              - type
+          additionalProperties:
             type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        isImplied:
+            properties:
+              type:
+                type: string
+                enum:
+                - push
+                - pull
+              isFullScan:
+                type: boolean
+              isIdOnly:
+                type: boolean
+            required:
+            - type
+        customFields:
           type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
+        udm:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              fields:
+                type: array
+                items:
+                  type: string
+              extract:
+                type: object
+                additionalProperties:
+                  type: object
+              parse:
+                type: object
+                additionalProperties:
+                  type: object
+        find:
+          type: object
+          properties:
+            apiRequests:
+              type: array
+              items:
+                type: object
+                properties:
+                  path:
+                    type: object
+                  method:
+                    type: object
+                required:
+                - path
+                - method
+            queryFields:
+              type: array
+              items:
+                type: string
+      required:
+      - type
+      - name
   parameters:
     Selector:
       name: selector

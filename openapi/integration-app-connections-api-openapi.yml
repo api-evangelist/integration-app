@@ -375,16 +375,14 @@ paths:
       security:
       - bearer: []
 components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
-    ConnectionList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Connection'
-        cursor:
-          type: string
     Connection:
       type: object
       properties:
@@ -400,6 +398,15 @@ components:
           type: string
         credentials:
           type: object
+    ConnectionList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+        cursor:
+          type: string
     BaseWorkspaceElementDto:
       type: object
       properties:
@@ -433,6 +440,52 @@ components:
       required:
       - id
       - name
+    ConnectionExportDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - connector
+          - mcp
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+        authOptionKey:
+          type: string
+        key:
+          type:
+          - string
+          - 'null'
+          minLength: 1
+          maxLength: 100
+        integrationUuid:
+          type: string
+        connectorUuid:
+          type: string
+        externalAppUuid:
+          type: string
+    ElementLogsResponseDto:
+      type: array
+      items:
+        type: object
+        properties: {}
+    EnsureConnectionDto:
+      type: object
+      properties:
+        appUrl:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: URL or domain of the app to connect to (e.g. "https://slack.com" or "slack.com"). Will be normalized to a domain.
+        name:
+          type: string
+          description: Custom name for the connection. Only used when a new connection is created; ignored if an existing one is returned.
+      required:
+      - appUrl
     ConnectionApiResponseDto__schema0:
       type: object
       properties:
@@ -469,52 +522,6 @@ components:
             type: object
       required:
       - message
-    EnsureConnectionDto:
-      type: object
-      properties:
-        appUrl:
-          type: string
-          minLength: 1
-          maxLength: 2000
-          description: URL or domain of the app to connect to (e.g. "https://slack.com" or "slack.com"). Will be normalized to a domain.
-        name:
-          type: string
-          description: Custom name for the connection. Only used when a new connection is created; ignored if an existing one is returned.
-      required:
-      - appUrl
-    ElementLogsResponseDto:
-      type: array
-      items:
-        type: object
-        properties: {}
-    ConnectionExportDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - connector
-          - mcp
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-        authOptionKey:
-          type: string
-        key:
-          type:
-          - string
-          - 'null'
-          minLength: 1
-          maxLength: 100
-        integrationUuid:
-          type: string
-        connectorUuid:
-          type: string
-        externalAppUuid:
-          type: string
     ConnectionApiResponseDto:
       type: object
       properties:
@@ -782,13 +789,6 @@ components:
       - userId
       - createdAt
       - updatedAt
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

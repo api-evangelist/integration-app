@@ -373,7 +373,7 @@ components:
       schema:
         type: string
   schemas:
-    PatchAgentSessionDto__schema0:
+    AgentSessionDto__schema0:
       type: object
       properties:
         type:
@@ -402,7 +402,7 @@ components:
         stack:
           type: object
         causedByError:
-          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
+          $ref: '#/components/schemas/AgentSessionDto__schema0'
         logs:
           type: array
           items:
@@ -416,38 +416,6 @@ components:
           type: boolean
       required:
       - interrupted
-    PatchAgentSessionDto:
-      type: object
-      properties:
-        state:
-          type: string
-          enum:
-          - busy
-          - idle
-        lastActivityAt:
-          type: string
-          description: Last meaningful session progress timestamp used for inactivity timeout checks.
-        title:
-          type: string
-        summary:
-          type: string
-        error:
-          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
-        opencodeSessionUuid:
-          type: string
-        output:
-          type: object
-          additionalProperties:
-            type: object
-        status:
-          type: string
-          enum:
-          - queued
-          - starting
-          - running
-          - completed
-          - failed
-          - cancelled
     AgentSessionsPaginatedResponseDto:
       type: object
       properties:
@@ -577,6 +545,149 @@ components:
           type: string
       required:
       - items
+    CreateAgentSessionDto:
+      type: object
+      properties:
+        workspaceElementType:
+          type: string
+          enum:
+          - customer
+          - app
+          - connector
+          - integration
+          - flow
+          - flow-instance
+          - flow-run
+          - action
+          - package
+          - action-instance
+          - connection
+          - field-mapping
+          - field-mapping-instance
+          - data-source
+          - data-source-instance
+          - data-link-table
+          - data-link-table-instance
+          - app-event-type
+          - app-event-subscription
+          - app-event-log-record
+          - app-data-schema
+          - app-data-schema-instance
+          - external-event-subscription
+          - external-event-log-record
+          - external-event-pull
+          - external-event-type
+          - screen
+          - action-run-log-record
+          - external-api-log-record
+          - incoming-webhook-log-record
+          - connected-product
+        workspaceElementId:
+          type: string
+          minLength: 1
+        prompt:
+          type: string
+          minLength: 1
+        testCustomerId:
+          type: string
+        isExternal:
+          type: boolean
+        modelId:
+          type: string
+          enum:
+          - anthropic/claude-sonnet-4.6
+          - anthropic/claude-opus-4.6
+          - anthropic/claude-sonnet-4.5
+          - anthropic/claude-opus-4.5
+          - anthropic/claude-haiku-4.5
+          - openai/gpt-5.2
+          - openai/gpt-5-nano
+          - google/gemini-3-pro-preview
+          - moonshotai/kimi-k2.5
+        agentName:
+          type: string
+          enum:
+          - membrane
+          - membrane-core
+          - self-integrating
+          - connection-building
+          - action-building
+          - universe
+        agentHarnessId:
+          type: string
+          minLength: 1
+        promptAttachments:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              data:
+                type: object
+            required:
+            - title
+            - data
+      required:
+      - prompt
+    PatchAgentSessionDto__schema0:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bad_request
+          - connection
+          - configuration
+          - dependency_error
+          - flow_run
+          - flow_instance_setup
+          - concurrency
+          - internal
+          - action_run
+          - action_instance_setup
+          - unit_run
+          - custom_code
+          - insufficient_credit
+          - openrouter_not_configured
+        key:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        stack:
+          type: object
+        causedByError:
+          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
+        logs:
+          type: array
+          items:
+            type: object
+      required:
+      - message
+    AgentSessionInputDto:
+      type: object
+      properties:
+        input:
+          type: string
+          minLength: 1
+        synthetic:
+          type: boolean
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              data:
+                type: object
+            required:
+            - title
+            - data
+      required:
+      - input
     AgentSessionDto:
       type: object
       properties:
@@ -697,127 +808,38 @@ components:
       - hasWorker
       - createdAt
       - updatedAt
-    AgentSessionDto__schema0:
+    PatchAgentSessionDto:
       type: object
       properties:
-        type:
+        state:
           type: string
           enum:
-          - bad_request
-          - connection
-          - configuration
-          - dependency_error
-          - flow_run
-          - flow_instance_setup
-          - concurrency
-          - internal
-          - action_run
-          - action_instance_setup
-          - unit_run
-          - custom_code
-          - insufficient_credit
-          - openrouter_not_configured
-        key:
+          - busy
+          - idle
+        lastActivityAt:
           type: string
-        message:
+          description: Last meaningful session progress timestamp used for inactivity timeout checks.
+        title:
           type: string
-        data:
+        summary:
+          type: string
+        error:
+          $ref: '#/components/schemas/PatchAgentSessionDto__schema0'
+        opencodeSessionUuid:
+          type: string
+        output:
           type: object
-        stack:
-          type: object
-        causedByError:
-          $ref: '#/components/schemas/AgentSessionDto__schema0'
-        logs:
-          type: array
-          items:
+          additionalProperties:
             type: object
-      required:
-      - message
-    CreateAgentSessionDto:
-      type: object
-      properties:
-        workspaceElementType:
+        status:
           type: string
           enum:
-          - customer
-          - app
-          - connector
-          - integration
-          - flow
-          - flow-instance
-          - flow-run
-          - action
-          - package
-          - action-instance
-          - connection
-          - field-mapping
-          - field-mapping-instance
-          - data-source
-          - data-source-instance
-          - data-link-table
-          - data-link-table-instance
-          - app-event-type
-          - app-event-subscription
-          - app-event-log-record
-          - app-data-schema
-          - app-data-schema-instance
-          - external-event-subscription
-          - external-event-log-record
-          - external-event-pull
-          - external-event-type
-          - screen
-          - action-run-log-record
-          - external-api-log-record
-          - incoming-webhook-log-record
-          - connected-product
-        workspaceElementId:
-          type: string
-          minLength: 1
-        prompt:
-          type: string
-          minLength: 1
-        testCustomerId:
-          type: string
-        isExternal:
-          type: boolean
-        modelId:
-          type: string
-          enum:
-          - anthropic/claude-sonnet-4.6
-          - anthropic/claude-opus-4.6
-          - anthropic/claude-sonnet-4.5
-          - anthropic/claude-opus-4.5
-          - anthropic/claude-haiku-4.5
-          - openai/gpt-5.2
-          - openai/gpt-5-nano
-          - google/gemini-3-pro-preview
-          - moonshotai/kimi-k2.5
-        agentName:
-          type: string
-          enum:
-          - membrane
-          - membrane-core
-          - self-integrating
-          - connection-building
-          - action-building
-          - universe
-        agentHarnessId:
-          type: string
-          minLength: 1
-        promptAttachments:
-          type: array
-          items:
-            type: object
-            properties:
-              title:
-                type: string
-              data:
-                type: object
-            required:
-            - title
-            - data
-      required:
-      - prompt
+          - queued
+          - starting
+          - running
+          - completed
+          - failed
+          - cancelled
     AgentSessionsPaginatedResponseDto__schema0:
       type: object
       properties:
@@ -854,28 +876,6 @@ components:
             type: object
       required:
       - message
-    AgentSessionInputDto:
-      type: object
-      properties:
-        input:
-          type: string
-          minLength: 1
-        synthetic:
-          type: boolean
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              title:
-                type: string
-              data:
-                type: object
-            required:
-            - title
-            - data
-      required:
-      - input
   securitySchemes:
     bearerAuth:
       type: http

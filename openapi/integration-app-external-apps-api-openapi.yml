@@ -141,6 +141,49 @@ paths:
       - External Apps
 components:
   schemas:
+    UpdateExternalAppDto:
+      type: object
+      properties:
+        key:
+          type: string
+          minLength: 1
+          description: Machine key (e.g., "attio"). Unique per workspace.
+        name:
+          type: string
+          minLength: 1
+          description: Human-readable app name (e.g., "Attio").
+        appUri:
+          type: string
+          description: App's main URL (e.g., "https://attio.com").
+          format: uri
+        logoUri:
+          type: string
+          format: uri
+        tenantId:
+          type: string
+    CreateExternalAppDto:
+      type: object
+      properties:
+        key:
+          type: string
+          minLength: 1
+          description: Machine key (e.g., "attio"). Unique per workspace.
+        name:
+          type: string
+          minLength: 1
+          description: Human-readable app name (e.g., "Attio").
+        appUri:
+          type: string
+          description: App's main URL (e.g., "https://attio.com").
+          format: uri
+        logoUri:
+          type: string
+          format: uri
+        tenantId:
+          type: string
+      required:
+      - key
+      - name
     ExternalAppDto:
       type: object
       properties:
@@ -214,49 +257,6 @@ components:
       - defaultConnectorId
       - categories
       - popularity
-    UpdateExternalAppDto:
-      type: object
-      properties:
-        key:
-          type: string
-          minLength: 1
-          description: Machine key (e.g., "attio"). Unique per workspace.
-        name:
-          type: string
-          minLength: 1
-          description: Human-readable app name (e.g., "Attio").
-        appUri:
-          type: string
-          description: App's main URL (e.g., "https://attio.com").
-          format: uri
-        logoUri:
-          type: string
-          format: uri
-        tenantId:
-          type: string
-    CreateExternalAppDto:
-      type: object
-      properties:
-        key:
-          type: string
-          minLength: 1
-          description: Machine key (e.g., "attio"). Unique per workspace.
-        name:
-          type: string
-          minLength: 1
-          description: Human-readable app name (e.g., "Attio").
-        appUri:
-          type: string
-          description: App's main URL (e.g., "https://attio.com").
-          format: uri
-        logoUri:
-          type: string
-          format: uri
-        tenantId:
-          type: string
-      required:
-      - key
-      - name
     ExternalAppsPaginatedResponseDto:
       type: object
       properties:

@@ -187,6 +187,33 @@ paths:
       - ConnectedProducts
 components:
   schemas:
+    CreateConnectedProductRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+          - ai-agent
+          - app
+        audience:
+          type: string
+          enum:
+          - personal
+          - customers
+        parameters:
+          type: object
+          properties:
+            agentType:
+              type: string
+          additionalProperties:
+            type: object
+      required:
+      - name
+      - type
     BaseWorkspaceElementDto:
       type: object
       properties:
@@ -220,9 +247,11 @@ components:
       required:
       - id
       - name
-    CreateConnectedProductRequestDto:
+    ConnectedProductApiResponseDto:
       type: object
       properties:
+        id:
+          type: string
         name:
           type: string
         key:
@@ -244,8 +273,18 @@ components:
               type: string
           additionalProperties:
             type: object
+        isConnected:
+          type: boolean
+        lastApiRequestDate:
+          type: string
+        createdAt:
+          type: string
+        archivedAt:
+          type: string
       required:
+      - id
       - name
+      - key
       - type
     UpdateConnectedProductRequestDto:
       type: object
@@ -319,45 +358,6 @@ components:
           type: string
       required:
       - items
-    ConnectedProductApiResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        key:
-          type: string
-        type:
-          type: string
-          enum:
-          - ai-agent
-          - app
-        audience:
-          type: string
-          enum:
-          - personal
-          - customers
-        parameters:
-          type: object
-          properties:
-            agentType:
-              type: string
-          additionalProperties:
-            type: object
-        isConnected:
-          type: boolean
-        lastApiRequestDate:
-          type: string
-        createdAt:
-          type: string
-        archivedAt:
-          type: string
-      required:
-      - id
-      - name
-      - key
-      - type
   securitySchemes:
     bearer:
       scheme: bearer

@@ -148,50 +148,6 @@ paths:
       - WorkspaceElementsSearch
 components:
   schemas:
-    SemanticSearchResponseDto:
-      type: array
-      items:
-        type: object
-        properties:
-          elementType:
-            type: string
-            enum:
-            - customer
-            - app
-            - connector
-            - integration
-            - flow
-            - flow-instance
-            - flow-run
-            - action
-            - package
-            - action-instance
-            - connection
-            - field-mapping
-            - field-mapping-instance
-            - data-source
-            - data-source-instance
-            - data-link-table
-            - data-link-table-instance
-            - app-event-type
-            - app-event-subscription
-            - app-event-log-record
-            - app-data-schema
-            - app-data-schema-instance
-            - external-event-subscription
-            - external-event-log-record
-            - external-event-pull
-            - external-event-type
-            - screen
-            - action-run-log-record
-            - external-api-log-record
-            - incoming-webhook-log-record
-            - connected-product
-          element:
-            type: object
-        required:
-        - elementType
-        - element
     SearchResponseDto:
       type: object
       properties:
@@ -243,6 +199,50 @@ components:
           type: string
       required:
       - items
+    SemanticSearchResponseDto:
+      type: array
+      items:
+        type: object
+        properties:
+          elementType:
+            type: string
+            enum:
+            - customer
+            - app
+            - connector
+            - integration
+            - flow
+            - flow-instance
+            - flow-run
+            - action
+            - package
+            - action-instance
+            - connection
+            - field-mapping
+            - field-mapping-instance
+            - data-source
+            - data-source-instance
+            - data-link-table
+            - data-link-table-instance
+            - app-event-type
+            - app-event-subscription
+            - app-event-log-record
+            - app-data-schema
+            - app-data-schema-instance
+            - external-event-subscription
+            - external-event-log-record
+            - external-event-pull
+            - external-event-type
+            - screen
+            - action-run-log-record
+            - external-api-log-record
+            - incoming-webhook-log-record
+            - connected-product
+          element:
+            type: object
+        required:
+        - elementType
+        - element
   securitySchemes:
     bearer:
       scheme: bearer

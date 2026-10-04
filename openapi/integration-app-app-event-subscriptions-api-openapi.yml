@@ -261,6 +261,9 @@ components:
       required:
       - id
       - name
+    AppEventSubscriptionSchemaResponseDto:
+      type: object
+      properties: {}
     AppEventSubscriptionApiResponseDto:
       type: object
       properties:
@@ -578,6 +581,15 @@ components:
           type: string
       additionalProperties:
         type: object
+    AppEventSubscriptionUpdateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        meta:
+          type: object
+          additionalProperties:
+            type: object
     AppEventSubscriptionApiResponseDto__schema0:
       type: object
       properties:
@@ -614,18 +626,6 @@ components:
             type: object
       required:
       - message
-    AppEventSubscriptionSchemaResponseDto:
-      type: object
-      properties: {}
-    AppEventSubscriptionUpdateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        meta:
-          type: object
-          additionalProperties:
-            type: object
   securitySchemes:
     bearerAuth:
       type: http

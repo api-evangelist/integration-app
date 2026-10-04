@@ -572,6 +572,235 @@ components:
           type: string
       required:
       - records
+    DataCollectionUpdateRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        id:
+          type: string
+        fields:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - id
+      - fields
+    DataCollectionSpecDto__schema0:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        format:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        items:
+          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        additionalProperties:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        enum:
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: number
+        referenceRecords:
+          type: array
+          items:
+            type: object
+        referenceCollection:
+          type: object
+          properties:
+            key:
+              type: object
+            parameters:
+              type: object
+              additionalProperties:
+                type: object
+        referenceUdm:
+          type: string
+        default:
+          type: object
+        allowCustom:
+          type: boolean
+        $ref:
+          type: string
+        required:
+          type: array
+          items:
+            type: string
+        minLength:
+          type: number
+        maxLength:
+          type: number
+        minimum:
+          type: number
+        maximum:
+          type: number
+        maxItems:
+          type: number
+        readOnly:
+          type: boolean
+        writeOnly:
+          type: boolean
+        examples:
+          type: array
+          items:
+            type: object
+        anyOf:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
+        isImplied:
+          type: boolean
+        isSensitive:
+          type: boolean
+        referenceCollectionPath:
+          type: string
+        referenceCollectionUri:
+          type: string
+      additionalProperties:
+        type: object
+    DataCollectionListRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        filter:
+          type: object
+        unifiedFilter:
+          type: object
+        cursor:
+          type: string
+    DataCollectionFindByIdRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        id:
+          type: string
+        udm:
+          type: string
+      required:
+      - id
+    DataCollectionSearchRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        query:
+          type: string
+        cursor:
+          type: string
+      required:
+      - query
+    DataCollectionSearchResponseDto:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              uri:
+                type: string
+              iconUri:
+                type: string
+              fields:
+                type: object
+                additionalProperties:
+                  type: object
+              udm:
+                type: string
+              unifiedFields:
+                type: object
+                additionalProperties:
+                  type: object
+              rawFields:
+                type: object
+                additionalProperties:
+                  type: object
+              createdTime:
+                type: string
+              updatedTime:
+                type: string
+              deletedTime:
+                type: string
+              createdById:
+                type: string
+              updatedById:
+                type: string
+            required:
+            - id
+        cursor:
+          type: string
+      required:
+      - records
+    DataCollectionCreateRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        fields:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - fields
+    DataCollectionMatchRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        query:
+          type: object
+          additionalProperties:
+            type: object
+      required:
+      - query
+    DataCollectionDeleteResponseDto:
+      type: object
+      properties: {}
+    DataCollectionDeleteRequestDto:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        id:
+          type: string
+      required:
+      - id
     DataCollectionUpdateResponseDto:
       type: object
       properties:
@@ -626,45 +855,6 @@ components:
               type: string
           required:
           - id
-    DataCollectionListRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        filter:
-          type: object
-        unifiedFilter:
-          type: object
-        cursor:
-          type: string
-    DataCollectionSearchRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        query:
-          type: string
-        cursor:
-          type: string
-      required:
-      - query
-    DataCollectionMatchRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        query:
-          type: object
-          additionalProperties:
-            type: object
-      required:
-      - query
     DataCollectionFindByIdResponseDto:
       type: object
       properties:
@@ -969,196 +1159,6 @@ components:
       required:
       - type
       - name
-    DataCollectionUpdateRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        id:
-          type: string
-        fields:
-          type: object
-          additionalProperties:
-            type: object
-      required:
-      - id
-      - fields
-    DataCollectionCreateRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        fields:
-          type: object
-          additionalProperties:
-            type: object
-      required:
-      - fields
-    DataCollectionFindByIdRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        id:
-          type: string
-        udm:
-          type: string
-      required:
-      - id
-    DataCollectionDeleteRequestDto:
-      type: object
-      properties:
-        parameters:
-          type: object
-          additionalProperties:
-            type: object
-        id:
-          type: string
-      required:
-      - id
-    DataCollectionDeleteResponseDto:
-      type: object
-      properties: {}
-    DataCollectionSpecDto__schema0:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        type:
-          anyOf:
-          - type: string
-          - type: array
-            items:
-              type: string
-        format:
-          type: string
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        items:
-          $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        additionalProperties:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        enum:
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: number
-        referenceRecords:
-          type: array
-          items:
-            type: object
-        referenceCollection:
-          type: object
-          properties:
-            key:
-              type: object
-            parameters:
-              type: object
-              additionalProperties:
-                type: object
-        referenceUdm:
-          type: string
-        default:
-          type: object
-        allowCustom:
-          type: boolean
-        $ref:
-          type: string
-        required:
-          type: array
-          items:
-            type: string
-        minLength:
-          type: number
-        maxLength:
-          type: number
-        minimum:
-          type: number
-        maximum:
-          type: number
-        maxItems:
-          type: number
-        readOnly:
-          type: boolean
-        writeOnly:
-          type: boolean
-        examples:
-          type: array
-          items:
-            type: object
-        anyOf:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataCollectionSpecDto__schema0'
-        isImplied:
-          type: boolean
-        isSensitive:
-          type: boolean
-        referenceCollectionPath:
-          type: string
-        referenceCollectionUri:
-          type: string
-      additionalProperties:
-        type: object
-    DataCollectionSearchResponseDto:
-      type: object
-      properties:
-        records:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              uri:
-                type: string
-              iconUri:
-                type: string
-              fields:
-                type: object
-                additionalProperties:
-                  type: object
-              udm:
-                type: string
-              unifiedFields:
-                type: object
-                additionalProperties:
-                  type: object
-              rawFields:
-                type: object
-                additionalProperties:
-                  type: object
-              createdTime:
-                type: string
-              updatedTime:
-                type: string
-              deletedTime:
-                type: string
-              createdById:
-                type: string
-              updatedById:
-                type: string
-            required:
-            - id
-        cursor:
-          type: string
-      required:
-      - records
   securitySchemes:
     bearerAuth:
       type: http
