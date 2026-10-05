@@ -1,0 +1,26 @@
+slug: integration-app
+provider: Integration.app (Membrane)
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: OrgWorkspaces
+  spec_file: integration-app-orgworkspaces-api-openapi.yml
+  capability_id: BC-4230.10
+  capability_id_l1: BC-4230
+  capability_name: Tenant Provisioning & Lifecycle
+  confidence: 0.7
+  evidence: POST /org-workspaces  createOrgWorkspace  Create a workspace in an organization; DELETE /org-workspaces/{id}  archiveOrgWorkspace  Archive
+    an organization workspace
+  reason: Workspaces are this platform's tenant construct; create/update/archive/restore plus access-token
+    and secret rotation is tenant provisioning and lifecycle in a multi-tenant SaaS. Some operations (token
+    generation) lean toward credential management, hence 0.7.
