@@ -1657,6 +1657,8 @@ apis:
   - type: Rules
     url: rules/integration-app-rules.yml
 common:
+  - type: FinOps
+    url: finops/integration-app-finops.yml
   - type: CapabilityMap
     url: capabilities/integration-app-capability-edges.yml
     name: Integration.app (Membrane) Business Capability Map
