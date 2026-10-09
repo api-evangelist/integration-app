@@ -1,4 +1,4 @@
-generated: '2026-09-16'
+generated: '2026-09-23'
 method: generated
 source: openapi/integration-app-act-api-openapi.yml, openapi/integration-app-actionrunlogs-api-openapi.yml,
   openapi/integration-app-actions-api-openapi.yml, openapi/integration-app-app-event-subscriptions-api-openapi.yml,
@@ -28,11 +28,11 @@ description: Recommended x-agentic-access execution contracts, classified heuris
 summary:
   operations: 303
   by_action_class:
-    acting: 176
-    connected: 127
+    acting: 171
+    connected: 132
   by_consequence:
-    write: 164
-    read: 127
+    write: 159
+    read: 132
     safety-critical: 10
     physical: 2
   human_in_the_loop_required: 10
@@ -1693,50 +1693,32 @@ operations:
   method: post
   operationId: findDataCollectionRecordById
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /connections/{id}/data/{dataCollectionKey}/list
   method: post
   operationId: listDataCollectionRecords
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /connections/{id}/data/{dataCollectionKey}/match
   method: post
   operationId: matchDataCollectionRecord
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /connections/{id}/data/{dataCollectionKey}/refresh
   method: post
   operationId: refreshConnectionDataCollection
@@ -1757,18 +1739,12 @@ operations:
   method: post
   operationId: searchDataCollectionRecords
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /connections/{id}/data/{dataCollectionKey}/update
   method: post
   operationId: updateDataCollectionRecord
@@ -4069,18 +4045,12 @@ operations:
   method: post
   operationId: searchApps
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /agent/tools/websearch
   method: post
   operationId: websearch

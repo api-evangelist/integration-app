@@ -4,13 +4,11 @@ note: Who wrote each artifact in this repository. `unknown` means we have no rec
   by check-provenance-manifest.py.
 artifacts:
   a2a/integration-app-a2a.yml:
-    method: probed
-    evidence: >-
-      declared in the artifact
+    method: unknown
+    evidence: no authorship recorded
   a2a/integration-app-agent-card.json:
-    method: harvested
-    evidence: >-
-      fetched verbatim 2026-09-13 from https://docs.getmembrane.com/.well-known/agent-card.json (HTTP 200); byte-identical to the source
+    method: unknown
+    evidence: no authorship recorded
   agentic-access/integration-app-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
@@ -140,37 +138,10 @@ artifacts:
   finops/integration-app-finops.yml:
     method: generated
     evidence: declared in the artifact
-  kin/checks-2026-09-12T221936.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-17T064519.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T080027.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T082702.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T114122.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T165047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T191845.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T205517.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-21T110057.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T064859.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T171257.yml:
+  front-door-ai/2026-09-17.yml:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-25T125852.yml:
@@ -305,120 +276,202 @@ artifacts:
   kin/score-2026-09-12T221936.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-13T214537.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T064754.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T210656.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T225847.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T211329.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T230249.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T210549.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T225339.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T211151.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T233623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T205255.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T231945.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T165737.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T193153.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T205903.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T232958.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T211425.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T233935.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-22T213221.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-23T000603.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T064009.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T090406.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T161608.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/integration-app-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
   llms/integration-app-llms.txt:
-    method: harvested
-    evidence: >-
-      fetched verbatim 2026-09-13 from https://docs.getmembrane.com/llms.txt (HTTP 200)
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
   mcp/integration-app-mcp.yml:
-    method: probed
-    evidence: >-
-      declared in the artifact
+    method: unknown
+    evidence: no authorship recorded
   mcp/integration-app-tool-crosswalk.yml:
     method: derived
     evidence: declared in the artifact
   openapi/_original/integration-app-openapi.yml:
-    method: generated
-    evidence: >-
-      CORRECTED 2026-09-13. This entry previously read "harvested; byte-identical to the source",
-      which is false. The file is a documentation-derived scaffold, not a fetched spec. On
-      2026-09-13 the provider's REAL machine-readable contract was found at
-      https://api.getmembrane.com/docs-json and https://docs.getmembrane.com/api-reference/membrane-api.json
-      (OpenAPI 3.0.0, 205 paths / 278 operations, NestJS-generated) and saved verbatim to
-      openapi/integration-app-membrane-api-openapi.json. Diffing the two shows 17 of this
-      scaffold's 42 paths DO NOT EXIST in the provider's published contract.
-    x-phantom-paths:
-      - /connections/{id}/archive
-      - /connections/{id}/logs
-      - /connections/{id}/restore
-      - /connectors/{id}
-      - /connectors/{id}/publish
-      - /data-collections/{connectionId}/{collectionName}/records
-      - /data-collections/{connectionId}/{collectionName}/records/{id}
-      - /integrations/{selector}
-      - /public/apps
-      - /public/connectors
-      - /public/packages
-      - /search/keyword
-      - /search/semantic
-      - /sessions
-      - /sessions/{id}
-      - /sessions/{id}/message
-      - /sessions/{id}/stop
-    x-phantom-operation-ids:
-      - createSession
-      - getDataCollectionRecord
-      - getSession
-      - keywordSearch
-      - listSessions
-      - publishConnector
-      - replaceConnection
-      - replaceConnector
-      - replaceCustomer
-      - semanticSearch
-      - sendSessionMessage
-      - stopSession
-      - subscribeExternalEvent
-      - unsubscribeExternalEvent
-      - updateAction
-      - updateConnector
-    x-contamination:
-      note: >-
-        Everything in this repo that declares this file as its source inherits the fabrication. That
-        is the 14 openapi/*-api-openapi.yml splits and the 14 apis[] entries pointing at them, the
-        30 files under collections/, and agentic-access/integration-app-agentic-access.yml (which
-        reports 63 operations classified from the scaffold). They were NOT removed by the 2026-09-13
-        enrichment pass because removing them deletes 14 published apis.io pages and their aids,
-        which is a catalog decision rather than an enrichment one. Queue this slug for the
-        scaffold-fabrication sweep and a re-split from the real spec.
-      affected_paths:
-        - openapi/integration-app-*-api-openapi.yml
-        - collections/
-        - agentic-access/integration-app-agentic-access.yml
-      real_contract: openapi/integration-app-membrane-api-openapi.json
-      detected: '2026-09-13'
+    method: harvested
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
+  openapi/integration-app-act-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-actionrunlogs-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-actions-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-app-event-subscriptions-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-appdataschemas-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-appeventlogrecords-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-appeventtypes-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-appsuniverse-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-checkpoints-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-connectedproducts-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-connections-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-connectors-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-connectorsuniverse-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-customers-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-data-collections-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-data-links-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-data-sources-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-datalinktables-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-exportmembraneinterfaces-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-external-apps-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-external-event-subscriptions-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-externalapilogs-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-externaleventlogrecords-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-externaleventpulls-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-externaleventtypes-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-field-mappings-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-files-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-flow-runs-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-flows-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-importmembraneinterfaces-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-incomingwebhooksreader-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-integrations-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-logs-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/integration-app-membrane-api-openapi.json:
-    method: harvested
-    evidence: >-
-      fetched verbatim 2026-09-13 from https://docs.getmembrane.com/api-reference/membrane-api.json (HTTP 200); byte-identical to the source. The same document is served at https://api.getmembrane.com/docs-json.
+  openapi/integration-app-orgworkspaces-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-orgworkspacestransfer-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-packages-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-packagesuniverse-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/integration-app-public-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -426,8 +479,17 @@ artifacts:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/integration-app-sessions-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-tools-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-universe-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/integration-app-workspaceelementssearch-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   overlays/integration-app-membrane-api-overlay.yaml:
     method: generated
     evidence: declared in the artifact
@@ -456,26 +518,20 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   skills/integration-app-integrate-anything.md:
-    method: harvested
-    evidence: >-
-      provider-authored; fetched verbatim 2026-09-13 from https://raw.githubusercontent.com/membranehq/agent-skills/main/skills/integrate-anything/SKILL.md
+    method: unknown
+    evidence: no authorship recorded
   skills/integration-app-integration-development.md:
-    method: harvested
-    evidence: >-
-      provider-authored; fetched verbatim 2026-09-13 from https://raw.githubusercontent.com/membranehq/agent-skills/main/skills/integration-development/SKILL.md
+    method: unknown
+    evidence: no authorship recorded
   skills/integration-app-membrane.md:
-    method: harvested
-    evidence: >-
-      provider-authored; fetched verbatim 2026-09-13 from https://docs.getmembrane.com/.well-known/agent-skills/membrane/skill.md
+    method: unknown
+    evidence: no authorship recorded
   well-known/integration-app-oauth-authorization-server.json:
-    method: harvested
-    evidence: >-
-      fetched verbatim 2026-09-13 from https://api.getmembrane.com/.well-known/oauth-authorization-server (HTTP 200)
+    method: unknown
+    evidence: no authorship recorded
   well-known/integration-app-oauth-protected-resource-mcp-integrate-anything.json:
-    method: harvested
-    evidence: >-
-      fetched verbatim 2026-09-13 from https://api.getmembrane.com/.well-known/oauth-protected-resource/mcp/integrate-anything (HTTP 200)
+    method: unknown
+    evidence: no authorship recorded
   well-known/integration-app-well-known.yml:
-    method: probed
-    evidence: >-
-      declared in the artifact
+    method: unknown
+    evidence: no authorship recorded
